@@ -24,7 +24,7 @@
 		[scriptTask launch];
 		
 		NS_DURING
-			[[inputPipe fileHandleForWriting] writeData:[NSData dataWithBytes:[input_ UTF8String] length:strlen([input_ UTF8String])]];
+			[[inputPipe fileHandleForWriting] writeData:[input_ dataUsingEncoding:NSUTF8StringEncoding]];
 		NS_HANDLER
 			//	Catch Broken pipe exceptions in case the script for some reason doesn't read its STDIN.
 		NS_ENDHANDLER
