@@ -29,7 +29,6 @@
 			//	Catch Broken pipe exceptions in case the script for some reason doesn't read its STDIN.
 		NS_ENDHANDLER
 		[[inputPipe fileHandleForWriting] closeFile];
-		[scriptTask waitUntilExit];
 		result = [[[NSString alloc] initWithData:[[outputPipe fileHandleForReading] readDataToEndOfFile]
 										encoding:NSUTF8StringEncoding] autorelease];
 	} else {
