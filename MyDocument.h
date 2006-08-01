@@ -15,4 +15,7 @@
 				NSPoint						savedOrigin;
 				BOOL						savedAtBottom;
 }
+
+- (IBAction)copyGeneratedHTMLAction:(id)sender;
+
 @end

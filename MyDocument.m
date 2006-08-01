@@ -120,7 +120,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 			hasSavedOrigin = YES;
 		}
 		[[htmlPreviewWebView mainFrame] loadHTMLString:[self markdown2html:[markdownSource string]]
-											   baseURL:nil];
+											   baseURL:[self fileName] ? [NSURL fileURLWithPath:[self fileName]] : nil];
 	}
 }
 
@@ -132,6 +132,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		else
 			[[[frame_ frameView] documentView] scrollPoint:savedOrigin];
 	}
+}
+
+- (IBAction)copyGeneratedHTMLAction:(id)sender {
+	[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+	[[NSPasteboard generalPasteboard] setString:[self markdown2html:[markdownSource string]] forType:NSStringPboardType];
 }
 
 @end
