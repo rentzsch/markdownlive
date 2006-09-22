@@ -13,6 +13,7 @@
 		796A2BBD0A20F4A800440275 /* Markdown-license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 796A2BBB0A20F4A800440275 /* Markdown-license.txt */; };
 		796A2BBE0A20F4A800440275 /* SmartyPants-license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 796A2BBC0A20F4A800440275 /* SmartyPants-license.txt */; };
 		796A2BC40A20F84E00440275 /* NSTask+runScriptNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 796A2BC30A20F84E00440275 /* NSTask+runScriptNamed.m */; };
+		79F7EF740AC39638003DAB4E /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
 		8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */; };
@@ -42,6 +43,7 @@
 		796A2BBC0A20F4A800440275 /* SmartyPants-license.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "SmartyPants-license.txt"; sourceTree = "<group>"; };
 		796A2BC20A20F84E00440275 /* NSTask+runScriptNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTask+runScriptNamed.h"; sourceTree = "<group>"; };
 		796A2BC30A20F84E00440275 /* NSTask+runScriptNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+runScriptNamed.m"; sourceTree = "<group>"; };
+		79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MarkdownLiveApp.icns; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* MarkdownLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkdownLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -121,6 +123,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */,
 				796A2BB90A20F48200440275 /* Markdown.pl */,
 				796A2BBB0A20F4A800440275 /* Markdown-license.txt */,
 				796A2BB70A20F47200440275 /* SmartyPants.pl */,
@@ -192,6 +195,7 @@
 				796A2BBA0A20F48200440275 /* Markdown.pl in Resources */,
 				796A2BBD0A20F4A800440275 /* Markdown-license.txt in Resources */,
 				796A2BBE0A20F4A800440275 /* SmartyPants-license.txt in Resources */,
+				79F7EF740AC39638003DAB4E /* MarkdownLiveApp.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

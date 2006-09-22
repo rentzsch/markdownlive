@@ -185,48 +185,7 @@
 	<key>Notifications</key>
 	<array/>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>794DC8490A7FBB4F0039C99A</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>MyDocument.h</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>794DC84A0A7FBB4F0039C99A</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>MyDocument.h</string>
-						<key>_historyCapacity</key>
-						<integer>0</integer>
-						<key>bookmark</key>
-						<string>794DC88F0A7FBEAF0039C99A</string>
-						<key>history</key>
-						<array>
-							<string>794DC84B0A7FBB4F0039C99A</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {773, 754}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>33 78 773 795 0 0 2560 1578 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>-1</integer>
@@ -259,8 +218,6 @@
 			<key>Layout</key>
 			<array>
 				<dict>
-					<key>BecomeActive</key>
-					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -300,14 +257,15 @@
 								<string>2A37F4ABFDCFA73011CA2CEA</string>
 								<string>2A37F4B8FDCFA73011CA2CEA</string>
 								<string>19C28FB0FE9D524F11CA2CBB</string>
+								<string>1C37FBAC04509CD000000102</string>
 								<string>1C37FAAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>20</integer>
 									<integer>19</integer>
-									<integer>18</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -376,6 +334,8 @@
 							<string>0pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -412,9 +372,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>794DC8430A7FBB4F0039C99A</string>
+				<string>79F7EF760AC39660003DAB4E</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>794DC8440A7FBB4F0039C99A</string>
+				<string>79F7EF770AC39660003DAB4E</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -548,15 +508,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>794DC8750A7FBC5E0039C99A</string>
-		<string>794DC8760A7FBC5E0039C99A</string>
-		<string>796A2AEB0A20DD6300440275</string>
-		<string>1CD10A99069EF8BA00B06720</string>
-		<string>794DC8730A7FBC5E0039C99A</string>
-		<string>794DC85D0A7FBC220039C99A</string>
 		<string>796A2AD00A20DCD600440275</string>
 		<string>1C0AD2B3069F1EA900FABCE6</string>
-		<string>794DC8490A7FBB4F0039C99A</string>
 		<string>/Volumes/Island/wolf/code/sf/redshed/cocoa/MarkdownLive/MarkdownLive.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
@@ -637,7 +590,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>796A2AD00A20DCD600440275</string>
-				<string>794DC84D0A7FBB4F0039C99A</string>
+				<string>79F7EF790AC39660003DAB4E</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
@@ -1009,9 +962,9 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>1C0AD2B3069F1EA900FABCE6</string>
-				<string>794DC84E0A7FBB4F0039C99A</string>
+				<string>79F7EF7A0AC39660003DAB4E</string>
 				<string>1CD0528B0623707200166675</string>
-				<string>794DC84F0A7FBB4F0039C99A</string>
+				<string>79F7EF7B0AC39660003DAB4E</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.run</string>
@@ -1020,7 +973,7 @@
 			<key>WindowToolGUID</key>
 			<string>1C0AD2B3069F1EA900FABCE6</string>
 			<key>WindowToolIsVisible</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Identifier</key>
