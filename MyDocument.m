@@ -10,7 +10,9 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 @implementation MyDocument
 
 - (NSString*)markdown2html:(NSString*)markdown_ {
-	
+	if (!markdown_)
+		return @"";
+		
 	NSString *dumbQuoteHTML = [NSTask runScriptNamed:@"Markdown" extension:@"pl" input:markdown_ error:nil];
 	NSString *smartQuoteHTML = nil;
 	if (dumbQuoteHTML)
