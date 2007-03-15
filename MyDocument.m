@@ -27,8 +27,6 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		markdownSource = [[NSMutableAttributedString alloc] initWithString:@""
 																attributes:[NSDictionary dictionaryWithObject:[NSFont fontWithName:@"Monaco" size:9.0]
 																									   forKey:NSFontAttributeName]];
-		
-		markdownFileEncoding = NSUTF8StringEncoding;
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
 		htmlPreviewTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
 															target:self
@@ -58,7 +56,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	if ([typeName_ isEqualToString:kMarkdownDocumentType]) {
 		result = [[markdownSource string] writeToURL:absoluteURL_
 										  atomically:YES
-											encoding:markdownFileEncoding
+											encoding:NSUTF8StringEncoding
 											   error:error_];
 		
 	}
@@ -71,21 +69,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	if ([typeName_ isEqualToString:kMarkdownDocumentType]) {
 		NSError *error = nil;
 		NSString *markdownSourceString = [NSString stringWithContentsOfURL:absoluteURL_
-														   usedEncoding:&markdownFileEncoding
-																  error:&error];
-		if ([error code] == NSFileReadInapplicableStringEncodingError
-			&& [[error domain] isEqualToString:NSCocoaErrorDomain])
-		{
-			//	Hit the "The file could not be opened using specified text encoding." error. -[NSString
-			//	stringWithContentsOfFile:usedEncoding:error:] only sniffs the uncommon UTF-16, not UTF-8
-			//	or even ASCII. Suck. Try again using UTF-8 explicitly.
-			error = nil;
-			markdownFileEncoding = NSUTF8StringEncoding;
-			markdownSourceString = [NSString stringWithContentsOfURL:absoluteURL_
-															encoding:markdownFileEncoding
+															encoding:NSUTF8StringEncoding
 															   error:&error];
-		}
-		
 		if (!error) {
 			NSAssert(markdownSourceString, nil);
 			[markdownSource release];

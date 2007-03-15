@@ -6,7 +6,6 @@
 	IBOutlet	WebView						*htmlPreviewWebView;
 	
 				NSMutableAttributedString	*markdownSource;
-				NSStringEncoding			markdownFileEncoding;
 	
 				NSTimeInterval				whenToUpdatePreview;
 				NSTimer						*htmlPreviewTimer;
