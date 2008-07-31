@@ -1,5 +1,5 @@
 #import "MyDocument.h"
-#import "NSTask+runScriptNamed.h"
+#import "NSTask+runMaruku.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
@@ -12,13 +12,13 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (NSString*)markdown2html:(NSString*)markdown_ {
 	if (!markdown_)
 		return @"";
-		
-	NSString *dumbQuoteHTML = [NSTask runScriptNamed:@"Markdown" extension:@"pl" input:markdown_ error:nil];
-	NSString *smartQuoteHTML = nil;
-	if (dumbQuoteHTML)
-		smartQuoteHTML = [NSTask runScriptNamed:@"SmartyPants" extension:@"pl" input:dumbQuoteHTML error:nil];
-	
-	return smartQuoteHTML;
+    
+    NSError *error = nil;
+    NSString *html = [NSTask runMarukuWithInput:markdown_ error:&error];
+    if (error) {
+        [NSApp presentError:error];
+    }
+    return html;
 }
 
 - (id)init {

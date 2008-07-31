@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		796A2AD80A20DCEE00440275 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796A2AD70A20DCEE00440275 /* WebKit.framework */; };
-		796A2BB80A20F47200440275 /* SmartyPants.pl in Resources */ = {isa = PBXBuildFile; fileRef = 796A2BB70A20F47200440275 /* SmartyPants.pl */; };
-		796A2BBA0A20F48200440275 /* Markdown.pl in Resources */ = {isa = PBXBuildFile; fileRef = 796A2BB90A20F48200440275 /* Markdown.pl */; };
-		796A2BBD0A20F4A800440275 /* Markdown-license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 796A2BBB0A20F4A800440275 /* Markdown-license.txt */; };
-		796A2BBE0A20F4A800440275 /* SmartyPants-license.txt in Resources */ = {isa = PBXBuildFile; fileRef = 796A2BBC0A20F4A800440275 /* SmartyPants-license.txt */; };
-		796A2BC40A20F84E00440275 /* NSTask+runScriptNamed.m in Sources */ = {isa = PBXBuildFile; fileRef = 796A2BC30A20F84E00440275 /* NSTask+runScriptNamed.m */; };
+		7972D9090E42AF6100BF53B8 /* NSTask+runMaruku.m in Sources */ = {isa = PBXBuildFile; fileRef = 7972D9080E42AF6100BF53B8 /* NSTask+runMaruku.m */; };
+		7972DA280E42B00E00BF53B8 /* maruku-0.5.9 in Resources */ = {isa = PBXBuildFile; fileRef = 7972D91E0E42B00E00BF53B8 /* maruku-0.5.9 */; };
 		79F7EF740AC39638003DAB4E /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
@@ -37,12 +34,9 @@
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* MarkdownLive_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkdownLive_Prefix.pch; sourceTree = "<group>"; };
 		796A2AD70A20DCEE00440275 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		796A2BB70A20F47200440275 /* SmartyPants.pl */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.perl; path = SmartyPants.pl; sourceTree = "<group>"; };
-		796A2BB90A20F48200440275 /* Markdown.pl */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.script.perl; path = Markdown.pl; sourceTree = "<group>"; };
-		796A2BBB0A20F4A800440275 /* Markdown-license.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "Markdown-license.txt"; sourceTree = "<group>"; };
-		796A2BBC0A20F4A800440275 /* SmartyPants-license.txt */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "SmartyPants-license.txt"; sourceTree = "<group>"; };
-		796A2BC20A20F84E00440275 /* NSTask+runScriptNamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTask+runScriptNamed.h"; sourceTree = "<group>"; };
-		796A2BC30A20F84E00440275 /* NSTask+runScriptNamed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+runScriptNamed.m"; sourceTree = "<group>"; };
+		7972D9070E42AF6100BF53B8 /* NSTask+runMaruku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTask+runMaruku.h"; sourceTree = "<group>"; };
+		7972D9080E42AF6100BF53B8 /* NSTask+runMaruku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+runMaruku.m"; sourceTree = "<group>"; };
+		7972D91E0E42B00E00BF53B8 /* maruku-0.5.9 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "maruku-0.5.9"; sourceTree = "<group>"; };
 		79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MarkdownLiveApp.icns; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* MarkdownLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkdownLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -105,8 +99,8 @@
 			children = (
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
-				796A2BC20A20F84E00440275 /* NSTask+runScriptNamed.h */,
-				796A2BC30A20F84E00440275 /* NSTask+runScriptNamed.m */,
+				7972D9070E42AF6100BF53B8 /* NSTask+runMaruku.h */,
+				7972D9080E42AF6100BF53B8 /* NSTask+runMaruku.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -123,11 +117,8 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				7972D91E0E42B00E00BF53B8 /* maruku-0.5.9 */,
 				79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */,
-				796A2BB90A20F48200440275 /* Markdown.pl */,
-				796A2BBB0A20F4A800440275 /* Markdown-license.txt */,
-				796A2BB70A20F47200440275 /* SmartyPants.pl */,
-				796A2BBC0A20F4A800440275 /* SmartyPants-license.txt */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
 				2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */,
 				2A37F4B4FDCFA73011CA2CEA /* MyDocument.nib */,
@@ -173,9 +164,11 @@
 		2A37F4A9FDCFA73011CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = C05733CB08A9546B00998B17 /* Build configuration list for PBXProject "MarkdownLive" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 2A37F4AAFDCFA73011CA2CEA /* MarkdownLive */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8D15AC270486D014006FF6A4 /* MarkdownLive */,
 			);
@@ -191,11 +184,8 @@
 				8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */,
 				8D15AC2E0486D014006FF6A4 /* MyDocument.nib in Resources */,
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
-				796A2BB80A20F47200440275 /* SmartyPants.pl in Resources */,
-				796A2BBA0A20F48200440275 /* Markdown.pl in Resources */,
-				796A2BBD0A20F4A800440275 /* Markdown-license.txt in Resources */,
-				796A2BBE0A20F4A800440275 /* SmartyPants-license.txt in Resources */,
 				79F7EF740AC39638003DAB4E /* MarkdownLiveApp.icns in Resources */,
+				7972DA280E42B00E00BF53B8 /* maruku-0.5.9 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +198,7 @@
 			files = (
 				8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
-				796A2BC40A20F84E00440275 /* NSTask+runScriptNamed.m in Sources */,
+				7972D9090E42AF6100BF53B8 /* NSTask+runMaruku.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +279,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Debug;
 		};
@@ -300,7 +290,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Release;
 		};
