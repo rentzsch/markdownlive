@@ -23,18 +23,23 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
     NSString *html = @"an error occured";
     if (!error) {
         FILE *markdownSourceTempFILE = fopen([[markdownSourceTempFile fullPath] fileSystemRepresentation], "r");
+        assert(markdownSourceTempFILE);
+        
         Document *discountContext = mkd_in(markdownSourceTempFILE, 0);
         assert(discountContext);
         
         FILE *htmlOutputTempFILE = fopen([[htmlOutputTempFile fullPath] fileSystemRepresentation], "w+");
+        assert(htmlOutputTempFILE);
+        
         int markdown_result = markdown(discountContext, htmlOutputTempFILE, 0);
         assert(markdown_result == 0);
+        
         fclose(markdownSourceTempFILE);
         fclose(htmlOutputTempFILE);
+        
         html = [NSString stringWithContentsOfFile:[htmlOutputTempFile fullPath]
                                          encoding:NSUTF8StringEncoding
                                             error:&error];
-        JRLogDebug(@"html: {%@}", html);
     }
     
     if (error) {
