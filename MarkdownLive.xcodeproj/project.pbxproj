@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79252F250E8DF46200DFAD98 /* discountInclude.c in Sources */ = {isa = PBXBuildFile; fileRef = 79252F240E8DF46200DFAD98 /* discountInclude.c */; };
+		79252F560E8DFAF200DFAD98 /* DDTemporaryFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 79252F520E8DFAF200DFAD98 /* DDTemporaryFile.m */; };
+		79252F570E8DFAF200DFAD98 /* DDTemporaryDirectory.m in Sources */ = {isa = PBXBuildFile; fileRef = 79252F540E8DFAF200DFAD98 /* DDTemporaryDirectory.m */; };
+		79252F5F0E8E017E00DFAD98 /* JRLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 79252F5D0E8E017E00DFAD98 /* JRLog.m */; };
+		79252FF20E8E080100DFAD98 /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 79252FF10E8E080100DFAD98 /* generate.c */; };
 		796A2AD80A20DCEE00440275 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796A2AD70A20DCEE00440275 /* WebKit.framework */; };
-		7972D9090E42AF6100BF53B8 /* NSTask+runMaruku.m in Sources */ = {isa = PBXBuildFile; fileRef = 7972D9080E42AF6100BF53B8 /* NSTask+runMaruku.m */; };
-		7979D3260E8D4BFF00768BE3 /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 7979D2F20E8D4BFF00768BE3 /* markdown.c */; };
-		7979D32A0E8D4BFF00768BE3 /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 7979D2F70E8D4BFF00768BE3 /* mkdio.c */; };
-		7979D32C0E8D4BFF00768BE3 /* resource.c in Sources */ = {isa = PBXBuildFile; fileRef = 7979D2FA0E8D4BFF00768BE3 /* resource.c */; };
 		79F7EF740AC39638003DAB4E /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
@@ -35,14 +36,16 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* MarkdownLive_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkdownLive_Prefix.pch; sourceTree = "<group>"; };
+		79252F230E8DF46200DFAD98 /* discountInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = discountInclude.h; sourceTree = "<group>"; };
+		79252F240E8DF46200DFAD98 /* discountInclude.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = discountInclude.c; sourceTree = "<group>"; };
+		79252F520E8DFAF200DFAD98 /* DDTemporaryFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTemporaryFile.m; sourceTree = "<group>"; };
+		79252F530E8DFAF200DFAD98 /* DDTemporaryFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTemporaryFile.h; sourceTree = "<group>"; };
+		79252F540E8DFAF200DFAD98 /* DDTemporaryDirectory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDTemporaryDirectory.m; sourceTree = "<group>"; };
+		79252F550E8DFAF200DFAD98 /* DDTemporaryDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDTemporaryDirectory.h; sourceTree = "<group>"; };
+		79252F5D0E8E017E00DFAD98 /* JRLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRLog.m; sourceTree = "<group>"; };
+		79252F5E0E8E017E00DFAD98 /* JRLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRLog.h; sourceTree = "<group>"; };
+		79252FF10E8E080100DFAD98 /* generate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = generate.c; path = "discount-1.2.10/generate.c"; sourceTree = "<group>"; };
 		796A2AD70A20DCEE00440275 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		7972D9070E42AF6100BF53B8 /* NSTask+runMaruku.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTask+runMaruku.h"; sourceTree = "<group>"; };
-		7972D9080E42AF6100BF53B8 /* NSTask+runMaruku.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTask+runMaruku.m"; sourceTree = "<group>"; };
-		7979D2F20E8D4BFF00768BE3 /* markdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdown.c; sourceTree = "<group>"; };
-		7979D2F30E8D4BFF00768BE3 /* markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdown.h; sourceTree = "<group>"; };
-		7979D2F70E8D4BFF00768BE3 /* mkdio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkdio.c; sourceTree = "<group>"; };
-		7979D2F80E8D4BFF00768BE3 /* mkdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdio.h; sourceTree = "<group>"; };
-		7979D2FA0E8D4BFF00768BE3 /* resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resource.c; sourceTree = "<group>"; };
 		79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MarkdownLiveApp.icns; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* MarkdownLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkdownLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
-				7979D2E10E8D4BFF00768BE3 /* discount-1.2.10 */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -106,8 +108,15 @@
 			children = (
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
-				7972D9070E42AF6100BF53B8 /* NSTask+runMaruku.h */,
-				7972D9080E42AF6100BF53B8 /* NSTask+runMaruku.m */,
+				79252F230E8DF46200DFAD98 /* discountInclude.h */,
+				79252F240E8DF46200DFAD98 /* discountInclude.c */,
+				79252F520E8DFAF200DFAD98 /* DDTemporaryFile.m */,
+				79252F530E8DFAF200DFAD98 /* DDTemporaryFile.h */,
+				79252F540E8DFAF200DFAD98 /* DDTemporaryDirectory.m */,
+				79252F550E8DFAF200DFAD98 /* DDTemporaryDirectory.h */,
+				79252F5D0E8E017E00DFAD98 /* JRLog.m */,
+				79252F5E0E8E017E00DFAD98 /* JRLog.h */,
+				79252FF10E8E080100DFAD98 /* generate.c */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -141,18 +150,6 @@
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		7979D2E10E8D4BFF00768BE3 /* discount-1.2.10 */ = {
-			isa = PBXGroup;
-			children = (
-				7979D2F20E8D4BFF00768BE3 /* markdown.c */,
-				7979D2F30E8D4BFF00768BE3 /* markdown.h */,
-				7979D2F70E8D4BFF00768BE3 /* mkdio.c */,
-				7979D2F80E8D4BFF00768BE3 /* mkdio.h */,
-				7979D2FA0E8D4BFF00768BE3 /* resource.c */,
-			);
-			path = "discount-1.2.10";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -215,10 +212,11 @@
 			files = (
 				8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
-				7972D9090E42AF6100BF53B8 /* NSTask+runMaruku.m in Sources */,
-				7979D3260E8D4BFF00768BE3 /* markdown.c in Sources */,
-				7979D32A0E8D4BFF00768BE3 /* mkdio.c in Sources */,
-				7979D32C0E8D4BFF00768BE3 /* resource.c in Sources */,
+				79252F250E8DF46200DFAD98 /* discountInclude.c in Sources */,
+				79252F560E8DFAF200DFAD98 /* DDTemporaryFile.m in Sources */,
+				79252F570E8DFAF200DFAD98 /* DDTemporaryDirectory.m in Sources */,
+				79252F5F0E8E017E00DFAD98 /* JRLog.m in Sources */,
+				79252FF20E8E080100DFAD98 /* generate.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

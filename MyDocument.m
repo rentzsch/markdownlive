@@ -1,6 +1,6 @@
 #import "MyDocument.h"
-#import "NSTask+runMaruku.h"
-#include "markdown.h"
+#include "discountInclude.h"
+#import "JRLog.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
@@ -15,11 +15,28 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		return @"";
     
     NSError *error = nil;
-#if 1
     
-#else
-    NSString *html = [NSTask runMarukuWithInput:markdown_ error:&error];
-#endif
+    [markdown_ writeToFile:[markdownSourceTempFile fullPath]
+                atomically:NO
+                  encoding:NSUTF8StringEncoding
+                     error:&error];
+    NSString *html = @"an error occured";
+    if (!error) {
+        FILE *markdownSourceTempFILE = fopen([[markdownSourceTempFile fullPath] fileSystemRepresentation], "r");
+        Document *discountContext = mkd_in(markdownSourceTempFILE, 0);
+        assert(discountContext);
+        
+        FILE *htmlOutputTempFILE = fopen([[htmlOutputTempFile fullPath] fileSystemRepresentation], "w+");
+        int markdown_result = markdown(discountContext, htmlOutputTempFILE, 0);
+        assert(markdown_result == 0);
+        fclose(markdownSourceTempFILE);
+        fclose(htmlOutputTempFILE);
+        html = [NSString stringWithContentsOfFile:[htmlOutputTempFile fullPath]
+                                         encoding:NSUTF8StringEncoding
+                                            error:&error];
+        JRLogDebug(@"html: {%@}", html);
+    }
+    
     if (error) {
         [NSApp presentError:error];
     }
@@ -38,6 +55,10 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 														  selector:@selector(htmlPreviewTimer:)
 														  userInfo:nil
 														   repeats:YES];
+        markdownSourceTempFile = [[DDTemporaryFile alloc] initWithName:@"tmp.markdown"];
+        JRLogDebug(@"markdownSourceTempFile: %@", [markdownSourceTempFile fullPath]);
+        htmlOutputTempFile = [[DDTemporaryFile alloc] initWithName:@"tmp.html"];
+        JRLogDebug(@"htmlOutputTempFile: %@", [htmlOutputTempFile fullPath]);
     }
     return self;
 }
@@ -45,6 +66,10 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (void)dealloc {
 	[htmlPreviewTimer invalidate]; htmlPreviewTimer = nil;
 	[markdownSource release]; markdownSource = nil;
+    
+    [markdownSourceTempFile release];
+    [htmlOutputTempFile release];
+    
 	[super dealloc];
 }
 
