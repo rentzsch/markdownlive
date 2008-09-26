@@ -1,5 +1,6 @@
 #import "MyDocument.h"
 #import "NSTask+runMaruku.h"
+#include "markdown.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
@@ -14,7 +15,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		return @"";
     
     NSError *error = nil;
+#if 1
+    
+#else
     NSString *html = [NSTask runMarukuWithInput:markdown_ error:&error];
+#endif
     if (error) {
         [NSApp presentError:error];
     }
