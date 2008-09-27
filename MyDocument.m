@@ -1,6 +1,5 @@
 #import "MyDocument.h"
-#include "discountInclude.h"
-#import "JRLog.h"
+#include "discountWrapper.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
@@ -14,38 +13,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	if (!markdown_)
 		return @"";
     
-    NSError *error = nil;
-    
-    [markdown_ writeToFile:[markdownSourceTempFile fullPath]
-                atomically:NO
-                  encoding:NSUTF8StringEncoding
-                     error:&error];
-    NSString *html = @"an error occured";
-    if (!error) {
-        FILE *markdownSourceTempFILE = fopen([[markdownSourceTempFile fullPath] fileSystemRepresentation], "r");
-        assert(markdownSourceTempFILE);
-        
-        Document *discountContext = mkd_in(markdownSourceTempFILE, 0);
-        assert(discountContext);
-        
-        FILE *htmlOutputTempFILE = fopen([[htmlOutputTempFile fullPath] fileSystemRepresentation], "w+");
-        assert(htmlOutputTempFILE);
-        
-        int markdown_result = markdown(discountContext, htmlOutputTempFILE, 0);
-        assert(markdown_result == 0);
-        
-        fclose(markdownSourceTempFILE);
-        fclose(htmlOutputTempFILE);
-        
-        html = [NSString stringWithContentsOfFile:[htmlOutputTempFile fullPath]
-                                         encoding:NSUTF8StringEncoding
-                                            error:&error];
-    }
-    
-    if (error) {
-        [NSApp presentError:error];
-    }
-    return html;
+    return discountToHTML(markdown_);
 }
 
 - (id)init {
@@ -60,10 +28,6 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 														  selector:@selector(htmlPreviewTimer:)
 														  userInfo:nil
 														   repeats:YES];
-        markdownSourceTempFile = [[DDTemporaryFile alloc] initWithName:@"tmp.markdown"];
-        JRLogDebug(@"markdownSourceTempFile: %@", [markdownSourceTempFile fullPath]);
-        htmlOutputTempFile = [[DDTemporaryFile alloc] initWithName:@"tmp.html"];
-        JRLogDebug(@"htmlOutputTempFile: %@", [htmlOutputTempFile fullPath]);
     }
     return self;
 }
@@ -71,10 +35,6 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (void)dealloc {
 	[htmlPreviewTimer invalidate]; htmlPreviewTimer = nil;
 	[markdownSource release]; markdownSource = nil;
-    
-    [markdownSourceTempFile release];
-    [htmlOutputTempFile release];
-    
 	[super dealloc];
 }
 
@@ -83,6 +43,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController*)controller_ {
+    static BOOL engagedAutosave = NO;
+    if (!engagedAutosave) {
+        engagedAutosave = YES;
+        [[NSDocumentController sharedDocumentController] setAutosavingDelay:30.0];
+    }
     [super windowControllerDidLoadNib:controller_];
 }
 
