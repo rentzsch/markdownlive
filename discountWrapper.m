@@ -1,7 +1,7 @@
 #include "discountWrapper.h"
 
 #define Line discountLine
-#include "discount-1.2.10/markdown.h"
+#include "discount-1.3.0/markdown.h"
 #undef Line
 
 #include "mkdioWrapper.h"

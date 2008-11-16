@@ -7,16 +7,22 @@ char markdown_version[] = VERSION
 #if PANDOC_HEADER
 		" HEADER"
 #endif
-#if 4 != 4
-		" TAB=4"
-#endif
-#if SUPERSCRIPT
-		" SUPERSCRIPT"
+#if @TABSTOP@ != 4
+		" TAB=@TABSTOP@"
 #endif
 #if USE_AMALLOC
 		" DEBUG"
 #endif
+#if SUPERSCRIPT
+		" SUPERSCRIPT"
+#endif
 #if RELAXED_EMPHASIS
 		" RELAXED"
+#endif
+#if DIV_QUOTE
+		" DIV"
+#endif
+#if ALPHA_LIST
+		" AL"
 #endif
 		;

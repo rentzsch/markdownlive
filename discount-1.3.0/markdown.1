@@ -1,0 +1,117 @@
+.\"     %A%
+.\"
+.Dd January 7, 2008
+.Dt MARKDOWN 1
+.Os MASTODON
+.Sh NAME
+.Nm markdown
+.Nd text to html conversion tool
+.Sh SYNOPSIS
+.Nm
+.Op Fl d
+.Op Fl V
+.Op Fl F Pa bitmap
+.Op Fl f Ar options
+.Op Fl o Pa file
+.Op Fl s Pa text
+.Op Fl t Pa text
+.Op Pa textfile
+.Sh DESCRIPTION
+The
+.Nm
+utility reads the
+.Xr markdown 7 Ns -formatted
+.Pa textfile
+.Pq or stdin if not specified,
+compiles it, and writes the html output
+to stdout.
+.Pp
+The options are as follows:
+.Bl -tag -width "-o file"
+.It Fl d
+Instead of writing the html file, dump a parse
+tree to stdout.
+.It Fl f options
+Set or clear various translation flags.   The flags
+are in a comma-delimited list, with an optional
+.Ar +
+(set) prefix on each flag.
+.Bl -tag -width "NOHEADER"
+.It Ar noimage
+Don't allow image tags.
+.It Ar nolinks
+Don't allow links.
+.It Ar nohtml
+Don't allow 
+.B any
+embedded html.
+.It Ar cdata
+Generate valid XML output.
+.It Ar noheader
+Do not process pandoc headers.
+.It Ar tabstops
+Use markdown-standard 4-space tabstops.
+.".It Ar strict
+."Disable superscript and relaxed emphasis.
+.".It Ar relax
+."Enable superscript and relaxed emphasis (this is the default.)
+.El
+.Pp
+As an example, the option
+.Fl f Ar nolinks,quot
+tells
+.Nm
+to not allow \<a tags, and to expand
+double-quotes.
+.It Fl F Ar bitmap
+Set translation flags.
+.Ar Bitmap
+is a bit map of the various configuration options
+described in
+.Xr markdown 3 .
+.It Fl V
+Show the version# and configuration data.
+.Pp
+If the version includes the string
+.Em DL_TAG ,
+.Nm
+was configured with definition list support.
+.Pp
+If the version includes the string
+.Em HEADER ,
+.Nm
+was configured to support pandoc header blocks.
+.It Fl F Ar bitmap
+Pass the flags contained in
+.Ar bitmap
+to the markdown compiler.  The valid flags are
+described in 
+.Xr markdown 3 .
+.It Fl o Pa file
+Write the generated html to 
+.Pa file .
+.It Fl t Ar text
+Use
+.Xr mkd_text 3
+to format 
+.Ar text
+instead of processing stdin with the
+.Xr markdown 3
+function.
+.It Fl s Ar text
+Use the
+.Xr markdown 3
+function to format
+.Ar text .
+.El
+.Sh RETURN VALUES
+The
+.Nm
+utility exits 0 on success, and >0 if an error occurs.
+.Sh SEE ALSO
+.Xr markdown 3 ,
+.Xr markdown 7 ,
+.Xr mkd-extensions 7 .
+.Sh AUTHOR
+.An David Parsons
+.Pq Li orc@pell.chi.il.us

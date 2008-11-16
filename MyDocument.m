@@ -46,7 +46,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
     static BOOL engagedAutosave = NO;
     if (!engagedAutosave) {
         engagedAutosave = YES;
-        [[NSDocumentController sharedDocumentController] setAutosavingDelay:30.0];
+        [[NSDocumentController sharedDocumentController] setAutosavingDelay:5.0];
     }
     [super windowControllerDidLoadNib:controller_];
 }

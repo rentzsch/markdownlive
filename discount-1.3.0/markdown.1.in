@@ -13,6 +13,7 @@
 .Op Fl F Pa bitmap
 .Op Fl f Ar options
 .Op Fl o Pa file
+.Op Fl s Pa text
 .Op Fl t Pa text
 .Op Pa textfile
 .Sh DESCRIPTION
@@ -50,6 +51,10 @@ Generate valid XML output.
 Do not process pandoc headers.
 .It Ar tabstops
 Use markdown-standard 4-space tabstops.
+@STRICT@.It Ar strict
+@STRICT@Disable superscript and relaxed emphasis.
+@STRICT@.It Ar relax
+@STRICT@Enable superscript and relaxed emphasis (this is the default.)
 .El
 .Pp
 As an example, the option
@@ -93,6 +98,11 @@ to format
 instead of processing stdin with the
 .Xr markdown 3
 function.
+.It Fl s Ar text
+Use the
+.Xr markdown 3
+function to format
+.Ar text .
 .El
 .Sh RETURN VALUES
 The

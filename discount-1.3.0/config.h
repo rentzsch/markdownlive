@@ -1,5 +1,5 @@
 /*
- * configuration for markdown, generated Fri Sep 26 12:00:58 CDT 2008
+ * configuration for markdown, generated Sun Nov 16 17:57:08 CST 2008
  * by wolf@wolf-mbp.local
  */
 #ifndef __AC_MARKDOWN_D

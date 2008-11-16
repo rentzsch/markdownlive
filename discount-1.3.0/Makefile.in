@@ -1,4 +1,4 @@
-CC=@CC@
+CC=@CC@ -I. -L.
 AR=@AR@
 RANLIB=@RANLIB@
 
@@ -8,10 +8,11 @@ LIBDIR=@libdir@
 INCDIR=@prefix@/include
 
 PGMS=markdown
-SAMPLE_PGMS=mkd2html
+SAMPLE_PGMS=mkd2html makepage
 @THEME@SAMPLE_PGMS+= theme
 MKDLIB=libmarkdown.a
-OBJS=mkdio.o markdown.o dumptree.o generate.o resource.o docheader.o version.o @AMALLOC@
+OBJS=mkdio.o markdown.o dumptree.o generate.o \
+     resource.o docheader.o version.o toc.o xmlpage.o @AMALLOC@
 
 all: $(PGMS) $(SAMPLE_PGMS)
 
@@ -47,15 +48,18 @@ version.o: version.c VERSION
 	$(CC) -DVERSION=\"`cat VERSION`\" -c version.c
 
 markdown: main.o $(MKDLIB)
-	$(CC) -L. -o markdown main.o -lmarkdown @LIBS@
+	$(CC) -o markdown main.o -lmarkdown @LIBS@
 
 # example programs
 @THEME@theme:  theme.o $(MKDLIB)
-@THEME@	$(CC) -L. -o theme theme.o -lmarkdown @LIBS@
+@THEME@	$(CC) -o theme theme.o -lmarkdown @LIBS@
 
 
 mkd2html:  mkd2html.o $(MKDLIB)
-	$(CC) -L. -o mkd2html mkd2html.o -lmarkdown @LIBS@
+	$(CC) -o mkd2html mkd2html.o -lmarkdown @LIBS@
+
+makepage:  makepage.c $(MKDLIB)
+	$(CC) -o makepage makepage.c -lmarkdown @LIBS@
 
 main.o: main.c mkdio.h config.h
 	$(CC) -I. -c main.c
@@ -82,3 +86,5 @@ markdown.o: markdown.c config.h cstring.h markdown.h
 generate.o: generate.c config.h cstring.h markdown.h
 dumptree.o: dumptree.c cstring.h markdown.h
 mkdio.o: mkdio.c mkdio.h cstring.h config.h
+xmlpage.o: xmlpage.c mkdio.h cstring.h config.h
+toc.o: toc.c mkdio.h cstring.h config.h

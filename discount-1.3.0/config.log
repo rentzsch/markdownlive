@@ -7,11 +7,11 @@ checking out the C compiler
 checking for "volatile" keyword
 checking for "const" keyword
 defining WORD & DWORD scalar types
-/tmp/pd18341.c: In function ‘main’:
-/tmp/pd18341.c:13: warning: incompatible implicit declaration of built-in function ‘exit’
-/tmp/ngc18341.c: In function ‘main’:
-/tmp/ngc18341.c:5: warning: initialization makes pointer from integer without a cast
-/tmp/ngc18341.c:6: warning: initialization makes pointer from integer without a cast
+/tmp/pd8734.c: In function ‘main’:
+/tmp/pd8734.c:13: warning: incompatible implicit declaration of built-in function ‘exit’
+/tmp/ngc8734.c: In function ‘main’:
+/tmp/ngc8734.c:5: warning: initialization makes pointer from integer without a cast
+/tmp/ngc8734.c:6: warning: initialization makes pointer from integer without a cast
 looking for header pwd.h
 looking for the getpwuid function
 looking for the srandom function
@@ -20,14 +20,15 @@ looking for the strcasecmp function
 looking for the strncasecmp function
 looking for the fchdir function
 looking for header malloc.h
-test failed:  command was cc -c -o /tmp/doto18341.o /tmp/ngc18341.c
+test failed:  command was cc -c -o /tmp/doto8734.o /tmp/ngc8734.c
 output:
-/tmp/ngc18341.c:2:20: error: malloc.h: No such file or directory
+/tmp/ngc8734.c:2:20: error: malloc.h: No such file or directory
 offending sources:
-/tmp/ngc18341.c:
+/tmp/ngc8734.c:
 /* AC_CHECK_HEADERS */
 #include <malloc.h>
 main() { }
 sed is /usr/bin/sed
 generating Makefile
 generating version.c
+generating markdown.1
