@@ -1,5 +1,5 @@
 //#include "mkdioWrapper.h"
-#include "discount-1.3.0/mkdio.h"
+#include "mkdio.h"
 
 #define Document void
 

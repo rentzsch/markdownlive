@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		792530F00E8F40F200DFAD98 /* discountWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 792530EF0E8F40F200DFAD98 /* discountWrapper.m */; };
-		792531470E8F4CD800DFAD98 /* mkdioWrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 792531460E8F4CD800DFAD98 /* mkdioWrapper.c */; };
-		7925314B0E8F4E4D00DFAD98 /* markdownWrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 7925314A0E8F4E4D00DFAD98 /* markdownWrapper.c */; };
 		796A2AD80A20DCEE00440275 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796A2AD70A20DCEE00440275 /* WebKit.framework */; };
-		797EF6930ED0EB5400B28F7A /* resource.c in Sources */ = {isa = PBXBuildFile; fileRef = 797EF68F0ED0EB5400B28F7A /* resource.c */; };
-		797EF6940ED0EB5400B28F7A /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 797EF6900ED0EB5400B28F7A /* generate.c */; };
-		797EF6950ED0EB5400B28F7A /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 797EF6910ED0EB5400B28F7A /* markdown.c */; };
-		797EF6960ED0EB5400B28F7A /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 797EF6920ED0EB5400B28F7A /* mkdio.c */; };
+		79E5579D0FA1091F00A3687A /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 79E557990FA1091F00A3687A /* mkdio.c */; };
+		79E5579E0FA1091F00A3687A /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 79E5579A0FA1091F00A3687A /* markdown.c */; };
+		79E5579F0FA1091F00A3687A /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 79E5579B0FA1091F00A3687A /* generate.c */; };
+		79E557A00FA1091F00A3687A /* resource.c in Sources */ = {isa = PBXBuildFile; fileRef = 79E5579C0FA1091F00A3687A /* resource.c */; };
+		79E557AF0FA1098500A3687A /* discountWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E557AA0FA1098500A3687A /* discountWrapper.m */; };
+		79E557B00FA1098500A3687A /* markdownWrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 79E557AB0FA1098500A3687A /* markdownWrapper.c */; };
+		79E557B10FA1098500A3687A /* mkdioWrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 79E557AD0FA1098500A3687A /* mkdioWrapper.c */; };
 		79F7EF740AC39638003DAB4E /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2D0486D014006FF6A4 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B6FDCFA73011CA2CEA /* MainMenu.nib */; };
@@ -38,17 +38,17 @@
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32DBCF750370BD2300C91783 /* MarkdownLive_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkdownLive_Prefix.pch; sourceTree = "<group>"; };
-		792530EE0E8F40F200DFAD98 /* discountWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = discountWrapper.h; sourceTree = "<group>"; };
-		792530EF0E8F40F200DFAD98 /* discountWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = discountWrapper.m; sourceTree = "<group>"; };
-		792531450E8F4CD800DFAD98 /* mkdioWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdioWrapper.h; sourceTree = "<group>"; };
-		792531460E8F4CD800DFAD98 /* mkdioWrapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkdioWrapper.c; sourceTree = "<group>"; };
-		792531490E8F4E4D00DFAD98 /* markdownWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdownWrapper.h; sourceTree = "<group>"; };
-		7925314A0E8F4E4D00DFAD98 /* markdownWrapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdownWrapper.c; sourceTree = "<group>"; };
 		796A2AD70A20DCEE00440275 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		797EF68F0ED0EB5400B28F7A /* resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = resource.c; path = "discount-1.3.0/resource.c"; sourceTree = "<group>"; };
-		797EF6900ED0EB5400B28F7A /* generate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = generate.c; path = "discount-1.3.0/generate.c"; sourceTree = "<group>"; };
-		797EF6910ED0EB5400B28F7A /* markdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = markdown.c; path = "discount-1.3.0/markdown.c"; sourceTree = "<group>"; };
-		797EF6920ED0EB5400B28F7A /* mkdio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mkdio.c; path = "discount-1.3.0/mkdio.c"; sourceTree = "<group>"; };
+		79E557990FA1091F00A3687A /* mkdio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkdio.c; sourceTree = "<group>"; };
+		79E5579A0FA1091F00A3687A /* markdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdown.c; sourceTree = "<group>"; };
+		79E5579B0FA1091F00A3687A /* generate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = generate.c; sourceTree = "<group>"; };
+		79E5579C0FA1091F00A3687A /* resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resource.c; sourceTree = "<group>"; };
+		79E557A90FA1098500A3687A /* discountWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = discountWrapper.h; sourceTree = "<group>"; };
+		79E557AA0FA1098500A3687A /* discountWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = discountWrapper.m; sourceTree = "<group>"; };
+		79E557AB0FA1098500A3687A /* markdownWrapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdownWrapper.c; sourceTree = "<group>"; };
+		79E557AC0FA1098500A3687A /* markdownWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdownWrapper.h; sourceTree = "<group>"; };
+		79E557AD0FA1098500A3687A /* mkdioWrapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkdioWrapper.c; sourceTree = "<group>"; };
+		79E557AE0FA1098500A3687A /* mkdioWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdioWrapper.h; sourceTree = "<group>"; };
 		79F7EF730AC39638003DAB4E /* MarkdownLiveApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MarkdownLiveApp.icns; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* MarkdownLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkdownLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,7 +98,8 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
-				792530F90E8F49C600DFAD98 /* discount */,
+				79E5571F0FA1086D00A3687A /* discount-1.3.5 */,
+				79E557A80FA1098500A3687A /* discount_wrappers */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -147,21 +148,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		792530F90E8F49C600DFAD98 /* discount */ = {
+		79E5571F0FA1086D00A3687A /* discount-1.3.5 */ = {
 			isa = PBXGroup;
 			children = (
-				792530EE0E8F40F200DFAD98 /* discountWrapper.h */,
-				792530EF0E8F40F200DFAD98 /* discountWrapper.m */,
-				792531450E8F4CD800DFAD98 /* mkdioWrapper.h */,
-				792531460E8F4CD800DFAD98 /* mkdioWrapper.c */,
-				792531490E8F4E4D00DFAD98 /* markdownWrapper.h */,
-				7925314A0E8F4E4D00DFAD98 /* markdownWrapper.c */,
-				797EF68F0ED0EB5400B28F7A /* resource.c */,
-				797EF6900ED0EB5400B28F7A /* generate.c */,
-				797EF6910ED0EB5400B28F7A /* markdown.c */,
-				797EF6920ED0EB5400B28F7A /* mkdio.c */,
+				79E557990FA1091F00A3687A /* mkdio.c */,
+				79E5579A0FA1091F00A3687A /* markdown.c */,
+				79E5579B0FA1091F00A3687A /* generate.c */,
+				79E5579C0FA1091F00A3687A /* resource.c */,
 			);
-			name = discount;
+			path = "discount-1.3.5";
+			sourceTree = "<group>";
+		};
+		79E557A80FA1098500A3687A /* discount_wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				79E557A90FA1098500A3687A /* discountWrapper.h */,
+				79E557AA0FA1098500A3687A /* discountWrapper.m */,
+				79E557AB0FA1098500A3687A /* markdownWrapper.c */,
+				79E557AC0FA1098500A3687A /* markdownWrapper.h */,
+				79E557AD0FA1098500A3687A /* mkdioWrapper.c */,
+				79E557AE0FA1098500A3687A /* mkdioWrapper.h */,
+			);
+			path = discount_wrappers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,13 +232,13 @@
 			files = (
 				8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
-				792530F00E8F40F200DFAD98 /* discountWrapper.m in Sources */,
-				792531470E8F4CD800DFAD98 /* mkdioWrapper.c in Sources */,
-				7925314B0E8F4E4D00DFAD98 /* markdownWrapper.c in Sources */,
-				797EF6930ED0EB5400B28F7A /* resource.c in Sources */,
-				797EF6940ED0EB5400B28F7A /* generate.c in Sources */,
-				797EF6950ED0EB5400B28F7A /* markdown.c in Sources */,
-				797EF6960ED0EB5400B28F7A /* mkdio.c in Sources */,
+				79E5579D0FA1091F00A3687A /* mkdio.c in Sources */,
+				79E5579E0FA1091F00A3687A /* markdown.c in Sources */,
+				79E5579F0FA1091F00A3687A /* generate.c in Sources */,
+				79E557A00FA1091F00A3687A /* resource.c in Sources */,
+				79E557AF0FA1098500A3687A /* discountWrapper.m in Sources */,
+				79E557B00FA1098500A3687A /* markdownWrapper.c in Sources */,
+				79E557B10FA1098500A3687A /* mkdioWrapper.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

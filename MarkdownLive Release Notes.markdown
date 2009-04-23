@@ -1,4 +1,13 @@
-# MarkdownLive 1.4 Sun May 21 2008
+## MarkdownLive 1.4.2 Thu Apr 23 2009
+
+* Upgrade to discount 1.3.5.
+
+## MarkdownLive 1.4.1 Sun Nov 16 2008
+
+* Upgraded to discount 1.3.0, which solves a bunch of 
+crashers.
+
+## MarkdownLive 1.4 Sun May 21 2008
 
 * Switch to discount for markdown engine. Saves having to spawn a Perl/ruby instance all the time. maruku also had rendering quirks, including not rendering things like `C4[2]` correctly, forcing me to write `C4\[2\]`.
 
@@ -8,13 +17,13 @@
 
 ---
 
-# MarkdownLive 1.3 Jul 31 2008
+## MarkdownLive 1.3 Jul 31 2008
 
 * Now uses [maruku](http://maruku.rubyforge.org) for its engine to get things like "Markdown inside HTML elements" and definition lists.
 
 ---
 
-# MarkdownLive-0 May 21 2006
+## MarkdownLive-0 May 21 2006
 
 * Supplies a category on `NSTask` (`+runScriptNamed:extension:input:error:`) that handles running external scripts. Marshals `NSString` parameters into `STDIN`/`STDOUT` pipe read/writes.
 
