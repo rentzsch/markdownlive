@@ -1,11 +1,18 @@
+## MarkdownLive 1.5.1 Sun Sep 13 2009
+
+* [FIX] Re-add "Copy Generated HTML" menu item left behind in transition to .xib.
+
+## MarkdownLive 1.5 Sun Sep 13 2009
+
+* Jump to Snow Leopard, Xcode 3.2 and discount 1.3.5.
+
 ## MarkdownLive 1.4.2 Thu Apr 23 2009
 
 * Upgrade to discount 1.3.5.
 
 ## MarkdownLive 1.4.1 Sun Nov 16 2008
 
-* Upgraded to discount 1.3.0, which solves a bunch of 
-crashers.
+* Upgraded to discount 1.3.0, which solves a bunch of crashers.
 
 ## MarkdownLive 1.4 Sun May 21 2008
 
