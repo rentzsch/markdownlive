@@ -13,28 +13,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	if (!markdown_)
 		return @"";
     
-#if 0
-    NSString *result = nil;
-    
-    char *markdownUTF8 = (char*)[markdown_ UTF8String];
-    Document *document = mkd_string(markdownUTF8, strlen(markdownUTF8), 0);
-    if (document) {
-        if (mkd_compile(document, 0)) {
-            char *htmlUTF8;
-            int htmlUTF8Len = mkd_document(document, &htmlUTF8);
-            if (htmlUTF8Len != EOF) {
-                result = [[[NSString alloc] initWithBytes:htmlUTF8
-                                                   length:htmlUTF8Len
-                                                 encoding:NSUTF8StringEncoding] autorelease];
-            }
-            mkd_cleanup(document);
-        }
-    }
-    
-    return result;
-#else
     return discountToHTML(markdown_);
-#endif
 }
 
 - (id)init {
