@@ -1,0 +1,3 @@
+[submodule "mayday"]
+	path = mayday
+	url = git://github.com/jemmons/mayday.git

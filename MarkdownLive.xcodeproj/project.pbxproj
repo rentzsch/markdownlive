@@ -9,17 +9,9 @@
 /* Begin PBXBuildFile section */
 		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
-		795F6C4F105D6EC400D1F90A /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C4E105D6EC400D1F90A /* mkdio.c */; };
-		795F6C51105D6ECE00D1F90A /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C50105D6ECE00D1F90A /* markdown.c */; };
-		795F6C53105D6ED800D1F90A /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C52105D6ED800D1F90A /* generate.c */; };
-		795F6C55105D6EE100D1F90A /* resource.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C54105D6EE100D1F90A /* resource.c */; };
-		795F6C62105D6F6E00D1F90A /* xml.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C61105D6F6E00D1F90A /* xml.c */; };
-		795F6C66105D6F8500D1F90A /* Csio.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C65105D6F8500D1F90A /* Csio.c */; };
 		795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 795F6C86105D70A300D1F90A /* MarkdownLiveApp.icns */; };
 		795F6CCD105D741100D1F90A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795F6CCC105D741100D1F90A /* WebKit.framework */; };
-		795F6DBA105D75D300D1F90A /* discountWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 795F6DB5105D75D300D1F90A /* discountWrapper.m */; };
-		795F6DBB105D75D300D1F90A /* markdownWrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6DB6105D75D300D1F90A /* markdownWrapper.c */; };
-		795F6DBC105D75D300D1F90A /* mkdioWrapper.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6DB8105D75D300D1F90A /* mkdioWrapper.c */; };
+		79B3D5441060376F00A8D174 /* MDMarkdownParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B3D5431060376F00A8D174 /* MDMarkdownParser.m */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
 		8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165FFE840EACC02AAC07 /* InfoPlist.strings */; };
 		8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */; settings = {ATTRIBUTES = (); }; };
@@ -40,20 +32,10 @@
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		795F6C4E105D6EC400D1F90A /* mkdio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkdio.c; sourceTree = "<group>"; };
-		795F6C50105D6ECE00D1F90A /* markdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdown.c; sourceTree = "<group>"; };
-		795F6C52105D6ED800D1F90A /* generate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = generate.c; sourceTree = "<group>"; };
-		795F6C54105D6EE100D1F90A /* resource.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = resource.c; sourceTree = "<group>"; };
-		795F6C61105D6F6E00D1F90A /* xml.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = xml.c; sourceTree = "<group>"; };
-		795F6C65105D6F8500D1F90A /* Csio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Csio.c; sourceTree = "<group>"; };
 		795F6C86105D70A300D1F90A /* MarkdownLiveApp.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = MarkdownLiveApp.icns; sourceTree = "<group>"; };
 		795F6CCC105D741100D1F90A /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		795F6DB4105D75D300D1F90A /* discountWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = discountWrapper.h; sourceTree = "<group>"; };
-		795F6DB5105D75D300D1F90A /* discountWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = discountWrapper.m; sourceTree = "<group>"; };
-		795F6DB6105D75D300D1F90A /* markdownWrapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdownWrapper.c; sourceTree = "<group>"; };
-		795F6DB7105D75D300D1F90A /* markdownWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdownWrapper.h; sourceTree = "<group>"; };
-		795F6DB8105D75D300D1F90A /* mkdioWrapper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkdioWrapper.c; sourceTree = "<group>"; };
-		795F6DB9105D75D300D1F90A /* mkdioWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdioWrapper.h; sourceTree = "<group>"; };
+		79B3D5421060376F00A8D174 /* MDMarkdownParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MDMarkdownParser.h; path = mayday/MDMarkdownParser.h; sourceTree = "<group>"; };
+		79B3D5431060376F00A8D174 /* MDMarkdownParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MDMarkdownParser.m; path = mayday/MDMarkdownParser.m; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* MarkdownLive-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarkdownLive-Info.plist"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* MarkdownLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkdownLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -102,8 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
-				795F6C4D105D6EA500D1F90A /* discount-1.5.4 */,
-				795F6DB3105D75D300D1F90A /* discount_wrappers */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
@@ -117,6 +97,8 @@
 			children = (
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
+				79B3D5421060376F00A8D174 /* MDMarkdownParser.h */,
+				79B3D5431060376F00A8D174 /* MDMarkdownParser.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -150,32 +132,6 @@
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		795F6C4D105D6EA500D1F90A /* discount-1.5.4 */ = {
-			isa = PBXGroup;
-			children = (
-				795F6C4E105D6EC400D1F90A /* mkdio.c */,
-				795F6C50105D6ECE00D1F90A /* markdown.c */,
-				795F6C52105D6ED800D1F90A /* generate.c */,
-				795F6C54105D6EE100D1F90A /* resource.c */,
-				795F6C61105D6F6E00D1F90A /* xml.c */,
-				795F6C65105D6F8500D1F90A /* Csio.c */,
-			);
-			path = "discount-1.5.4";
-			sourceTree = "<group>";
-		};
-		795F6DB3105D75D300D1F90A /* discount_wrappers */ = {
-			isa = PBXGroup;
-			children = (
-				795F6DB4105D75D300D1F90A /* discountWrapper.h */,
-				795F6DB5105D75D300D1F90A /* discountWrapper.m */,
-				795F6DB6105D75D300D1F90A /* markdownWrapper.c */,
-				795F6DB7105D75D300D1F90A /* markdownWrapper.h */,
-				795F6DB8105D75D300D1F90A /* mkdioWrapper.c */,
-				795F6DB9105D75D300D1F90A /* mkdioWrapper.h */,
-			);
-			path = discount_wrappers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,15 +194,7 @@
 			files = (
 				8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
-				795F6C4F105D6EC400D1F90A /* mkdio.c in Sources */,
-				795F6C51105D6ECE00D1F90A /* markdown.c in Sources */,
-				795F6C53105D6ED800D1F90A /* generate.c in Sources */,
-				795F6C55105D6EE100D1F90A /* resource.c in Sources */,
-				795F6C62105D6F6E00D1F90A /* xml.c in Sources */,
-				795F6C66105D6F8500D1F90A /* Csio.c in Sources */,
-				795F6DBA105D75D300D1F90A /* discountWrapper.m in Sources */,
-				795F6DBB105D75D300D1F90A /* markdownWrapper.c in Sources */,
-				795F6DBC105D75D300D1F90A /* mkdioWrapper.c in Sources */,
+				79B3D5441060376F00A8D174 /* MDMarkdownParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,7 +278,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/discount-1.5.4\"";
 			};
 			name = Debug;
 		};
@@ -343,7 +290,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
-				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/discount-1.5.4\"";
 			};
 			name = Release;
 		};
