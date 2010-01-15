@@ -1,10 +1,9 @@
-//
-//  main.m
-//  MarkdownLive
-//
-//  Created by wolf on 9/13/09.
-//  Copyright 2009 Red Shed Software Company. All rights reserved.
-//
+/*******************************************************************************
+	main.m - <http://github.com/rentzsch/MarkdownLive>
+		Copyright (c) 2006-2010 Jonathan 'Wolf' Rentzsch: <http://rentzsch.com>
+		Some rights reserved: <http://opensource.org/licenses/mit-license.php>
+
+	***************************************************************************/
 
 #import <Cocoa/Cocoa.h>
 
