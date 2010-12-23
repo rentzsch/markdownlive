@@ -10,10 +10,6 @@
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
-@interface NSResponder (scrollToEndOfDocument)
-- (IBAction)scrollToEndOfDocument:(id)sender; // For some reason this isn't declared anywhere in AppKit.
-@end
-
 @implementation MyDocument
 
 - (NSString*)markdown2html:(NSString*)markdown_ {
@@ -122,7 +118,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	if ([htmlPreviewWebView mainFrame] == frame_ && hasSavedOrigin) {
 		hasSavedOrigin = NO;
 		if (savedAtBottom)
-			[[frame_ frameView] scrollToEndOfDocument:nil];
+			[[[frame_ frameView] documentView] scrollPoint:NSMakePoint(savedOrigin.x, CGFLOAT_MAX)];
 		else
 			[[[frame_ frameView] documentView] scrollPoint:savedOrigin];
 	}
