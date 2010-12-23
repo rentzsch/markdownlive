@@ -1,0 +1,5 @@
+# Xcode
+build/
+*.mode*
+*.pbxuser*
+*~.nib
