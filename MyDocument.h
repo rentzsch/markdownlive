@@ -12,7 +12,7 @@
 	IBOutlet	NSTextView					*markdownSourceTextView;
 	IBOutlet	WebView						*htmlPreviewWebView;
 	
-				NSMutableAttributedString	*markdownSource;
+				NSTextStorage				*markdownSource;
 	
 				NSTimeInterval				whenToUpdatePreview;
 				NSTimer						*htmlPreviewTimer;
