@@ -22,9 +22,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (id)init {
     self = [super init];
     if (self) {
-		markdownSource = [[NSMutableAttributedString alloc] initWithString:@""
-																attributes:[NSDictionary dictionaryWithObject:[NSFont fontWithName:@"Monaco" size:9.0]
-																									   forKey:NSFontAttributeName]];
+		markdownSource = [[NSMutableAttributedString alloc] init];
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
 		htmlPreviewTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
 															target:self
@@ -51,6 +49,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
         engagedAutosave = YES;
         [[NSDocumentController sharedDocumentController] setAutosavingDelay:5.0];
     }
+	
+	// If you use IB to set an NSTextView's font, the font doesn't stick,
+	// even if you've turned off the text view's richText setting.
+	[markdownSourceTextView setFont:[NSFont fontWithName:@"Monaco" size:9]];
+	
     [super windowControllerDidLoadNib:controller_];
 }
 
