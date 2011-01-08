@@ -110,7 +110,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 			hasSavedOrigin = YES;
 		}
 		[[htmlPreviewWebView mainFrame] loadHTMLString:[self markdown2html:[markdownSource string]]
-											   baseURL:[self fileName] ? [NSURL fileURLWithPath:[self fileName]] : nil];
+											   baseURL:[self fileURL]];
 	}
 }
 
