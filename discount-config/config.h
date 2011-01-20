@@ -18,6 +18,7 @@
 #define HAVE_STRNCASECMP 1
 #define HAVE_FCHDIR 1
 #define TABSTOP 4
+#define PATH_FIND "/usr/bin/find"
 #define PATH_SED "/usr/bin/sed"
 
 #endif/* __AC_MARKDOWN_D */
