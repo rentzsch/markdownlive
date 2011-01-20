@@ -3,6 +3,9 @@
 
 
 #define OS_DARWIN 1
+#define DWORD unsigned int
+#define WORD unsigned short
+#define BYTE unsigned char
 #define HAVE_PWD_H 1
 #define HAVE_GETPWUID 1
 #define HAVE_SRANDOM 1
