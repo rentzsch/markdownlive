@@ -3,6 +3,7 @@
 
 
 #define OS_DARWIN 1
+#define USE_DISCOUNT_DL 1
 #define DWORD unsigned int
 #define WORD unsigned short
 #define BYTE unsigned char
