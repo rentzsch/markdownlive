@@ -1,0 +1,27 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+    font-family: "Helvetica", sans-serif;
+	color: #000000;
+    background-color: #ffffff;
+    margin: 1em;
+}
+
+code {
+    font-family: "Monaco", monospace;
+    font-size: 85%;
+	padding: 0.2em 0.5em;
+}
+
+pre {
+    border: 1px solid #ccc;
+	padding: 0.5em;
+	overflow: auto;
+}
+
+code, pre {
+    background-color: #eee;
+}

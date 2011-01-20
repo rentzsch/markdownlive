@@ -98,6 +98,25 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	whenToUpdatePreview = [NSDate timeIntervalSinceReferenceDate] + 0.5;
 }
 
+- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSHTML:(NSString *)cssHTML
+{
+	return [NSString stringWithFormat:
+		@"<!DOCTYPE html>\n<html>\n<head>\n<title>%@</title>\n%@</head>\n<body>%@</body>\n</html>",
+		@"Markdown Preview",
+		cssHTML,
+		markdownHTML
+	];
+}
+
+- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSFromURL:(NSURL *)cssURL
+{
+	NSString *cssHTML = [NSString stringWithFormat:
+		@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">\n",
+		[cssURL absoluteString]
+	];
+	return [self HTMLPage:markdownHTML withCSSHTML:cssHTML];
+}
+
 - (void)htmlPreviewTimer:(NSTimer*)timer_ {
 	if ([NSDate timeIntervalSinceReferenceDate] >= whenToUpdatePreview) {
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
@@ -113,8 +132,9 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 				: [docView bounds].origin.y >= [docView visibleRect].origin.y;
 			hasSavedOrigin = YES;
 		}
-		[[htmlPreviewWebView mainFrame] loadHTMLString:[self markdown2html:[markdownSource string]]
-											   baseURL:[self fileURL]];
+		NSURL *css = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"css"];
+		NSString *html = [self HTMLPage:[self markdown2html:[markdownSource string]] withCSSFromURL:css];
+		[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
 	}
 }
 
