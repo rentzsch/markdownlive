@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
+		2269367F12E7C53000171322 /* emmatch.c in Sources */ = {isa = PBXBuildFile; fileRef = 2269367E12E7C53000171322 /* emmatch.c */; };
 		795F6C4F105D6EC400D1F90A /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C4E105D6EC400D1F90A /* mkdio.c */; };
 		795F6C51105D6ECE00D1F90A /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C50105D6ECE00D1F90A /* markdown.c */; };
 		795F6C53105D6ED800D1F90A /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C52105D6ED800D1F90A /* generate.c */; };
@@ -33,6 +34,7 @@
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2269367E12E7C53000171322 /* emmatch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emmatch.c; sourceTree = "<group>"; };
 		22ECEEC612E7C258003B50DC /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
 		22ECEED212E7C2B4003B50DC /* mkdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdio.h; sourceTree = "<group>"; };
 		22ECEED912E7C2E8003B50DC /* markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdown.h; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 				795F6C54105D6EE100D1F90A /* resource.c */,
 				795F6C61105D6F6E00D1F90A /* xml.c */,
 				795F6C65105D6F8500D1F90A /* Csio.c */,
+				2269367E12E7C53000171322 /* emmatch.c */,
 			);
 			path = discount;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				795F6DBA105D75D300D1F90A /* discountWrapper.m in Sources */,
 				795F6DBB105D75D300D1F90A /* markdownWrapper.c in Sources */,
 				795F6DBC105D75D300D1F90A /* mkdioWrapper.c in Sources */,
+				2269367F12E7C53000171322 /* emmatch.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
