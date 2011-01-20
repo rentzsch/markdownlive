@@ -10,6 +10,10 @@
 		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		226936E712E7CDC500171322 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 226936E612E7CDC500171322 /* styles.css */; };
+		2269367F12E7C53000171322 /* emmatch.c in Sources */ = {isa = PBXBuildFile; fileRef = 2269367E12E7C53000171322 /* emmatch.c */; };
+		2269369B12E7C6AB00171322 /* html5.c in Sources */ = {isa = PBXBuildFile; fileRef = 2269369A12E7C6AB00171322 /* html5.c */; };
+		226936A012E7C6BE00171322 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2269369E12E7C6BE00171322 /* tags.c */; };
+		226936CA12E7CA2800171322 /* setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 226936C912E7CA2800171322 /* setup.c */; };
 		795F6C4F105D6EC400D1F90A /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C4E105D6EC400D1F90A /* mkdio.c */; };
 		795F6C51105D6ECE00D1F90A /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C50105D6ECE00D1F90A /* markdown.c */; };
 		795F6C53105D6ED800D1F90A /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C52105D6ED800D1F90A /* generate.c */; };
@@ -35,6 +39,14 @@
 		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		226936E612E7CDC500171322 /* styles.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = styles.css; sourceTree = "<group>"; };
+		2269367E12E7C53000171322 /* emmatch.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = emmatch.c; sourceTree = "<group>"; };
+		2269369A12E7C6AB00171322 /* html5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = html5.c; sourceTree = "<group>"; };
+		2269369E12E7C6BE00171322 /* tags.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = tags.c; sourceTree = "<group>"; };
+		2269369F12E7C6BE00171322 /* tags.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tags.h; sourceTree = "<group>"; };
+		226936B912E7C8B600171322 /* mkdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdio.h; sourceTree = "<group>"; };
+		226936C912E7CA2800171322 /* setup.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = setup.c; sourceTree = "<group>"; };
+		22ECEEC612E7C258003B50DC /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		22ECEED912E7C2E8003B50DC /* markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdown.h; sourceTree = "<group>"; };
 		2564AD2C0F5327BB00F57823 /* MarkdownLive_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkdownLive_Prefix.pch; sourceTree = "<group>"; };
 		2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
 		2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
@@ -100,11 +112,21 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		22ECEEC512E7C258003B50DC /* discount-config */ = {
+			isa = PBXGroup;
+			children = (
+				226936B912E7C8B600171322 /* mkdio.h */,
+				22ECEEC612E7C258003B50DC /* config.h */,
+			);
+			path = "discount-config";
+			sourceTree = "<group>";
+		};
 		2A37F4AAFDCFA73011CA2CEA /* MarkdownLive */ = {
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
-				795F6C4D105D6EA500D1F90A /* discount-1.5.4 */,
+				795F6C4D105D6EA500D1F90A /* discount */,
+				22ECEEC512E7C258003B50DC /* discount-config */,
 				795F6DB3105D75D300D1F90A /* discount_wrappers */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
@@ -155,17 +177,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		795F6C4D105D6EA500D1F90A /* discount-1.5.4 */ = {
+		795F6C4D105D6EA500D1F90A /* discount */ = {
 			isa = PBXGroup;
 			children = (
 				795F6C4E105D6EC400D1F90A /* mkdio.c */,
+				22ECEED912E7C2E8003B50DC /* markdown.h */,
 				795F6C50105D6ECE00D1F90A /* markdown.c */,
 				795F6C52105D6ED800D1F90A /* generate.c */,
 				795F6C54105D6EE100D1F90A /* resource.c */,
 				795F6C61105D6F6E00D1F90A /* xml.c */,
 				795F6C65105D6F8500D1F90A /* Csio.c */,
+				2269367E12E7C53000171322 /* emmatch.c */,
+				2269369A12E7C6AB00171322 /* html5.c */,
+				2269369F12E7C6BE00171322 /* tags.h */,
+				2269369E12E7C6BE00171322 /* tags.c */,
+				226936C912E7CA2800171322 /* setup.c */,
 			);
-			path = "discount-1.5.4";
+			path = discount;
 			sourceTree = "<group>";
 		};
 		795F6DB3105D75D300D1F90A /* discount_wrappers */ = {
@@ -258,6 +286,10 @@
 				795F6DBA105D75D300D1F90A /* discountWrapper.m in Sources */,
 				795F6DBB105D75D300D1F90A /* markdownWrapper.c in Sources */,
 				795F6DBC105D75D300D1F90A /* mkdioWrapper.c in Sources */,
+				2269367F12E7C53000171322 /* emmatch.c in Sources */,
+				2269369B12E7C6AB00171322 /* html5.c in Sources */,
+				226936A012E7C6BE00171322 /* tags.c in Sources */,
+				226936CA12E7CA2800171322 /* setup.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
