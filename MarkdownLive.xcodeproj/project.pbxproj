@@ -33,6 +33,9 @@
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		22ECEEC612E7C258003B50DC /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		22ECEED212E7C2B4003B50DC /* mkdio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdio.h; sourceTree = "<group>"; };
+		22ECEED912E7C2E8003B50DC /* markdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = markdown.h; sourceTree = "<group>"; };
 		2564AD2C0F5327BB00F57823 /* MarkdownLive_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MarkdownLive_Prefix.pch; sourceTree = "<group>"; };
 		2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
 		2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
@@ -98,11 +101,20 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		22ECEEC512E7C258003B50DC /* discount-config */ = {
+			isa = PBXGroup;
+			children = (
+				22ECEEC612E7C258003B50DC /* config.h */,
+			);
+			path = "discount-config";
+			sourceTree = "<group>";
+		};
 		2A37F4AAFDCFA73011CA2CEA /* MarkdownLive */ = {
 			isa = PBXGroup;
 			children = (
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
-				795F6C4D105D6EA500D1F90A /* discount-1.5.4 */,
+				795F6C4D105D6EA500D1F90A /* discount */,
+				22ECEEC512E7C258003B50DC /* discount-config */,
 				795F6DB3105D75D300D1F90A /* discount_wrappers */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
@@ -152,17 +164,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		795F6C4D105D6EA500D1F90A /* discount-1.5.4 */ = {
+		795F6C4D105D6EA500D1F90A /* discount */ = {
 			isa = PBXGroup;
 			children = (
+				22ECEED212E7C2B4003B50DC /* mkdio.h */,
 				795F6C4E105D6EC400D1F90A /* mkdio.c */,
+				22ECEED912E7C2E8003B50DC /* markdown.h */,
 				795F6C50105D6ECE00D1F90A /* markdown.c */,
 				795F6C52105D6ED800D1F90A /* generate.c */,
 				795F6C54105D6EE100D1F90A /* resource.c */,
 				795F6C61105D6F6E00D1F90A /* xml.c */,
 				795F6C65105D6F8500D1F90A /* Csio.c */,
 			);
-			path = "discount-1.5.4";
+			path = discount;
 			sourceTree = "<group>";
 		};
 		795F6DB3105D75D300D1F90A /* discount_wrappers */ = {

@@ -1,7 +1,3 @@
-/*
- * configuration for markdown, generated Sun Sep 13 13:13:06 CDT 2009
- * by wolf@wolf-mbp.local
- */
 #ifndef __AC_MARKDOWN_D
 #define __AC_MARKDOWN_D 1
 
