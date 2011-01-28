@@ -22,6 +22,10 @@ pre {
 	overflow: auto;
 }
 
+pre code {
+	padding: 0;
+}
+
 code, pre {
 	background-color: #eee;
 }
