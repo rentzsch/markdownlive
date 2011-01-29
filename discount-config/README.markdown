@@ -11,20 +11,9 @@ Discount is included as a [fake submodule][]. To upgrade or test other versions 
 
 ## Config files ##
 
-When discount is changed, regenerate the config files. These commands should work for the current version of discount:
-	cd discount/
-	./configure.sh
-	mv config.h mkdio.h ../discount-config/
-	rm Makefile config.cmd config.log config.mak config.md config.sub librarian.sh version.c
+When discount is changed, regenerate the config files. The included `update.sh` script should do this automatically.
 
-It's also a good idea to run `git status` before/after this to check if the output files haven't changed in newer/older versions of discount.
-
-**Also, to avoid adding needless patches to the git history,** remove the comments at the head of `config.h`:
-	/*
-	 * configuration for markdown, generated {date}
-	 * by {user}@{hostname}
-	 */
-
+If you want to update the files by hand, remove the "configuration for markdown, generated" comments at the head of `config.h` to avoid adding needless patches to the git history.
 
 [discount]:https://github.com/Orc/discount
 [fake submodule]:http://debuggable.com/posts/git-fake-submodules:4b563ee4-f3cc-4061-967e-0e48cbdd56cb
