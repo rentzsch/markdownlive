@@ -1,31 +1,55 @@
-html, body {
-	margin: 0;
-	padding: 0;
-}
+/* nabbed from bundle_common.css */
+*{margin:0;padding:0;}
+html,body{height:100%;color:black;}
+body{font:13.34px helvetica,arial,freesans,clean,sans-serif;}
+table{font-size:inherit;font:100%;}
+input[type=text],input[type=password],input[type=image],textarea{font:99% helvetica,arial,freesans,sans-serif;}
+select,option{padding:0 .25em;}
+optgroup{margin-top:.5em;}
+pre,code{font:12px Monaco,"Courier New","DejaVu Sans Mono","Bitstream Vera Sans Mono",monospace;}
+body *{line-height:1.4em;}
+p{margin:1em 0;}
+img{border:0;}
+abbr{border-bottom:none;}
+html{overflow-y:scroll;}
+a{color:#4183c4;text-decoration:none;}
+a:hover{text-decoration:underline;}
+h2,h3{margin:1em 0;}
 
 body {
-	font-family: "Helvetica", sans-serif;
-	color: #000000;
-	background-color: #ffffff;
-	margin: 1em;
+	background-color: #F8F8F8;
+	padding: 0.7em;
 }
 
-code {
-	font-family: "Monaco", monospace;
-	font-size: 85%;
-	padding: 0.2em 0.5em;
+body:after {
+	content: "";
 }
 
-pre {
-	border: 1px solid #ccc;
-	padding: 0.5em;
-	overflow: auto;
-}
-
-pre code {
-	padding: 0;
-}
-
-code, pre {
-	background-color: #eee;
-}
+/* nabbed from bundle_github.css (.wikistyle) */
+h1,h2,h3,h4,h5,h6{border:0!important;}
+h1{font-size:170%!important;border-top:4px solid #aaa!important;padding-top:.5em!important;margin-top:1.5em!important;}
+h1:first-child{margin-top:0!important;padding-top:.25em!important;border-top:none!important;}
+h2{font-size:150%!important;margin-top:1.5em!important;border-top:4px solid #e0e0e0!important;padding-top:.5em!important;}
+h3{margin-top:1em!important;}
+hr{border:1px solid #ddd;}
+p{margin:1em 0!important;line-height:1.5em!important;}
+a.absent{color:#a00;}
+ul{margin:1em 0 1em 2em!important;}
+ol{margin:1em 0 1em 2em!important;}
+ul li,ol li{margin-top:.5em;margin-bottom:.5em;}
+ul ul,ul ol,ol ol,ol ul{margin-top:0!important;margin-bottom:0!important;}
+blockquote{margin:1em 0!important;border-left:5px solid #ddd!important;padding-left:.6em!important;color:#555!important;}
+dt{font-weight:bold!important;margin-left:1em!important;}
+dd{margin-left:2em!important;margin-bottom:1em!important;}
+table{margin:1em 0!important;}
+table th{border-bottom:1px solid #bbb!important;padding:.2em 1em!important;}
+table td{border-bottom:1px solid #ddd!important;padding:.2em 1em!important;}
+pre{margin:1em 0;font-size:12px;background-color:#eee;border:1px solid #ddd;padding:5px;line-height:1.5em;color:#444;overflow:auto;-webkit-box-shadow:rgba(0,0,0,0.07) 0 1px 2px inset;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+pre::-webkit-scrollbar{height:8px;width:8px;}
+pre::-webkit-scrollbar-track-piece{margin-bottom:10px;background-color:#e5e5e5;border-bottom-left-radius:4px 4px;border-bottom-right-radius:4px 4px;border-top-left-radius:4px 4px;border-top-right-radius:4px 4px;}
+pre::-webkit-scrollbar-thumb:vertical{height:25px;background-color:#ccc;-webkit-border-radius:4px;-webkit-box-shadow:0 1px 1px rgba(255,255,255,1);}
+pre::-webkit-scrollbar-thumb:horizontal{width:25px;background-color:#ccc;-webkit-border-radius:4px;}
+pre code{padding:0!important;font-size:12px!important;background-color:#eee!important;border:none!important;}
+code{font-size:12px!important;background-color:#f8f8ff!important;color:#444!important;padding:0 .2em!important;border:1px solid #dedede!important;}
+a code,a:link code,a:visited code{color:#4183c4!important;}
+img{max-width:100%;}
