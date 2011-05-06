@@ -148,6 +148,19 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	}
 }
 
+- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation
+		request:(NSURLRequest *)request
+		  frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener {
+    WebNavigationType actionKey = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+    if (actionKey == WebNavigationTypeOther) {
+		[listener use];
+    } else {
+		NSURL *url = [actionInformation objectForKey:WebActionOriginalURLKey];
+		[[NSWorkspace sharedWorkspace] openURL:url];
+		[listener ignore];
+    }
+}
+
 - (IBAction)copyGeneratedHTMLAction:(id)sender {
 	[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
 	[[NSPasteboard generalPasteboard] setString:[self markdown2html:[markdownSource string]] forType:NSStringPboardType];
