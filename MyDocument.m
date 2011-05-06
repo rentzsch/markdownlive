@@ -6,6 +6,8 @@
 	***************************************************************************/
 
 #import "MyDocument.h"
+#import "EditPaneLayoutManager.h"
+#import "PreferencesController.h"
 #include "discountWrapper.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
@@ -15,13 +17,13 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (NSString*)markdown2html:(NSString*)markdown_ {
 	if (!markdown_)
 		return @"";
-    
-    return discountToHTML(markdown_);
+	
+	return discountToHTML(markdown_);
 }
 
 - (id)init {
-    self = [super init];
-    if (self) {
+	self = [super init];
+	if (self) {
 		markdownSource = [[NSTextStorage alloc] init];
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
 		htmlPreviewTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
@@ -29,34 +31,56 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 														  selector:@selector(htmlPreviewTimer:)
 														  userInfo:nil
 														   repeats:YES];
-    }
-    return self;
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(updateFont)
+													 name:kEditPaneFontNameChangedNotification
+												   object:nil];
+	}
+	return self;
 }
 
 - (void)dealloc {
 	[htmlPreviewTimer invalidate]; htmlPreviewTimer = nil;
 	[markdownSource release]; markdownSource = nil;
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
 
+- (void)updateFont {
+	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	NSFont *currentFont = [NSFont fontWithName:[prefs stringForKey:@"EditPaneFontName"]
+										  size:[prefs floatForKey:@"EditPaneFontSize"]];
+	layoutMan.font = currentFont;
+	[markdownSourceTextView setFont:currentFont];
+}
+
 - (NSString *)windowNibName {
-    return @"MyDocument";
+	return @"MyDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController*)controller_ {
-    static BOOL engagedAutosave = NO;
-    if (!engagedAutosave) {
-        engagedAutosave = YES;
-        [[NSDocumentController sharedDocumentController] setAutosavingDelay:5.0];
-    }
+	static BOOL engagedAutosave = NO;
+	if (!engagedAutosave) {
+		engagedAutosave = YES;
+		[[NSDocumentController sharedDocumentController] setAutosavingDelay:5.0];
+	}
 	
+	[markdownSourceTextView setUsesFontPanel:NO];
 	[[markdownSourceTextView layoutManager] replaceTextStorage:markdownSource];
+	
+	NSTextContainer *textContainer = [[NSTextContainer alloc] init];
+	[textContainer setContainerSize:[[markdownSourceTextView textContainer] containerSize]];
+	[textContainer setWidthTracksTextView:YES];
+	layoutMan = [[EditPaneLayoutManager alloc] init];
+	[markdownSourceTextView replaceTextContainer:textContainer];
+	[textContainer release];
+	[textContainer replaceLayoutManager:layoutMan];
 	
 	// If you use IB to set an NSTextView's font, the font doesn't stick,
 	// even if you've turned off the text view's richText setting.
-	[markdownSourceTextView setFont:[NSFont fontWithName:@"Monaco" size:9]];
+	[self updateFont];
 	
-    [super windowControllerDidLoadNib:controller_];
+	[super windowControllerDidLoadNib:controller_];
 }
 
 - (BOOL)writeToURL:(NSURL*)absoluteURL_ ofType:(NSString*)typeName_ error:(NSError**)error_ {
@@ -151,14 +175,14 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation
 		request:(NSURLRequest *)request
 		  frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener {
-    WebNavigationType actionKey = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
-    if (actionKey == WebNavigationTypeOther) {
+	WebNavigationType actionKey = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+	if (actionKey == WebNavigationTypeOther) {
 		[listener use];
-    } else {
+	} else {
 		NSURL *url = [actionInformation objectForKey:WebActionOriginalURLKey];
 		[[NSWorkspace sharedWorkspace] openURL:url];
 		[listener ignore];
-    }
+	}
 }
 
 - (IBAction)copyGeneratedHTMLAction:(id)sender {

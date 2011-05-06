@@ -8,6 +8,8 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
+@class EditPaneLayoutManager;
+
 @interface MyDocument : NSDocument {
 	IBOutlet	NSTextView					*markdownSourceTextView;
 	IBOutlet	WebView						*htmlPreviewWebView;
@@ -20,6 +22,8 @@
 				BOOL						hasSavedOrigin;
 				NSPoint						savedOrigin;
 				BOOL						savedAtBottom;
+	
+				EditPaneLayoutManager				*layoutMan;
 }
 
 - (IBAction)copyGeneratedHTMLAction:(id)sender;

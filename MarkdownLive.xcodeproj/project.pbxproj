@@ -14,6 +14,10 @@
 		226936A012E7C6BE00171322 /* tags.c in Sources */ = {isa = PBXBuildFile; fileRef = 2269369E12E7C6BE00171322 /* tags.c */; };
 		226936CA12E7CA2800171322 /* setup.c in Sources */ = {isa = PBXBuildFile; fileRef = 226936C912E7CA2800171322 /* setup.c */; };
 		226936E712E7CDC500171322 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 226936E612E7CDC500171322 /* styles.css */; };
+		6178F7C01373DC9F00FC9CB4 /* EditPaneLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6178F7BD1373DC9F00FC9CB4 /* EditPaneLayoutManager.m */; };
+		6178F7C11373DC9F00FC9CB4 /* EditPaneTypesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6178F7BF1373DC9F00FC9CB4 /* EditPaneTypesetter.m */; };
+		619AB1261374B9D00035293A /* PreferencesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 619AB1251374B9CF0035293A /* PreferencesManager.m */; };
+		61F8F16F1374371D00FB4B82 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61F8F16E1374371D00FB4B82 /* PreferencesController.m */; };
 		795F6C4F105D6EC400D1F90A /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C4E105D6EC400D1F90A /* mkdio.c */; };
 		795F6C51105D6ECE00D1F90A /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C50105D6ECE00D1F90A /* markdown.c */; };
 		795F6C53105D6ED800D1F90A /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C52105D6ED800D1F90A /* generate.c */; };
@@ -54,6 +58,14 @@
 		2A37F4BAFDCFA73011CA2CEA /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.rtf; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		6178F7BC1373DC9F00FC9CB4 /* EditPaneLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPaneLayoutManager.h; sourceTree = "<group>"; };
+		6178F7BD1373DC9F00FC9CB4 /* EditPaneLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPaneLayoutManager.m; sourceTree = "<group>"; };
+		6178F7BE1373DC9F00FC9CB4 /* EditPaneTypesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPaneTypesetter.h; sourceTree = "<group>"; };
+		6178F7BF1373DC9F00FC9CB4 /* EditPaneTypesetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditPaneTypesetter.m; sourceTree = "<group>"; };
+		619AB1241374B9CF0035293A /* PreferencesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesManager.h; sourceTree = "<group>"; };
+		619AB1251374B9CF0035293A /* PreferencesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesManager.m; sourceTree = "<group>"; };
+		61F8F16D1374371D00FB4B82 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
+		61F8F16E1374371D00FB4B82 /* PreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesController.m; sourceTree = "<group>"; };
 		795F6C4E105D6EC400D1F90A /* mkdio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mkdio.c; sourceTree = "<group>"; };
 		795F6C50105D6ECE00D1F90A /* markdown.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = markdown.c; sourceTree = "<group>"; };
 		795F6C52105D6ED800D1F90A /* generate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = generate.c; sourceTree = "<group>"; };
@@ -141,6 +153,14 @@
 			children = (
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
+				6178F7BC1373DC9F00FC9CB4 /* EditPaneLayoutManager.h */,
+				6178F7BD1373DC9F00FC9CB4 /* EditPaneLayoutManager.m */,
+				6178F7BE1373DC9F00FC9CB4 /* EditPaneTypesetter.h */,
+				6178F7BF1373DC9F00FC9CB4 /* EditPaneTypesetter.m */,
+				61F8F16D1374371D00FB4B82 /* PreferencesController.h */,
+				61F8F16E1374371D00FB4B82 /* PreferencesController.m */,
+				619AB1241374B9CF0035293A /* PreferencesManager.h */,
+				619AB1251374B9CF0035293A /* PreferencesManager.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -290,6 +310,10 @@
 				2269369B12E7C6AB00171322 /* html5.c in Sources */,
 				226936A012E7C6BE00171322 /* tags.c in Sources */,
 				226936CA12E7CA2800171322 /* setup.c in Sources */,
+				6178F7C01373DC9F00FC9CB4 /* EditPaneLayoutManager.m in Sources */,
+				6178F7C11373DC9F00FC9CB4 /* EditPaneTypesetter.m in Sources */,
+				61F8F16F1374371D00FB4B82 /* PreferencesController.m in Sources */,
+				619AB1261374B9D00035293A /* PreferencesManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
