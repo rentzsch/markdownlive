@@ -8,6 +8,7 @@
 #import "MyDocument.h"
 #import "EditPaneLayoutManager.h"
 #import "PreferencesController.h"
+#import "PreferencesManager.h"
 #include "discountWrapper.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
@@ -47,11 +48,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (void)updateFont {
-	NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-	NSFont *currentFont = [NSFont fontWithName:[prefs stringForKey:@"EditPaneFontName"]
-										  size:[prefs floatForKey:@"EditPaneFontSize"]];
-	layoutMan.font = currentFont;
-	[markdownSourceTextView setFont:currentFont];
+	layoutMan.font = [PreferencesManager editPanelFont];
+	[markdownSourceTextView setFont:layoutMan.font];
 }
 
 - (NSString *)windowNibName {
