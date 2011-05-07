@@ -180,7 +180,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		[listener use];
 	} else {
 		NSURL *url = [actionInformation objectForKey:WebActionOriginalURLKey];
-		if ([[url scheme] isEqualToString:@"applewebdata"]) {
+		
+		NSURL *stdUrl = [url URLByStandardizingPath];
+		NSURL *docUrl = [[self fileURL] URLByStandardizingPath];
+		if ([[url scheme] isEqualToString:@"applewebdata"] ||
+			[stdUrl isFileURL] && [stdUrl isEqualTo:docUrl]) {
 			[listener use];
 		} else {
 			[[NSWorkspace sharedWorkspace] openURL:url];
