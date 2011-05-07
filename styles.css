@@ -1,6 +1,6 @@
 /* nabbed from bundle_common.css */
 *{margin:0;padding:0;}
-html,body{height:100%;color:black;}
+html,body{color:black;}
 body{font:13.34px helvetica,arial,freesans,clean,sans-serif;}
 table{font-size:inherit;font:100%;}
 input[type=text],input[type=password],input[type=image],textarea{font:99% helvetica,arial,freesans,sans-serif;}
