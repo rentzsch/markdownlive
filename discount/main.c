@@ -36,41 +36,85 @@ basename(char *p)
 
 char *pgm = "markdown";
 
-static struct {
+static struct _opt {
     char *name;
+    char *desc;
     int off;
-    int flag;
+    int skip;
+    int sayenable;
+    mkd_flag_t flag;
 } opts[] = {
-    { "tabstop",       0, MKD_TABSTOP  },
-    { "image",         1, MKD_NOIMAGE  },
-    { "links",         1, MKD_NOLINKS  },
-    { "relax",         1, MKD_STRICT   },
-    { "strict",        0, MKD_STRICT   },
-    { "tables",        1, MKD_NOTABLES },
-    { "header",        1, MKD_NOHEADER },
-    { "html",          1, MKD_NOHTML   },
-    { "ext",           1, MKD_NO_EXT   },
-    { "cdata",         0, MKD_CDATA    },
-    { "pants",         1, MKD_NOPANTS  },
-    { "smarty",        1, MKD_NOPANTS  },
-    { "toc",           0, MKD_TOC      },
-    { "autolink",      0, MKD_AUTOLINK },
-    { "safelink",      0, MKD_SAFELINK },
-    { "del",           1, MKD_NOSTRIKETHROUGH },
-    { "strikethrough", 1, MKD_NOSTRIKETHROUGH },
-    { "superscript",   1, MKD_NOSUPERSCRIPT },
-    { "emphasis",      0, MKD_NORELAXED },
-    { "divquote",      1, MKD_NODIVQUOTE },
-    { "alphalist",     1, MKD_NOALPHALIST },
-    { "definitionlist",1, MKD_NODLIST },
-    { "1.0",           0, MKD_1_COMPAT },
+    { "tabstop",       "default (4-space) tabstops", 0, 0, 1, MKD_TABSTOP  },
+    { "image",         "images",                     1, 0, 1, MKD_NOIMAGE  },
+    { "links",         "links",                      1, 0, 1, MKD_NOLINKS  },
+    { "relax",         "emphasis inside words",      1, 1, 1, MKD_STRICT   },
+    { "strict",        "emphasis inside words",      0, 0, 1, MKD_STRICT   },
+    { "tables",        "tables",                     1, 0, 1, MKD_NOTABLES },
+    { "header",        "pandoc-style headers",       1, 0, 1, MKD_NOHEADER },
+    { "html",          "raw html",                   1, 0, 1, MKD_NOHTML   },
+    { "ext",           "extended protocols",         1, 0, 1, MKD_NO_EXT   },
+    { "cdata",         "generate cdata",             0, 0, 0, MKD_CDATA    },
+    { "smarty",        "smartypants",                1, 0, 1, MKD_NOPANTS  },
+    { "pants",         "smartypants",                1, 1, 1, MKD_NOPANTS  },
+    { "toc",           "tables of contents",         0, 0, 1, MKD_TOC      },
+    { "autolink",      "autolinking",                0, 0, 1, MKD_AUTOLINK },
+    { "safelink",      "safe links",                 0, 0, 1, MKD_SAFELINK },
+    { "strikethrough", "strikethrough",              1, 0, 1, MKD_NOSTRIKETHROUGH },
+    { "del",           "strikethrough",              1, 1, 1, MKD_NOSTRIKETHROUGH },
+    { "superscript",   "superscript",                1, 0, 1, MKD_NOSUPERSCRIPT },
+    { "emphasis",      "emphasis inside words",      0, 0, 1, MKD_NORELAXED },
+    { "divquote",      ">%class% blockquotes",       1, 0, 1, MKD_NODIVQUOTE },
+    { "alphalist",     "alpha lists",                1, 0, 1, MKD_NOALPHALIST },
+    { "definitionlist","definition lists",           1, 0, 1, MKD_NODLIST },
+    { "1.0",           "markdown 1.0 compatibility", 0, 0, 1, MKD_1_COMPAT },
+    { "footnotes",     "markdown extra footnotes",   0, 0, 1, MKD_EXTRA_FOOTNOTE },
+    { "footnote",      "markdown extra footnotes",   0, 1, 1, MKD_EXTRA_FOOTNOTE },
 } ;
 
 #define NR(x)	(sizeof x / sizeof x[0])
+
+
+int
+sort_by_name(struct _opt *a, struct _opt *b)
+{
+    return strcmp(a->name,b->name);
+}
+
+int
+sort_by_flag(struct _opt *a, struct _opt *b)
+{
+    return a->flag - b->flag;
+}
+
+
+void
+show_flags(int byname)
+{
+    int i;
+
+    if ( byname ) {
+	qsort(opts, NR(opts), sizeof(opts[0]), sort_by_name);
+    
+	for (i=0; i < NR(opts); i++)
+	    if ( ! opts[i].skip )
+		fprintf(stderr, "%16s : %s\n", opts[i].name, opts[i].desc);
+    }
+    else {
+	qsort(opts, NR(opts), sizeof(opts[0]), sort_by_flag);
+	
+	for (i=0; i < NR(opts); i++)
+	    if ( ! opts[i].skip ) {
+		fprintf(stderr, "%08lx : ", (long)opts[i].flag);
+		if ( opts[i].sayenable )
+		    fprintf(stderr, opts[i].off ? "disable " : "enable ");
+		fprintf(stderr, "%s\n", opts[i].desc);
+	    }
+    }
+}
     
 
 void
-set(int *flags, char *optionstring)
+set(mkd_flag_t *flags, char *optionstring)
 {
     int i;
     int enable;
@@ -117,12 +161,13 @@ main(int argc, char **argv)
 {
     int opt;
     int rc;
-    int flags = 0;
+    mkd_flag_t flags = 0;
     int debug = 0;
     int toc = 0;
     int version = 0;
     int with_html5 = 0;
     int use_mkd_line = 0;
+    char *extra_footnote_prefix = 0;
     char *urlflags = 0;
     char *text = 0;
     char *ofile = 0;
@@ -136,7 +181,7 @@ main(int argc, char **argv)
     pgm = basename(argv[0]);
     opterr = 1;
 
-    while ( (opt=getopt(argc, argv, "5b:df:E:F:o:s:t:TV")) != EOF ) {
+    while ( (opt=getopt(argc, argv, "5b:C:df:E:F:o:s:t:TV")) != EOF ) {
 	switch (opt) {
 	case '5':   with_html5 = 1;
 		    break;
@@ -148,9 +193,19 @@ main(int argc, char **argv)
 		    break;
 	case 'E':   urlflags = optarg;
 		    break;
-	case 'F':   flags = strtol(optarg, 0, 0);
+	case 'F':   if ( strcmp(optarg, "?") == 0 ) {
+			show_flags(0);
+			exit(0);
+		    }
+		    else
+			flags = strtol(optarg, 0, 0);
 		    break;
-	case 'f':   set(&flags, optarg);
+	case 'f':   if ( strcmp(optarg, "?") == 0 ) {
+			show_flags(1);
+			exit(0);
+		    }
+		    else
+			set(&flags, optarg);
 		    break;
 	case 't':   text = optarg;
 		    use_mkd_line = 1;
@@ -158,6 +213,8 @@ main(int argc, char **argv)
 	case 'T':   toc = 1;
 		    break;
 	case 's':   text = optarg;
+		    break;
+	case 'C':   extra_footnote_prefix = optarg;
 		    break;
 	case 'o':   if ( ofile ) {
 			fprintf(stderr, "Too many -o options\n");
@@ -216,6 +273,8 @@ main(int argc, char **argv)
 	    mkd_e_data(doc, urlflags);
 	    mkd_e_flags(doc, e_flags);
 	}
+	if ( extra_footnote_prefix )
+	    mkd_ref_prefix(doc, extra_footnote_prefix);
 
 	if ( debug )
 	    rc = mkd_dump(doc, stdout, 0, argc ? basename(argv[0]) : "stdin");
@@ -230,6 +289,7 @@ main(int argc, char **argv)
 	    }
 	}
     }
+    mkd_deallocate_tags();
     adump();
     exit( (rc == 0) ? 0 : errno );
 }
