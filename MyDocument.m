@@ -13,6 +13,12 @@
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
+@interface MyDocument (Private)
+
+- (void)updateContent;
+
+@end
+
 @implementation MyDocument
 
 - (NSString*)markdown2html:(NSString*)markdown_ {
@@ -77,6 +83,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	// If you use IB to set an NSTextView's font, the font doesn't stick,
 	// even if you've turned off the text view's richText setting.
 	[self updateFont];
+	[self updateContent];
 	
 	[super windowControllerDidLoadNib:controller_];
 }
@@ -120,8 +127,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	whenToUpdatePreview = [NSDate timeIntervalSinceReferenceDate] + 0.5;
 }
 
-- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSHTML:(NSString *)cssHTML
-{
+- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSHTML:(NSString *)cssHTML {
 	return [NSString stringWithFormat:
 		@"<!DOCTYPE html>\n<html>\n<head>\n<title>%@</title>\n%@</head>\n<body>%@</body>\n</html>",
 		@"Markdown Preview",
@@ -130,8 +136,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	];
 }
 
-- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSFromURL:(NSURL *)cssURL
-{
+- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSFromURL:(NSURL *)cssURL {
 	NSString *cssHTML = [NSString stringWithFormat:
 		@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">\n",
 		[cssURL absoluteString]
@@ -139,24 +144,28 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	return [self HTMLPage:markdownHTML withCSSHTML:cssHTML];
 }
 
+- (void)updateContent {
+	NSView *docView = [[[htmlPreviewWebView mainFrame] frameView] documentView];
+	NSView *parent = [docView superview];
+	if (parent) {
+		NSAssert([parent isKindOfClass:[NSClipView class]], nil);
+		savedOrigin = [parent bounds].origin;
+		// This line from Darin from http://lists.apple.com/archives/webkitsdk-dev/2003/Dec/msg00004.html :
+		savedAtBottom = [docView isFlipped]
+		? NSMaxY([docView bounds]) <= NSMaxY([docView visibleRect])
+		: [docView bounds].origin.y >= [docView visibleRect].origin.y;
+		hasSavedOrigin = YES;
+	}
+	
+	NSURL *css = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"css"];
+	NSString *html = [self HTMLPage:[self markdown2html:[markdownSource string]] withCSSFromURL:css];
+	[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
+}
+
 - (void)htmlPreviewTimer:(NSTimer*)timer_ {
 	if ([NSDate timeIntervalSinceReferenceDate] >= whenToUpdatePreview) {
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
-		
-		NSView *docView = [[[htmlPreviewWebView mainFrame] frameView] documentView];
-		NSView *parent = [docView superview];
-		if (parent) {
-			NSAssert([parent isKindOfClass:[NSClipView class]], nil);
-			savedOrigin = [parent bounds].origin;
-			// This line from Darin from http://lists.apple.com/archives/webkitsdk-dev/2003/Dec/msg00004.html :
-			savedAtBottom = [docView isFlipped]
-				? NSMaxY([docView bounds]) <= NSMaxY([docView visibleRect])
-				: [docView bounds].origin.y >= [docView visibleRect].origin.y;
-			hasSavedOrigin = YES;
-		}
-		NSURL *css = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"css"];
-		NSString *html = [self HTMLPage:[self markdown2html:[markdownSource string]] withCSSFromURL:css];
-		[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
+		[self updateContent];
 	}
 }
 
