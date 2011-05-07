@@ -42,6 +42,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 												 selector:@selector(updateFont)
 													 name:kEditPaneFontNameChangedNotification
 												   object:nil];
+		
+		// print attributes
+		[[self printInfo] setHorizontalPagination:NSFitPagination];
+		[[self printInfo] setHorizontallyCentered:NO];
+		[[self printInfo] setVerticallyCentered:NO];
 	}
 	return self;
 }
@@ -121,6 +126,27 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 			*error_ = error;
 	}
 	return result;
+}
+
+- (NSView *)printableView {
+	NSRect frame = [[self printInfo] imageablePageBounds];
+	frame.size.height = 0;
+	NSTextView *printView = [[[NSTextView alloc] initWithFrame:frame] autorelease];
+    [printView setVerticallyResizable:YES];
+    [printView setHorizontallyResizable:NO];
+	
+    [[printView textStorage] beginEditing];
+    [[printView textStorage] appendAttributedString:markdownSource];
+    [[printView textStorage] endEditing];
+    
+    [printView sizeToFit];
+    
+    return printView;
+}
+
+- (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError {
+	return [NSPrintOperation printOperationWithView:[self printableView]
+										  printInfo:[self printInfo]];
 }
 
 - (void)textDidChange:(NSNotification*)notification_ {
