@@ -19,7 +19,7 @@
 							 @"Monaco", kEditPaneFontName,
 							 [NSNumber numberWithFloat:9.0f], kEditPaneFontSize,
 							 nil];
-	[[NSUserDefaultsController sharedUserDefaultsController] setInitialValues:defVals];
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defVals];
 }
 
 + (NSString *)editPanelFontName {
