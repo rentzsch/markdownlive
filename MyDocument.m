@@ -43,6 +43,25 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 													 name:kEditPaneFontNameChangedNotification
 												   object:nil];
 		
+		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+		
+		[defaultsController addObserver:self
+							 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneForegroundColor]
+								options:0
+								context:@"ColorChange"];
+		[defaultsController addObserver:self
+							 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneBackgroundColor]
+								options:0
+								context:@"ColorChange"];
+		[defaultsController addObserver:self
+							 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneSelectionColor]
+								options:0
+								context:@"ColorChange"];
+		[defaultsController addObserver:self
+							 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneCaretColor]
+								options:0
+								context:@"ColorChange"];
+		
 		// print attributes
 		[[self printInfo] setHorizontalPagination:NSFitPagination];
 		[[self printInfo] setHorizontallyCentered:NO];
@@ -55,11 +74,30 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	[htmlPreviewTimer invalidate]; htmlPreviewTimer = nil;
 	[markdownSource release]; markdownSource = nil;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
 	[super dealloc];
 }
 
+- (void)updateColors {
+	[[markdownSourceTextView enclosingScrollView] setBackgroundColor:[PreferencesManager editPaneBackgroundColor]];
+	[markdownSourceTextView setTextColor:[PreferencesManager editPaneForegroundColor]];
+	[markdownSourceTextView setInsertionPointColor:[PreferencesManager editPaneCaretColor]];
+	NSDictionary *selectedAttr = [NSDictionary dictionaryWithObject:[PreferencesManager editPaneSelectionColor]
+															 forKey:NSBackgroundColorAttributeName];
+	[markdownSourceTextView setSelectedTextAttributes:selectedAttr];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+					  ofObject:(id)object
+						change:(NSDictionary *)change
+					   context:(void *)context {
+	if ([(NSString *)context isEqualToString:@"ColorChange"]) {
+		[self updateColors];
+	}
+}
+
 - (void)updateFont {
-	layoutMan.font = [PreferencesManager editPanelFont];
+	layoutMan.font = [PreferencesManager editPaneFont];
 	[markdownSourceTextView setFont:layoutMan.font];
 }
 
@@ -88,6 +126,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	// If you use IB to set an NSTextView's font, the font doesn't stick,
 	// even if you've turned off the text view's richText setting.
 	[self updateFont];
+	[self updateColors];
 	[self updateContent];
 	
 	[super windowControllerDidLoadNib:controller_];

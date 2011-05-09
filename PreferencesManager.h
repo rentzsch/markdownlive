@@ -8,15 +8,31 @@
 
 #import <Foundation/Foundation.h>
 
+#define kEditPaneFontName			@"EditPaneFontName"
+#define kEditPaneFontSize			@"EditPaneFontSize"
+#define kEditPaneForegroundColor	@"EditPaneForegroundColor"
+#define kEditPaneBackgroundColor	@"EditPaneBackgroundColor"
+#define kEditPaneSelectionColor		@"EditPaneSelectionColor"
+#define kEditPaneCaretColor			@"EditPaneCaretColor"
+
 
 @interface PreferencesManager : NSObject {
 
 }
 
-+ (NSString *)editPanelFontName;
-+ (void)setEditPanelFontName:(NSString *)value;
-+ (float)editPanelFontSize;
-+ (void)setEditPanelFontSize:(float)value;
-+ (NSFont *)editPanelFont;
++ (void)resetEditPanePreferences;
++ (NSString *)editPaneFontName;
++ (void)setEditPaneFontName:(NSString *)value;
++ (float)editPaneFontSize;
++ (void)setEditPaneFontSize:(float)value;
++ (NSFont *)editPaneFont;
++ (NSColor *)editPaneForegroundColor;
++ (void)setEditPaneForegroundColor:(NSColor *)value;
++ (NSColor *)editPaneBackgroundColor;
++ (void)setEditPaneBackgroundColor:(NSColor *)value;
++ (NSColor *)editPaneSelectionColor;
++ (void)setEditPaneSelectionColor:(NSColor *)value;
++ (NSColor *)editPaneCaretColor;
++ (void)setEditPaneCaretColor:(NSColor *)value;
 
 @end

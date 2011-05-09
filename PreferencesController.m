@@ -12,20 +12,37 @@
 #define FONT_DISPLAY_FORMAT @"%@ %g pt."
 
 
+@interface PreferencesController (Private)
+
+- (void)updateFontDisplay;
+
+@end
+
 @implementation PreferencesController
 
 - (void)awakeFromNib {
-	NSString *fontName = [PreferencesManager editPanelFontName];
-	float fontSize = [PreferencesManager editPanelFontSize];
-	[fontPreviewField setStringValue:[NSString stringWithFormat:FONT_DISPLAY_FORMAT, fontName, fontSize]];
+	[self updateFontDisplay];
 }
 
 - (IBAction)showFonts:(id)sender {
 	NSFontManager *fontMan = [NSFontManager sharedFontManager];
-	NSFont *currentFont = [PreferencesManager editPanelFont];
+	NSFont *currentFont = [PreferencesManager editPaneFont];
 	[prefWindow makeFirstResponder:prefWindow];
 	[fontMan setSelectedFont:currentFont isMultiple:NO];
 	[fontMan orderFrontFontPanel:sender];
+}
+
+- (void)updateFontDisplay {
+	NSString *fontName = [PreferencesManager editPaneFontName];
+	float fontSize = [PreferencesManager editPaneFontSize];
+	[fontPreviewField setStringValue:[NSString stringWithFormat:FONT_DISPLAY_FORMAT, fontName, fontSize]];
+}
+
+- (IBAction)resetEditPanePreferences:(id)sender {
+	[PreferencesManager resetEditPanePreferences];
+	[self updateFontDisplay];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kEditPaneFontNameChangedNotification
+														object:nil];
 }
 
 - (void)changeFont:(id)sender {
@@ -34,13 +51,20 @@
 	float fontSize = [newFont pointSize];
 	
 	if (newFont && fontName) {
-		[PreferencesManager setEditPanelFontName:fontName];
-		[PreferencesManager setEditPanelFontSize:fontSize];
+		[PreferencesManager setEditPaneFontName:fontName];
+		[PreferencesManager setEditPaneFontSize:fontSize];
 		[fontPreviewField setStringValue:[NSString stringWithFormat:FONT_DISPLAY_FORMAT, fontName, fontSize]];
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kEditPaneFontNameChangedNotification
 															object:nil];
 	}
+}
+
+- (NSUInteger)validModesForFontPanel:(NSFontPanel *)fontPanel {
+	return (NSFontPanelFaceModeMask |
+			NSFontPanelSizeModeMask |
+			NSFontPanelCollectionModeMask);
+	
 }
 
 @end

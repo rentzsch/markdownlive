@@ -15,6 +15,7 @@
 	IBOutlet NSTextField *fontPreviewField;
 }
 
+- (IBAction)resetEditPanePreferences:(id)sender;
 - (IBAction)showFonts:(id)sender;
 
 @end
