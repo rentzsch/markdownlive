@@ -12,13 +12,6 @@
 #import "PreferencesController.h"
 
 
-@interface EditPaneTextView (Private)
-
-- (void)updateColors;
-- (void)updateFont;
-
-@end
-
 @implementation EditPaneTextView
 
 - (void)awakeFromNib {
@@ -55,11 +48,6 @@
 	[self replaceTextContainer:textContainer];
 	[textContainer replaceLayoutManager:layoutMan];
 	[textContainer release];
-	
-	// If you use IB to set an NSTextView's font, the font doesn't stick,
-	// even if you've turned off the text view's richText setting.
-	[self updateFont];
-	[self updateColors];
 }
 
 - (void)dealloc {

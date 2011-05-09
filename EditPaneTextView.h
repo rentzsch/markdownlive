@@ -14,4 +14,7 @@
 	EditPaneLayoutManager *layoutMan;
 }
 
+- (void)updateColors;
+- (void)updateFont;
+
 @end

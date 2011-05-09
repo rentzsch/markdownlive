@@ -7,6 +7,7 @@
 
 #import "MyDocument.h"
 #import "EditPaneLayoutManager.h"
+#import "EditPaneTextView.h"
 #import "PreferencesController.h"
 #import "PreferencesManager.h"
 #include "discountWrapper.h"
@@ -66,6 +67,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	
 	[[markdownSourceTextView layoutManager] replaceTextStorage:markdownSource];
 	[self updateContent];
+	
+	// If you use IB to set an NSTextView's font, the font doesn't stick,
+	// even if you've turned off the text view's richText setting.
+	[markdownSourceTextView updateFont];
+	[markdownSourceTextView updateColors];
 	
 	[super windowControllerDidLoadNib:controller_];
 }
