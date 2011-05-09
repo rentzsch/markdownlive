@@ -22,8 +22,6 @@
 				BOOL						hasSavedOrigin;
 				NSPoint						savedOrigin;
 				BOOL						savedAtBottom;
-	
-				EditPaneLayoutManager				*layoutMan;
 }
 
 - (IBAction)copyGeneratedHTMLAction:(id)sender;
