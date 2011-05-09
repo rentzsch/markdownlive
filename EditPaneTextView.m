@@ -57,6 +57,12 @@
 	[super dealloc];
 }
 
+- (void)keyDown:(NSEvent *)aEvent {
+	[super keyDown:aEvent];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kEditPaneTextViewChangedNotification
+														object:self];
+}
+
 - (void)setMarkedText:(id)aString
 		selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange {
 	id resultString;

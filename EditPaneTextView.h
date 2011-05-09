@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#define kEditPaneTextViewChangedNotification @"EditPaneTextViewChangedNotification"
 
 @class EditPaneLayoutManager;
 

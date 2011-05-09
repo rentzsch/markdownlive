@@ -40,6 +40,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 														  userInfo:nil
 														   repeats:YES];
 		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(textDidChange:)
+													 name:kEditPaneTextViewChangedNotification
+												   object:markdownSourceTextView];
+		
 		// print attributes
 		[[self printInfo] setHorizontalPagination:NSFitPagination];
 		[[self printInfo] setHorizontallyCentered:NO];
@@ -51,6 +56,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (void)dealloc {
 	[htmlPreviewTimer invalidate]; htmlPreviewTimer = nil;
 	[markdownSource release]; markdownSource = nil;
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
 
