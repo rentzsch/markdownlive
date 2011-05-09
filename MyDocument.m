@@ -118,8 +118,16 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
     [printView setVerticallyResizable:YES];
     [printView setHorizontallyResizable:NO];
 	
+	// force black text color
+	NSMutableAttributedString *printStr = [markdownSource mutableCopy];
+	NSDictionary *printAttr = [NSDictionary dictionaryWithObject:[NSColor blackColor]
+														  forKey:NSForegroundColorAttributeName];
+	[printStr setAttributes:printAttr
+					  range:NSMakeRange(0, [printStr length])];
+	
     [[printView textStorage] beginEditing];
-    [[printView textStorage] appendAttributedString:markdownSource];
+    [[printView textStorage] appendAttributedString:printStr];
+	[printStr release];
     [[printView textStorage] endEditing];
     
     [printView sizeToFit];
