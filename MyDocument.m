@@ -5,19 +5,16 @@
 
 	***************************************************************************/
 
+#import "ORCDiscount.h"
 #import "MyDocument.h"
-#include "discountWrapper.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
-@implementation MyDocument
+@interface MyDocument()
+- (void)htmlPreviewTimer:(NSTimer*)timer_;
+@end
 
-- (NSString*)markdown2html:(NSString*)markdown_ {
-	if (!markdown_)
-		return @"";
-    
-    return discountToHTML(markdown_);
-}
+@implementation MyDocument
 
 - (id)init {
     self = [super init];
@@ -95,29 +92,16 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (void)textDidChange:(NSNotification*)notification_ {
+	
+#pragma unused(notification_)
+	
 	whenToUpdatePreview = [NSDate timeIntervalSinceReferenceDate] + 0.5;
 }
 
-- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSHTML:(NSString *)cssHTML
-{
-	return [NSString stringWithFormat:
-		@"<!DOCTYPE html>\n<html>\n<head>\n<title>%@</title>\n%@</head>\n<body>%@</body>\n</html>",
-		@"Markdown Preview",
-		cssHTML,
-		markdownHTML
-	];
-}
-
-- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSFromURL:(NSURL *)cssURL
-{
-	NSString *cssHTML = [NSString stringWithFormat:
-		@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">\n",
-		[cssURL absoluteString]
-	];
-	return [self HTMLPage:markdownHTML withCSSHTML:cssHTML];
-}
-
 - (void)htmlPreviewTimer:(NSTimer*)timer_ {
+	
+#pragma unused(timer_)
+	
 	if ([NSDate timeIntervalSinceReferenceDate] >= whenToUpdatePreview) {
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
 		
@@ -133,12 +117,15 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 			hasSavedOrigin = YES;
 		}
 		NSURL *css = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"css"];
-		NSString *html = [self HTMLPage:[self markdown2html:[markdownSource string]] withCSSFromURL:css];
+		NSString *html = [ORCDiscount HTMLPage:[ORCDiscount markdown2HTML:[markdownSource string]] withCSSFromURL:css];
 		[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
 	}
 }
 
 - (void)webView:(WebView*)sender_ didFinishLoadForFrame:(WebFrame*)frame_ {
+	
+#pragma unused(sender_)
+	
 	if ([htmlPreviewWebView mainFrame] == frame_ && hasSavedOrigin) {
 		hasSavedOrigin = NO;
 		if (savedAtBottom)
@@ -149,8 +136,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (IBAction)copyGeneratedHTMLAction:(id)sender {
+	
+	#pragma unused(sender)
+	
 	[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-	[[NSPasteboard generalPasteboard] setString:[self markdown2html:[markdownSource string]] forType:NSStringPboardType];
+	[[NSPasteboard generalPasteboard] setString:[ORCDiscount markdown2HTML:[markdownSource string]] forType:NSStringPboardType];
 }
 
 @end
