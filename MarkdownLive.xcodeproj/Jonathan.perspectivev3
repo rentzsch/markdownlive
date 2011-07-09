@@ -216,7 +216,48 @@
 		</dict>
 	</array>
 	<key>OpenEditors</key>
-	<array/>
+	<array>
+		<dict>
+			<key>Content</key>
+			<dict>
+				<key>PBXProjectModuleGUID</key>
+				<string>AB806BB413C8F29100576604</string>
+				<key>PBXProjectModuleLabel</key>
+				<string>ORCDiscount.m</string>
+				<key>PBXSplitModuleInNavigatorKey</key>
+				<dict>
+					<key>Split0</key>
+					<dict>
+						<key>PBXProjectModuleGUID</key>
+						<string>AB806BB513C8F29100576604</string>
+						<key>PBXProjectModuleLabel</key>
+						<string>ORCDiscount.m</string>
+						<key>_historyCapacity</key>
+						<integer>40</integer>
+						<key>bookmark</key>
+						<string>AB806BB613C8F29100576604</string>
+						<key>history</key>
+						<array>
+							<string>AB806BAE13C8F28600576604</string>
+						</array>
+					</dict>
+					<key>SplitCount</key>
+					<string>1</string>
+				</dict>
+				<key>StatusBarVisibility</key>
+				<true/>
+			</dict>
+			<key>Geometry</key>
+			<dict>
+				<key>Frame</key>
+				<string>{{0, 20}, {1156, 733}}</string>
+				<key>PBXModuleWindowStatusBarHidden2</key>
+				<false/>
+				<key>RubberWindowFrame</key>
+				<string>330 79 1156 774 0 0 1440 878 </string>
+			</dict>
+		</dict>
+	</array>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>1344</integer>
@@ -302,8 +343,8 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>9</integer>
-									<integer>7</integer>
+									<integer>3</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -341,7 +382,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>ABECD8E213C8B9C900B77CFD</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>markdown.h</string>
+								<string>ORCDiscount.m</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -349,11 +390,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>ABECD8E313C8B9C900B77CFD</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>markdown.h</string>
+										<string>ORCDiscount.m</string>
 										<key>_historyCapacity</key>
 										<integer>40</integer>
 										<key>bookmark</key>
-										<string>ABCE476513C8E98900DF3CD0</string>
+										<string>AB806BB013C8F29100576604</string>
 										<key>history</key>
 										<array>
 											<string>ABECD8F913C8BA7C00B77CFD</string>
@@ -371,10 +412,10 @@
 											<string>ABECDA0013C8DC6900B77CFD</string>
 											<string>ABECDA0213C8DC6900B77CFD</string>
 											<string>ABECDA3313C8DD8600B77CFD</string>
-											<string>ABECDA3413C8DD8600B77CFD</string>
 											<string>ABCE476313C8E98900DF3CD0</string>
 											<string>ABCE476413C8E98900DF3CD0</string>
-											<string>ABECDA3213C8DD8600B77CFD</string>
+											<string>AB806BAF13C8F29100576604</string>
+											<string>ABECDA3413C8DD8600B77CFD</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -388,18 +429,18 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {949, 289}}</string>
+								<string>{{0, 0}, {949, 276}}</string>
 								<key>RubberWindowFrame</key>
 								<string>5 110 1344 768 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>289pt</string>
+							<string>276pt</string>
 						</dict>
 						<dict>
 							<key>Proportion</key>
-							<string>433pt</string>
+							<string>446pt</string>
 							<key>Tabs</key>
 							<array>
 								<dict>
@@ -413,7 +454,7 @@
 									<key>GeometryConfiguration</key>
 									<dict>
 										<key>Frame</key>
-										<string>{{10, 27}, {949, 406}}</string>
+										<string>{{10, 27}, {949, 419}}</string>
 										<key>RubberWindowFrame</key>
 										<string>5 110 1344 768 0 0 1440 878 </string>
 									</dict>
@@ -497,11 +538,11 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>ABCE476613C8E98900DF3CD0</string>
+				<string>AB806BB113C8F29100576604</string>
 				<string>1CA23ED40692098700951B8B</string>
-				<string>ABCE476713C8E98900DF3CD0</string>
+				<string>AB806BB213C8F29100576604</string>
 				<string>ABECD8E213C8B9C900B77CFD</string>
-				<string>ABCE476813C8E98900DF3CD0</string>
+				<string>AB806BB313C8F29100576604</string>
 				<string>1CA23EDF0692099D00951B8B</string>
 				<string>1CA23EE00692099D00951B8B</string>
 				<string>1CA23EE10692099D00951B8B</string>
@@ -674,7 +715,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>331934089.52628398</real>
+	<real>331936401.23872203</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -692,6 +733,7 @@
 	<key>WindowOrderList</key>
 	<array>
 		<string>/Users/Jonathan/Documents/Computing/github/markdownlive/MarkdownLive.xcodeproj</string>
+		<string>AB806BB413C8F29100576604</string>
 	</array>
 	<key>WindowString</key>
 	<string>5 110 1344 768 0 0 1440 878 </string>
