@@ -116,7 +116,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 				: [docView bounds].origin.y >= [docView visibleRect].origin.y;
 			hasSavedOrigin = YES;
 		}
-		NSURL *css = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"css"];
+		NSURL *css = [ORCDiscount cssURL];
 		NSString *html = [ORCDiscount HTMLPage:[ORCDiscount markdown2HTML:[markdownSource string]] withCSSFromURL:css];
 		[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
 	}

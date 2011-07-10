@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
-		226936E712E7CDC500171322 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 226936E612E7CDC500171322 /* styles.css */; };
 		795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 795F6C86105D70A300D1F90A /* MarkdownLiveApp.icns */; };
 		795F6CCD105D741100D1F90A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795F6CCC105D741100D1F90A /* WebKit.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -17,6 +16,7 @@
 		8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		ABE8DDF913CA38B5005852B5 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 226936E612E7CDC500171322 /* styles.css */; };
 		ABECD8C713C8B90E00B77CFD /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C4E105D6EC400D1F90A /* mkdio.c */; };
 		ABECD8C813C8B92900B77CFD /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C50105D6ECE00D1F90A /* markdown.c */; };
 		ABECD8C913C8B92900B77CFD /* generate.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C52105D6ED800D1F90A /* generate.c */; };
@@ -357,7 +357,6 @@
 				1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */,
-				226936E712E7CDC500171322 /* styles.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,6 +364,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABE8DDF913CA38B5005852B5 /* styles.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

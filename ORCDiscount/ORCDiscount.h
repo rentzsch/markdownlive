@@ -14,5 +14,6 @@
 + (NSString *)markdown2HTML:(NSString *)markdown;
 + (NSString *)HTMLPage:(NSString *)markdownHTML withCSSHTML:(NSString *)cssHTML;
 + (NSString *)HTMLPage:(NSString *)markdownHTML withCSSFromURL:(NSURL *)cssURL;
++ (NSURL *)cssURL;
 
 @end

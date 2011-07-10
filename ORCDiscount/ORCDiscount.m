@@ -38,6 +38,11 @@
 						 ];
 	return [self HTMLPage:markdownHTML withCSSHTML:cssHTML];
 }
+
++ (NSURL *)cssURL 
+{
+	return [[NSBundle bundleForClass:self] URLForResource:@"styles" withExtension:@"css"];
+}
 @end
 
 
