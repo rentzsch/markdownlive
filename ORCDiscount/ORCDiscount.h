@@ -3,7 +3,8 @@
  *  MarkdownLive
  *
  *  Created by Jonathan on 09/07/2011.
- *  Copyright 2011 mugginsoft.com. All rights reserved.
+ *  Copyright 2011 mugginsoft.com. 
+ *  Some rights reserved: <http://opensource.org/licenses/mit-license.php>
  *
  */
 #import <Cocoa/Cocoa.h>
