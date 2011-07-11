@@ -13,9 +13,11 @@
 #include <mkdio.h>
 #include <errno.h>
 #include <string.h>
+#include <stdarg.h>
 
 #include "config.h"
 #include "amalloc.h"
+#include "pgm_options.h"
 
 #if HAVE_LIBGEN_H
 #include <libgen.h>
@@ -36,79 +38,24 @@ basename(char *p)
 
 char *pgm = "markdown";
 
-static struct {
-    char *name;
-    int off;
-    int flag;
-} opts[] = {
-    { "tabstop",       0, MKD_TABSTOP  },
-    { "image",         1, MKD_NOIMAGE  },
-    { "links",         1, MKD_NOLINKS  },
-    { "relax",         1, MKD_STRICT   },
-    { "strict",        0, MKD_STRICT   },
-    { "tables",        1, MKD_NOTABLES },
-    { "header",        1, MKD_NOHEADER },
-    { "html",          1, MKD_NOHTML   },
-    { "ext",           1, MKD_NO_EXT   },
-    { "cdata",         0, MKD_CDATA    },
-    { "pants",         1, MKD_NOPANTS  },
-    { "smarty",        1, MKD_NOPANTS  },
-    { "toc",           0, MKD_TOC      },
-    { "autolink",      0, MKD_AUTOLINK },
-    { "safelink",      0, MKD_SAFELINK },
-    { "del",           1, MKD_NOSTRIKETHROUGH },
-    { "strikethrough", 1, MKD_NOSTRIKETHROUGH },
-    { "superscript",   1, MKD_NOSUPERSCRIPT },
-    { "emphasis",      0, MKD_NORELAXED },
-    { "divquote",      1, MKD_NODIVQUOTE },
-    { "alphalist",     1, MKD_NOALPHALIST },
-    { "definitionlist",1, MKD_NODLIST },
-    { "1.0",           0, MKD_1_COMPAT },
-} ;
-
-#define NR(x)	(sizeof x / sizeof x[0])
-    
-
-void
-set(int *flags, char *optionstring)
-{
-    int i;
-    int enable;
-    char *arg;
-
-    for ( arg = strtok(optionstring, ","); arg; arg = strtok(NULL, ",") ) {
-	if ( *arg == '+' || *arg == '-' )
-	    enable = (*arg++ == '+') ? 1 : 0;
-	else if ( strncasecmp(arg, "no", 2) == 0 ) {
-	    arg += 2;
-	    enable = 0;
-	}
-	else
-	    enable = 1;
-
-	for ( i=0; i < NR(opts); i++ )
-	    if ( strcasecmp(arg, opts[i].name) == 0 )
-		break;
-
-	if ( i < NR(opts) ) {
-	    if ( opts[i].off )
-		enable = !enable;
-		
-	    if ( enable )
-		*flags |= opts[i].flag;
-	    else
-		*flags &= ~opts[i].flag;
-	}
-	else
-	    fprintf(stderr, "%s: unknown option <%s>\n", pgm, arg);
-    }
-}
-
-
 char *
 e_flags(const char *text, const int size, void *context)
 {
     return (char*)context;
+}
+
+
+void
+complain(char *fmt, ...)
+{
+    va_list ptr;
+
+    fprintf(stderr, "%s: ", pgm);
+    va_start(ptr, fmt);
+    vfprintf(stderr, fmt, ptr);
+    va_end(ptr);
+    fputc('\n', stderr);
+    fflush(stderr);
 }
 
 
@@ -117,12 +64,13 @@ main(int argc, char **argv)
 {
     int opt;
     int rc;
-    int flags = 0;
+    mkd_flag_t flags = 0;
     int debug = 0;
     int toc = 0;
     int version = 0;
     int with_html5 = 0;
     int use_mkd_line = 0;
+    char *extra_footnote_prefix = 0;
     char *urlflags = 0;
     char *text = 0;
     char *ofile = 0;
@@ -136,7 +84,7 @@ main(int argc, char **argv)
     pgm = basename(argv[0]);
     opterr = 1;
 
-    while ( (opt=getopt(argc, argv, "5b:df:E:F:o:s:t:TV")) != EOF ) {
+    while ( (opt=getopt(argc, argv, "5b:C:df:E:F:o:s:t:TV")) != EOF ) {
 	switch (opt) {
 	case '5':   with_html5 = 1;
 		    break;
@@ -148,9 +96,19 @@ main(int argc, char **argv)
 		    break;
 	case 'E':   urlflags = optarg;
 		    break;
-	case 'F':   flags = strtol(optarg, 0, 0);
+	case 'F':   if ( strcmp(optarg, "?") == 0 ) {
+			show_flags(0);
+			exit(0);
+		    }
+		    else
+			flags = strtol(optarg, 0, 0);
 		    break;
-	case 'f':   set(&flags, optarg);
+	case 'f':   if ( strcmp(optarg, "?") == 0 ) {
+			show_flags(1);
+			exit(0);
+		    }
+		    else if ( !set_flag(&flags, optarg) )
+			complain("unknown option <%s>", optarg);
 		    break;
 	case 't':   text = optarg;
 		    use_mkd_line = 1;
@@ -159,8 +117,10 @@ main(int argc, char **argv)
 		    break;
 	case 's':   text = optarg;
 		    break;
+	case 'C':   extra_footnote_prefix = optarg;
+		    break;
 	case 'o':   if ( ofile ) {
-			fprintf(stderr, "Too many -o options\n");
+			complain("Too many -o options");
 			exit(1);
 		    }
 		    if ( !freopen(ofile = optarg, "w", stdout) ) {
@@ -216,6 +176,8 @@ main(int argc, char **argv)
 	    mkd_e_data(doc, urlflags);
 	    mkd_e_flags(doc, e_flags);
 	}
+	if ( extra_footnote_prefix )
+	    mkd_ref_prefix(doc, extra_footnote_prefix);
 
 	if ( debug )
 	    rc = mkd_dump(doc, stdout, 0, argc ? basename(argv[0]) : "stdin");
@@ -230,6 +192,7 @@ main(int argc, char **argv)
 	    }
 	}
     }
+    mkd_deallocate_tags();
     adump();
     exit( (rc == 0) ? 0 : errno );
 }

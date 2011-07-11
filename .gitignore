@@ -4,5 +4,6 @@
 /*.xcodeproj/*.mode2v3
 /*.xcodeproj/*.pbxuser
 /*.xcodeproj/xcuserdata/*
+/*.xcodeproj/*.perspectivev3
 /*.xcodeproj/project.xcworkspace/*
 *~.nib

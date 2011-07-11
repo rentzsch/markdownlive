@@ -1,3 +1,7 @@
+/*
+ * configuration for markdown, generated Mon 11 Jul 2011 22:16:51 BST
+ * by Jonathan@macbook-pro.local
+ */
 #ifndef __AC_MARKDOWN_D
 #define __AC_MARKDOWN_D 1
 
