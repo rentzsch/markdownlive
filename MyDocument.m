@@ -5,23 +5,29 @@
 
 	***************************************************************************/
 
+#import "ORCDiscount.h"
 #import "MyDocument.h"
+#import "EditPaneLayoutManager.h"
+#import "EditPaneTextView.h"
+#import "PreferencesController.h"
+#import "PreferencesManager.h"
 #include "discountWrapper.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
+// class extension
+@interface MyDocument ()
+
+- (void)updateContent;
+- (void)htmlPreviewTimer:(NSTimer*)timer_;
+
+@end
+
 @implementation MyDocument
 
-- (NSString*)markdown2html:(NSString*)markdown_ {
-	if (!markdown_)
-		return @"";
-    
-    return discountToHTML(markdown_);
-}
-
 - (id)init {
-    self = [super init];
-    if (self) {
+	self = [super init];
+	if (self) {
 		markdownSource = [[NSTextStorage alloc] init];
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
 		htmlPreviewTimer = [NSTimer scheduledTimerWithTimeInterval:0.1
@@ -29,34 +35,47 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 														  selector:@selector(htmlPreviewTimer:)
 														  userInfo:nil
 														   repeats:YES];
-    }
-    return self;
+		
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(textDidChange:)
+													 name:kEditPaneTextViewChangedNotification
+												   object:markdownSourceTextView];
+		
+		// print attributes
+		[[self printInfo] setHorizontalPagination:NSFitPagination];
+		[[self printInfo] setHorizontallyCentered:NO];
+		[[self printInfo] setVerticallyCentered:NO];
+	}
+	return self;
 }
 
 - (void)dealloc {
 	[htmlPreviewTimer invalidate]; htmlPreviewTimer = nil;
 	[markdownSource release]; markdownSource = nil;
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
 
 - (NSString *)windowNibName {
-    return @"MyDocument";
+	return @"MyDocument";
 }
 
-- (void)windowControllerDidLoadNib:(NSWindowController*)controller_ {
-    static BOOL engagedAutosave = NO;
-    if (!engagedAutosave) {
-        engagedAutosave = YES;
-        [[NSDocumentController sharedDocumentController] setAutosavingDelay:5.0];
-    }
+- (void)windowControllerDidLoadNib:(NSWindowController *)controller_ {
+	static BOOL engagedAutosave = NO;
+	if (!engagedAutosave) {
+		engagedAutosave = YES;
+		[[NSDocumentController sharedDocumentController] setAutosavingDelay:5.0];
+	}
 	
 	[[markdownSourceTextView layoutManager] replaceTextStorage:markdownSource];
+	[self updateContent];
 	
 	// If you use IB to set an NSTextView's font, the font doesn't stick,
 	// even if you've turned off the text view's richText setting.
-	[markdownSourceTextView setFont:[NSFont fontWithName:@"Monaco" size:9]];
+	[markdownSourceTextView updateFont];
+	[markdownSourceTextView updateColors];
 	
-    [super windowControllerDidLoadNib:controller_];
+	[super windowControllerDidLoadNib:controller_];
 }
 
 - (BOOL)writeToURL:(NSURL*)absoluteURL_ ofType:(NSString*)typeName_ error:(NSError**)error_ {
@@ -94,51 +113,78 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	return result;
 }
 
+- (NSView *)printableView {
+	NSRect frame = [[self printInfo] imageablePageBounds];
+	frame.size.height = 0;
+	NSTextView *printView = [[[NSTextView alloc] initWithFrame:frame] autorelease];
+    [printView setVerticallyResizable:YES];
+    [printView setHorizontallyResizable:NO];
+	
+	// force black text color
+	NSMutableAttributedString *printStr = [markdownSource mutableCopy];
+	NSDictionary *printAttr = [NSDictionary dictionaryWithObject:[NSColor blackColor]
+														  forKey:NSForegroundColorAttributeName];
+	[printStr setAttributes:printAttr
+					  range:NSMakeRange(0, [printStr length])];
+	
+    [[printView textStorage] beginEditing];
+    [[printView textStorage] appendAttributedString:printStr];
+	[printStr release];
+    [[printView textStorage] endEditing];
+    
+    [printView sizeToFit];
+    
+    return printView;
+}
+
+- (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError {
+	
+#pragma unused(printSettings)
+#pragma unused(outError)
+	
+	return [NSPrintOperation printOperationWithView:[self printableView]
+										  printInfo:[self printInfo]];
+}
+
 - (void)textDidChange:(NSNotification*)notification_ {
+	
+#pragma unused(notification_)
+	
 	whenToUpdatePreview = [NSDate timeIntervalSinceReferenceDate] + 0.5;
 }
 
-- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSHTML:(NSString *)cssHTML
-{
-	return [NSString stringWithFormat:
-		@"<!DOCTYPE html>\n<html>\n<head>\n<title>%@</title>\n%@</head>\n<body>%@</body>\n</html>",
-		@"Markdown Preview",
-		cssHTML,
-		markdownHTML
-	];
-}
-
-- (NSString *)HTMLPage:(NSString *)markdownHTML withCSSFromURL:(NSURL *)cssURL
-{
-	NSString *cssHTML = [NSString stringWithFormat:
-		@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\">\n",
-		[cssURL absoluteString]
-	];
-	return [self HTMLPage:markdownHTML withCSSHTML:cssHTML];
+- (void)updateContent {
+	NSView *docView = [[[htmlPreviewWebView mainFrame] frameView] documentView];
+	NSView *parent = [docView superview];
+	if (parent) {
+		NSAssert([parent isKindOfClass:[NSClipView class]], nil);
+		savedOrigin = [parent bounds].origin;
+		// This line from Darin from http://lists.apple.com/archives/webkitsdk-dev/2003/Dec/msg00004.html :
+		savedAtBottom = [docView isFlipped]
+		? NSMaxY([docView bounds]) <= NSMaxY([docView visibleRect])
+		: [docView bounds].origin.y >= [docView visibleRect].origin.y;
+		hasSavedOrigin = YES;
+	}
+	
+	NSURL *css = [ORCDiscount cssURL];
+	NSString *html = [ORCDiscount HTMLPage:[ORCDiscount markdown2HTML:[markdownSource string]] withCSSFromURL:css];
+	[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
 }
 
 - (void)htmlPreviewTimer:(NSTimer*)timer_ {
+	
+#pragma unused(timer_)
+	
 	if ([NSDate timeIntervalSinceReferenceDate] >= whenToUpdatePreview) {
 		whenToUpdatePreview = [[NSDate distantFuture] timeIntervalSinceReferenceDate];
-		
-		NSView *docView = [[[htmlPreviewWebView mainFrame] frameView] documentView];
-		NSView *parent = [docView superview];
-		if (parent) {
-			NSAssert([parent isKindOfClass:[NSClipView class]], nil);
-			savedOrigin = [parent bounds].origin;
-			// This line from Darin from http://lists.apple.com/archives/webkitsdk-dev/2003/Dec/msg00004.html :
-			savedAtBottom = [docView isFlipped]
-				? NSMaxY([docView bounds]) <= NSMaxY([docView visibleRect])
-				: [docView bounds].origin.y >= [docView visibleRect].origin.y;
-			hasSavedOrigin = YES;
-		}
-		NSURL *css = [[NSBundle mainBundle] URLForResource:@"styles" withExtension:@"css"];
-		NSString *html = [self HTMLPage:[self markdown2html:[markdownSource string]] withCSSFromURL:css];
-		[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
+		[self updateContent];
 	}
 }
 
 - (void)webView:(WebView*)sender_ didFinishLoadForFrame:(WebFrame*)frame_ {
+	
+#pragma unused(sender_)
+	
 	if ([htmlPreviewWebView mainFrame] == frame_ && hasSavedOrigin) {
 		hasSavedOrigin = NO;
 		if (savedAtBottom)
@@ -148,9 +194,38 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	}
 }
 
+- (void)webView:(WebView *)webView decidePolicyForNavigationAction:(NSDictionary *)actionInformation
+		request:(NSURLRequest *)request
+		  frame:(WebFrame *)frame decisionListener:(id < WebPolicyDecisionListener >)listener {
+
+#pragma unused(webView)
+#pragma unused(request)
+#pragma unused(frame)
+	
+	WebNavigationType actionKey = [[actionInformation objectForKey:WebActionNavigationTypeKey] intValue];
+	if (actionKey == WebNavigationTypeOther) {
+		[listener use];
+	} else {
+		NSURL *url = [actionInformation objectForKey:WebActionOriginalURLKey];
+		
+		NSURL *stdUrl = [url URLByStandardizingPath];
+		NSURL *docUrl = [[self fileURL] URLByStandardizingPath];
+		if ([[url scheme] isEqualToString:@"applewebdata"] ||
+			[stdUrl isFileURL] && [stdUrl isEqualTo:docUrl]) {
+			[listener use];
+		} else {
+			[[NSWorkspace sharedWorkspace] openURL:url];
+			[listener ignore];
+		}
+	}
+}
+
 - (IBAction)copyGeneratedHTMLAction:(id)sender {
+	
+	#pragma unused(sender)
+	
 	[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
-	[[NSPasteboard generalPasteboard] setString:[self markdown2html:[markdownSource string]] forType:NSStringPboardType];
+	[[NSPasteboard generalPasteboard] setString:[ORCDiscount markdown2HTML:[markdownSource string]] forType:NSStringPboardType];
 }
 
 @end

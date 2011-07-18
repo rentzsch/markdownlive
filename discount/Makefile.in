@@ -16,19 +16,20 @@ OBJS=mkdio.o markdown.o dumptree.o generate.o \
      resource.o docheader.o version.o toc.o css.o \
      xml.o Csio.o xmlpage.o basename.o emmatch.o \
      setup.o tags.o html5.o flags.o @AMALLOC@
+TESTFRAMEWORK=echo cols
 
 MAN3PAGES=mkd-callbacks.3 mkd-functions.3 markdown.3 mkd-line.3
 
-all: $(PGMS) $(SAMPLE_PGMS)
+all: $(PGMS) $(SAMPLE_PGMS) $(TESTFRAMEWORK)
 
-install: $(PGMS)
+install: $(PGMS) $(DESTDIR)/$(BINDIR) $(DESTDIR)/$(LIBDIR) $(DESTDIR)/$(INCDIR)
 	@INSTALL_PROGRAM@ $(PGMS) $(DESTDIR)/$(BINDIR)
 	./librarian.sh install libmarkdown VERSION $(DESTDIR)/$(LIBDIR)
 	@INSTALL_DATA@ mkdio.h $(DESTDIR)/$(INCDIR)
 
 install.everything: install install.samples install.man
 
-install.samples: $(SAMPLE_PGMS) install
+install.samples: $(SAMPLE_PGMS) install $(DESTDIR)/$(BINDIR)
 	@INSTALL_PROGRAM@ $(SAMPLE_PGMS) $(DESTDIR)/$(BINDIR)
 	@INSTALL_DIR@ $(DESTDIR)/$(MANDIR)/man1
 	@INSTALL_DATA@ theme.1 makepage.1 mkd2html.1 $(DESTDIR)/$(MANDIR)/man1
@@ -52,11 +53,17 @@ install.man:
 
 install.everything: install install.man
 
+$(DESTDIR)/$(BINDIR):
+	@INSTALL_DIR@ $(DESTDIR)/$(BINDIR)
+
+$(DESTDIR)/$(INCDIR):
+	@INSTALL_DIR@ $(DESTDIR)/$(INCDIR)
+
+$(DESTDIR)/$(LIBDIR):
+	@INSTALL_DIR@ $(DESTDIR)/$(LIBDIR)
+
 version.o: version.c VERSION
 	$(CC) -DVERSION=\"`cat VERSION`\" -c version.c
-
-markdown: main.o $(MKDLIB)
-	$(CC) $(CFLAGS) -o markdown main.o -lmarkdown @LIBS@
 
 # example programs
 @THEME@theme:  theme.o $(MKDLIB) mkdio.h
@@ -66,8 +73,14 @@ markdown: main.o $(MKDLIB)
 mkd2html:  mkd2html.o $(MKDLIB) mkdio.h
 	$(CC) -o mkd2html mkd2html.o -lmarkdown @LIBS@
 
-makepage:  makepage.c $(MKDLIB) mkdio.h
-	$(CC) -o makepage makepage.c -lmarkdown @LIBS@
+markdown: main.o pgm_options.o $(MKDLIB)
+	$(CC) $(CFLAGS) -o markdown main.o pgm_options.o -lmarkdown @LIBS@
+	
+makepage:  makepage.c pgm_options.o $(MKDLIB) mkdio.h
+	$(CC) $(CFLAGS) -o makepage makepage.c pgm_options.o -lmarkdown @LIBS@
+
+pgm_options.o: pgm_options.c mkdio.h config.h
+	$(CC) -I. -c pgm_options.c
 
 main.o: main.c mkdio.h config.h
 	$(CC) -I. -c main.c
@@ -78,7 +91,7 @@ $(MKDLIB): $(OBJS)
 verify: echo tools/checkbits.sh
 	@./echo -n "headers ... "; tools/checkbits.sh && echo "GOOD"
 
-test:	$(PGMS) echo cols verify
+test:	$(PGMS) $(TESTFRAMEWORK) verify
 	@for x in tests/*.t; do \
 	    @LD_LIBRARY_PATH@=`pwd` sh $$x || exit 1; \
 	done
@@ -89,7 +102,7 @@ echo:   tools/echo.c config.h
 	$(CC) -o echo tools/echo.c
 	
 clean:
-	rm -f $(PGMS) $(SAMPLE_PGMS) *.o
+	rm -f $(PGMS) $(TESTFRAMEWORK) $(SAMPLE_PGMS) *.o
 	rm -f $(MKDLIB) `./librarian.sh files $(MKDLIB) VERSION`
 
 distclean spotless: clean
@@ -104,6 +117,7 @@ dumptree.o: dumptree.c markdown.h cstring.h amalloc.h config.h
 emmatch.o: emmatch.c config.h cstring.h amalloc.h markdown.h
 generate.o: generate.c config.h cstring.h amalloc.h markdown.h
 main.o: main.c config.h amalloc.h
+pgm_options.o: pgm_options.c pgm_options.h config.h amalloc.h
 makepage.o: makepage.c
 markdown.o: markdown.c config.h cstring.h amalloc.h markdown.h
 mkd2html.o: mkd2html.c config.h mkdio.h cstring.h amalloc.h

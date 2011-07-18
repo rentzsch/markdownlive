@@ -12,6 +12,10 @@ typedef struct footnote {
     Cstring title;		/* what it's called (TITLE= attribute) */
     int height, width;		/* dimensions (for image link) */
     int dealloc;		/* deallocation needed? */
+    int refnumber;
+    int flags;
+#define EXTRA_BOOKMARK	0x01
+#define REFERENCED	0x02
 } Footnote;
 
 /* each input line is read into a Line, which contains the line,
@@ -22,7 +26,9 @@ typedef struct footnote {
 typedef struct line {
     Cstring text;
     struct line *next;
-    int dle;
+    int dle;			/* leading indent on the line */
+    int flags;			/* special attributes for this line */
+#define PIPECHAR	0x01		/* line contains a | */
 } Line;
 
 
@@ -75,6 +81,8 @@ typedef struct mmiot {
     Cstring in;
     Qblock Q;
     int isp;
+    int reference;
+    char *ref_prefix;
     STRING(Footnote) *footnotes;
     DWORD flags;
 #define MKD_NOLINKS	0x00000001
@@ -98,6 +106,7 @@ typedef struct mmiot {
 #define MKD_NODIVQUOTE	0x00040000
 #define MKD_NOALPHALIST	0x00080000
 #define MKD_NODLIST	0x00100000
+#define MKD_EXTRA_FOOTNOTE 0x00200000
 #define IS_LABEL	0x08000000
 #define USER_FLAGS	0x0FFFFFFF
 #define INPUT_MASK	(MKD_NOHEADER|MKD_TABSTOP)
@@ -124,6 +133,7 @@ typedef struct document {
     int compiled;		/* set after mkd_compile() */
     int html;			/* set after (internal) htmlify() */
     int tabstop;		/* for properly expanding tabs (ick) */
+    char *ref_prefix;
     MMIOT *ctx;			/* backend buffers, flags, and structures */
     Callback_data cb;		/* callback functions & private data */
 } Document;
@@ -143,13 +153,17 @@ extern int  mkd_line(char *, int, char **, DWORD);
 extern int  mkd_generateline(char *, int, FILE*, DWORD);
 #define mkd_text mkd_generateline
 extern void mkd_basename(Document*, char *);
-extern void mkd_string_to_anchor(char*,int, void(*)(int,void*), void*, int);
+
+typedef int (*mkd_sta_function_t)(const int,const void*);
+extern void mkd_string_to_anchor(char*,int, mkd_sta_function_t, void*, int);
 
 extern Document *mkd_in(FILE *, DWORD);
-extern Document *mkd_string(char*,int, DWORD);
+extern Document *mkd_string(const char*,int, DWORD);
 
 extern void mkd_initialize();
 extern void mkd_shlib_destructor();
+
+extern void mkd_ref_prefix(Document*, char*);
 
 /* internal resource handling functions.
  */
