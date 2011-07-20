@@ -88,6 +88,36 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 											   error:error_];
 		
 	}
+    if (result && ![self hasUnautosavedChanges]) {
+        NSURL *markdownFileURL = [self fileURL];
+        NSURL *htmlFileURL = [[markdownFileURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"html"];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[htmlFileURL path]]) {
+            NSXMLDocument *doc = [[[NSXMLDocument alloc] initWithContentsOfURL:htmlFileURL
+                                                                       options:NSXMLNodePreserveAll|NSXMLDocumentTidyXML
+                                                                         error:nil] autorelease];
+            if (doc) {
+                NSArray *nodes = [doc nodesForXPath:@"//*[@id=\"markdownlive\"]" error:nil];
+                if ([nodes count] == 1) {
+                    NSXMLElement *node = [nodes objectAtIndex:0];
+                    NSXMLDocument *markdownDoc = [[[NSXMLDocument alloc] initWithXMLString:[ORCDiscount markdown2HTML:[markdownSource string]]
+                                                                                   options:NSXMLDocumentTidyHTML
+                                                                                     error:nil] autorelease];
+                    NSArray *markdownNodes = [markdownDoc nodesForXPath:@"/html/body/*" error:nil];
+                    [markdownNodes makeObjectsPerformSelector:@selector(detach)];
+                    [node setChildren:markdownNodes];
+                    NSString *htmlFileContent = [doc XMLStringWithOptions:NSXMLNodePrettyPrint];
+                    if ([htmlFileContent hasPrefix:@"<?xml"]) {
+                        NSUInteger index = [htmlFileContent rangeOfString:@"\n"].location;
+                        htmlFileContent = [htmlFileContent substringFromIndex:index+1];
+                    }
+                    [htmlFileContent writeToURL:htmlFileURL
+                                     atomically:YES
+                                       encoding:NSUTF8StringEncoding
+                                          error:nil];
+                }
+            }
+        }
+    }
 	
 	return result;
 }
