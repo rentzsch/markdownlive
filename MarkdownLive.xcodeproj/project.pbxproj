@@ -492,7 +492,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = ORCDiscount;
-				RUN_CLANG_STATIC_ANALYZER = YES;
+				RUN_CLANG_STATIC_ANALYZER = NO;
 			};
 			name = Debug;
 		};
