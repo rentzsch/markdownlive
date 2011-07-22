@@ -78,8 +78,13 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	[super windowControllerDidLoadNib:controller_];
 }
 
-- (BOOL)writeToURL:(NSURL*)absoluteURL_ ofType:(NSString*)typeName_ error:(NSError**)error_ {
-	BOOL result = NO;
+- (BOOL)writeToURL:(NSURL*)absoluteURL_
+    ofType:(NSString*)typeName_
+    forSaveOperation:(NSSaveOperationType)saveOperation_
+    originalContentsURL:(NSURL*)absoluteOriginalContentsURL_
+    error:(NSError **)error_
+{
+    BOOL result = NO;
 	if ([typeName_ isEqualToString:kMarkdownDocumentType]) {
 		[markdownSourceTextView breakUndoCoalescing];
 		result = [[markdownSource string] writeToURL:absoluteURL_
@@ -88,7 +93,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 											   error:error_];
 		
 	}
-    if (result && ![self hasUnautosavedChanges]) {
+    
+    if (result && saveOperation_ != NSAutosaveOperation) {
         NSURL *markdownFileURL = [self fileURL];
         NSURL *htmlFileURL = [[markdownFileURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"html"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:[htmlFileURL path]]) {
