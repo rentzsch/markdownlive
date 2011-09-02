@@ -16,6 +16,10 @@
 		8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC320486D014006FF6A4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A37F4B0FDCFA73011CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
+		9958D88F14119A22004F7DF1 /* RKSyntaxView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9958D88E14119A22004F7DF1 /* RKSyntaxView.m */; };
+		9958D89214119A8D004F7DF1 /* NSColor+HexRGB.m in Sources */ = {isa = PBXBuildFile; fileRef = 9958D89114119A8D004F7DF1 /* NSColor+HexRGB.m */; };
+		9958D89514119B85004F7DF1 /* PageScheme.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9958D89314119B85004F7DF1 /* PageScheme.plist */; };
+		9958D89614119B85004F7DF1 /* PageSyntax.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9958D89414119B85004F7DF1 /* PageSyntax.plist */; };
 		ABE8DDF913CA38B5005852B5 /* styles.css in Resources */ = {isa = PBXBuildFile; fileRef = 226936E612E7CDC500171322 /* styles.css */; };
 		ABECD8C713C8B90E00B77CFD /* mkdio.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C4E105D6EC400D1F90A /* mkdio.c */; };
 		ABECD8C813C8B92900B77CFD /* markdown.c in Sources */ = {isa = PBXBuildFile; fileRef = 795F6C50105D6ECE00D1F90A /* markdown.c */; };
@@ -107,6 +111,12 @@
 		795F6DB9105D75D300D1F90A /* mkdioWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mkdioWrapper.h; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* MarkdownLive-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MarkdownLive-Info.plist"; sourceTree = "<group>"; };
 		8D15AC370486D014006FF6A4 /* MarkdownLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MarkdownLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9958D88D14119A22004F7DF1 /* RKSyntaxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RKSyntaxView.h; sourceTree = "<group>"; };
+		9958D88E14119A22004F7DF1 /* RKSyntaxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKSyntaxView.m; sourceTree = "<group>"; };
+		9958D89014119A8D004F7DF1 /* NSColor+HexRGB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+HexRGB.h"; sourceTree = "<group>"; };
+		9958D89114119A8D004F7DF1 /* NSColor+HexRGB.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+HexRGB.m"; sourceTree = "<group>"; };
+		9958D89314119B85004F7DF1 /* PageScheme.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PageScheme.plist; sourceTree = "<group>"; };
+		9958D89414119B85004F7DF1 /* PageSyntax.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PageSyntax.plist; sourceTree = "<group>"; };
 		ABCE3DDF13C8DFFF00DF3CD0 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		ABECD8C213C8B8CA00B77CFD /* ORCDiscount.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ORCDiscount.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABECD8C313C8B8CA00B77CFD /* ORCDiscount-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ORCDiscount-Info.plist"; sourceTree = "<group>"; };
@@ -180,6 +190,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* MarkdownLive */ = {
 			isa = PBXGroup;
 			children = (
+				9958D88B14119A18004F7DF1 /* RK */,
 				ABECD96113C8D1C200B77CFD /* ORCDiscount */,
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				795F6C4D105D6EA500D1F90A /* discount */,
@@ -228,6 +239,8 @@
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				1DDD58280DA1D0D100B32029 /* MyDocument.xib */,
 				1DDD582A0DA1D0D100B32029 /* MainMenu.xib */,
+				9958D89314119B85004F7DF1 /* PageScheme.plist */,
+				9958D89414119B85004F7DF1 /* PageSyntax.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -271,6 +284,17 @@
 				795F6DB9105D75D300D1F90A /* mkdioWrapper.h */,
 			);
 			path = discount_wrappers;
+			sourceTree = "<group>";
+		};
+		9958D88B14119A18004F7DF1 /* RK */ = {
+			isa = PBXGroup;
+			children = (
+				9958D89014119A8D004F7DF1 /* NSColor+HexRGB.h */,
+				9958D89114119A8D004F7DF1 /* NSColor+HexRGB.m */,
+				9958D88D14119A22004F7DF1 /* RKSyntaxView.h */,
+				9958D88E14119A22004F7DF1 /* RKSyntaxView.m */,
+			);
+			name = RK;
 			sourceTree = "<group>";
 		};
 		ABECD96113C8D1C200B77CFD /* ORCDiscount */ = {
@@ -373,6 +397,8 @@
 				1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */,
+				9958D89514119B85004F7DF1 /* PageScheme.plist in Resources */,
+				9958D89614119B85004F7DF1 /* PageSyntax.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +424,8 @@
 				ABF75D7513CDEBBB00B5E7AB /* EditPaneTypesetter.m in Sources */,
 				ABF75D7613CDEBBB00B5E7AB /* PreferencesController.m in Sources */,
 				ABF75D7713CDEBBB00B5E7AB /* PreferencesManager.m in Sources */,
+				9958D88F14119A22004F7DF1 /* RKSyntaxView.m in Sources */,
+				9958D89214119A8D004F7DF1 /* NSColor+HexRGB.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,7 +566,9 @@
 				GCC_PREFIX_HEADER = MarkdownLive_Prefix.pch;
 				INFOPLIST_FILE = "MarkdownLive-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = MarkdownLive;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -553,7 +583,9 @@
 				GCC_PREFIX_HEADER = MarkdownLive_Prefix.pch;
 				INFOPLIST_FILE = "MarkdownLive-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = MarkdownLive;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

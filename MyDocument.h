@@ -7,12 +7,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import "RKSyntaxView.h"
 
 @class EditPaneTextView;
 @class EditPaneLayoutManager;
 
 @interface MyDocument : NSDocument {
-	IBOutlet	EditPaneTextView			*markdownSourceTextView;
+	IBOutlet	RKSyntaxView                *markdownSourceTextView;
 	IBOutlet	WebView						*htmlPreviewWebView;
 	
 				NSTextStorage				*markdownSource;

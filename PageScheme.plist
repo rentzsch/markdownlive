@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>colors</key>
+	<dict>
+		<key>title3</key>
+		<string>6C71C4</string>
+		<key>em</key>
+		<string>859900</string>
+		<key>strong</key>
+		<string>48595f</string>
+		<key>code</key>
+		<string>2AA198</string>
+		<key>codeBackground</key>
+		<string>EEE8D5</string>
+		<key>highlight</key>
+		<string>EEE8D5</string>
+		<key>background</key>
+		<string>FDF6E3</string>
+		<key>checked</key>
+		<string>8e8e8e</string>
+		<key>default</key>
+		<string>586E75</string>
+		<key>subtitle</key>
+		<string>268BD2</string>
+		<key>title</key>
+		<string>DC322F</string>
+		<key>zone</key>
+		<string>f21bea</string>
+	</dict>
+	<key>font</key>
+	<string>Menlo</string>
+</dict>
+</plist>
