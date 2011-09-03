@@ -72,8 +72,12 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	
 	// If you use IB to set an NSTextView's font, the font doesn't stick,
 	// even if you've turned off the text view's richText setting.
-	[markdownSourceTextView updateFont];
-	[markdownSourceTextView updateColors];
+	//[markdownSourceTextView updateFont];
+	//[markdownSourceTextView updateColors];
+    
+    [markdownSourceTextView loadScheme:@"PageScheme"];
+    [markdownSourceTextView loadSyntax:@"PageSyntax"];
+    [markdownSourceTextView highlight];
 	
 	[super windowControllerDidLoadNib:controller_];
 }

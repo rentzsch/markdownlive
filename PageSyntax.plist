@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>todo-zone</key>
+	<dict>
+		<key>color</key>
+		<string>zone</string>
+		<key>pattern</key>
+		<string>^●\s*.*$</string>
+	</dict>
+	<key>todo-checked</key>
+	<dict>
+		<key>color</key>
+		<string>checked</string>
+		<key>pattern</key>
+		<string>^✓\s*.*$</string>
+	</dict>
+	<key>todo-unchecked</key>
+	<dict>
+		<key>color</key>
+		<string>default</string>
+		<key>pattern</key>
+		<string>^☐\s*.*$</string>
+	</dict>
+	<key>list-item</key>
+	<dict>
+		<key>color</key>
+		<string>default</string>
+		<key>pattern</key>
+		<string>^\*\s+.*$</string>
+	</dict>
+	<key>markdown-header-1</key>
+	<dict>
+		<key>size</key>
+		<integer>14</integer>
+		<key>isBold</key>
+		<true/>
+		<key>color</key>
+		<string>title</string>
+		<key>pattern</key>
+		<string>^(# )(.*?)($| #+$)</string>
+	</dict>
+	<key>markdown-header-2</key>
+	<dict>
+		<key>color</key>
+		<string>subtitle</string>
+		<key>isBold</key>
+		<true/>
+		<key>pattern</key>
+		<string>^(## )(.*?)($| #+$)</string>
+	</dict>
+	<key>markdown-em</key>
+	<dict>
+		<key>color</key>
+		<string>em</string>
+		<key>patternGroup</key>
+		<integer>2</integer>
+		<key>pattern</key>
+		<string>(^|[^\*])(\*[^\s\*]([^\*\n]+)\*)</string>
+	</dict>
+	<key>markdown-strong</key>
+	<dict>
+		<key>isBold</key>
+		<true/>
+		<key>color</key>
+		<string>strong</string>
+		<key>pattern</key>
+		<string>\*{2}(.+?)\*{2}</string>
+	</dict>
+	<key>markdown-header-3</key>
+	<dict>
+		<key>color</key>
+		<string>title3</string>
+		<key>isBold</key>
+		<true/>
+		<key>pattern</key>
+		<string>^(### )(.*?)($| #+$)</string>
+	</dict>
+	<key>code</key>
+	<dict>
+		<key>patternGroup</key>
+		<integer>1</integer>
+		<key>backgroundColor</key>
+		<string>codeBackground</string>
+		<key>color</key>
+		<string>code</string>
+		<key>pattern</key>
+		<string>^ {4}(.*?)$</string>
+	</dict>
+</dict>
+</plist>
