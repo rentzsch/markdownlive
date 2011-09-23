@@ -72,6 +72,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	[markdownSourceTextView updateFont];
 	[markdownSourceTextView updateColors];
 	
+	if ([controller_.window respondsToSelector:@selector(toggleFullScreen:)]) {
+		controller_.window.collectionBehavior &= !NSWindowCollectionBehaviorFullScreenAuxiliary;
+		controller_.window.collectionBehavior |= NSWindowCollectionBehaviorFullScreenPrimary;
+	}
+	
 	[super windowControllerDidLoadNib:controller_];
 }
 

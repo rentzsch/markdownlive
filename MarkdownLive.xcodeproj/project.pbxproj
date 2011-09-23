@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11EF12E0142D24BB0086C77F /* MLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11EF12DF142D24BB0086C77F /* MLAppDelegate.m */; };
 		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 795F6C86105D70A300D1F90A /* MarkdownLiveApp.icns */; };
@@ -72,6 +73,8 @@
 /* Begin PBXFileReference section */
 		089C1660FE840EACC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		11EF12DE142D24BB0086C77F /* MLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLAppDelegate.h; sourceTree = "<group>"; };
+		11EF12DF142D24BB0086C77F /* MLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLAppDelegate.m; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -203,6 +206,8 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				11EF12DE142D24BB0086C77F /* MLAppDelegate.h */,
+				11EF12DF142D24BB0086C77F /* MLAppDelegate.m */,
 				3DD1618A1431FD030003F6C7 /* EditPaneLayoutManager.h */,
 				ABF75D6E13CDEBBA00B5E7AB /* EditPaneLayoutManager.m */,
 				3DD161891431FCFC0003F6C7 /* EditPaneTextView.h */,
@@ -411,6 +416,7 @@
 				ABF75D7513CDEBBB00B5E7AB /* EditPaneTypesetter.m in Sources */,
 				ABF75D7613CDEBBB00B5E7AB /* PreferencesController.m in Sources */,
 				ABF75D7713CDEBBB00B5E7AB /* PreferencesManager.m in Sources */,
+				11EF12E0142D24BB0086C77F /* MLAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
