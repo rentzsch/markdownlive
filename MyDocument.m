@@ -12,6 +12,15 @@
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
+
+@interface MyDocument ()
+
+- (void)_surroundSelectionWithString:(NSString *)string;
+- (void)_addStringBeforeSelectedLines:(NSString *)string;
+
+@end
+
+
 // class extension
 @interface MyDocument ()
 
@@ -195,7 +204,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	NSView *docView = [[[htmlPreviewWebView mainFrame] frameView] documentView];
 	NSView *parent = [docView superview];
 	if (parent) {
-		NSAssert([parent isKindOfClass:[NSClipView class]], nil);
+		NSAssert([parent isKindOfClass:[NSClipView class]], @"");
 		savedOrigin = [parent bounds].origin;
 		// This line from Darin from http://lists.apple.com/archives/webkitsdk-dev/2003/Dec/msg00004.html :
 		savedAtBottom = [docView isFlipped]
@@ -264,6 +273,148 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	
 	[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
 	[[NSPasteboard generalPasteboard] setString:[ORCDiscount markdown2HTML:[markdownSource string]] forType:NSStringPboardType];
+}
+
+- (void)_surroundSelectionWithString:(NSString *)string
+{
+	NSMutableString *newString = [markdownSourceTextView.string mutableCopy];
+	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
+	NSUInteger addedCharacters = 0;
+	
+	for (NSValue *rangeInfo in [markdownSourceTextView selectedRanges]) {
+		NSRange range = [rangeInfo rangeValue];
+		range.location += addedCharacters;
+		
+		[newString insertString:string atIndex:range.location + range.length];
+		[newString insertString:string atIndex:range.location];
+		
+		addedCharacters += [string length] * 2;
+		
+		range.location += [string length];
+		[newSelection addObject:[NSValue valueWithRange:range]];
+	}
+	
+	[markdownSourceTextView setString:newString];
+	[markdownSourceTextView setSelectedRanges:newSelection];
+	[newString release];
+	[newSelection release];
+	
+	[self updateContent];
+}
+
+- (void)_addStringBeforeSelectedLines:(NSString *)string
+{
+	NSString *oldString = markdownSourceTextView.string;
+	NSMutableString *newString = [oldString mutableCopy];
+	NSMutableArray *newSelection = [markdownSourceTextView.selectedRanges mutableCopy];
+	__block NSInteger currentSelectionIndex = -1;
+	
+	
+	[oldString enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
+		NSRange originalLineRange = [oldString rangeOfString:line];
+		NSRange lineRange = [newString rangeOfString:line];
+		__block BOOL stringAdded = NO;
+		NSArray *selection = [newSelection copy];
+		[newSelection removeAllObjects];
+		
+		[selection enumerateObjectsUsingBlock:^(id rangeInfo, NSUInteger index, BOOL *stop) {
+			NSRange selectionRange = [rangeInfo rangeValue];
+			BOOL justAdded = NO;
+			
+			if (!stringAdded && NSIntersectionRange(selectionRange, originalLineRange).length != 0) {
+				[newString insertString:string atIndex:lineRange.location];
+				
+				justAdded = currentSelectionIndex != index;
+				currentSelectionIndex = index;
+				stringAdded = YES;
+			}
+			
+			NSLog(@"justAdded: %d", justAdded);
+			
+			if (stringAdded && currentSelectionIndex != index) {
+				selectionRange.location += [string length];
+			}
+			
+			if (justAdded && lineRange.location != selectionRange.location) {
+				selectionRange.location += [string length];
+			} else {
+				selectionRange.length += [string length];
+			}
+			
+			[newSelection addObject:[NSValue valueWithRange:selectionRange]];
+		}];
+		
+		[selection release];
+	}];
+	
+	
+	[markdownSourceTextView setString:newString];
+	[markdownSourceTextView setSelectedRanges:newSelection];
+	[newString release];
+	[newSelection release];
+	
+	[self updateContent];
+}
+
+- (IBAction)boldItalic:(NSSegmentedControl *)sender
+{
+	NSLog(@"sender: %ld", sender.selectedSegment);
+	switch (sender.selectedSegment) {
+		case 0: {//bold
+			[self bold:sender];
+			
+			break;
+		} case 1: {//italic
+			[self italic:sender];
+			
+			break;
+		}
+	}
+}
+
+- (void)_undoBold:(NSString *)string
+{
+	NSLog(@"string: %@", string);
+}
+
+- (IBAction)bold:(id)sender
+{
+	[self _surroundSelectionWithString:@"**"];
+}
+
+- (IBAction)italic:(id)sender
+{
+	[self _surroundSelectionWithString:@"*"];
+}
+
+- (IBAction)header1:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"# "];
+}
+
+- (IBAction)header2:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"## "];
+}
+
+- (IBAction)header3:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"### "];
+}
+
+- (IBAction)blockQuote:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"> "];
+}
+
+- (IBAction)unorderedList:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"* "];
+}
+
+- (IBAction)numberedList:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"1. "];
 }
 
 @end
