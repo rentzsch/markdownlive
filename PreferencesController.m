@@ -9,8 +9,9 @@
 #import "PreferencesController.h"
 #import "PreferencesManager.h"
 
-#define FONT_DISPLAY_FORMAT @"%@ %g pt."
+NSString * const	kEditPaneFontNameChangedNotification		= @"EditPaneFontNameChangedNotification";
 
+NSString * const	kFontDisplayFormat							= @"%@ %g pt.";
 
 @interface PreferencesController (Private)
 
@@ -35,7 +36,7 @@
 - (void)updateFontDisplay {
 	NSString *fontName = [PreferencesManager editPaneFontName];
 	float fontSize = [PreferencesManager editPaneFontSize];
-	[fontPreviewField setStringValue:[NSString stringWithFormat:FONT_DISPLAY_FORMAT, fontName, fontSize]];
+	[fontPreviewField setStringValue:[NSString stringWithFormat:kFontDisplayFormat, fontName, fontSize]];
 }
 
 - (IBAction)resetEditPanePreferences:(id)sender {
@@ -56,7 +57,7 @@
 	if (newFont && fontName) {
 		[PreferencesManager setEditPaneFontName:fontName];
 		[PreferencesManager setEditPaneFontSize:fontSize];
-		[fontPreviewField setStringValue:[NSString stringWithFormat:FONT_DISPLAY_FORMAT, fontName, fontSize]];
+		[fontPreviewField setStringValue:[NSString stringWithFormat:kFontDisplayFormat, fontName, fontSize]];
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:kEditPaneFontNameChangedNotification
 															object:nil];
