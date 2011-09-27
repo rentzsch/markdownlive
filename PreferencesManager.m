@@ -8,6 +8,13 @@
 
 #import "PreferencesManager.h"
 
+NSString * const	kEditPaneFontName					= @"EditPaneFontName";
+NSString * const	kEditPaneFontSize					= @"EditPaneFontSize";
+NSString * const	kEditPaneForegroundColor			= @"EditPaneForegroundColor";
+NSString * const	kEditPaneBackgroundColor			= @"EditPaneBackgroundColor";
+NSString * const	kEditPaneSelectionColor				= @"EditPaneSelectionColor";
+NSString * const	kEditPaneCaretColor					= @"EditPaneCaretColor";
+
 @interface PreferencesManager (Private)
 
 + (NSColor *)colorForKey:(NSString *)key;

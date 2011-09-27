@@ -8,13 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-#define kEditPaneFontName			@"EditPaneFontName"
-#define kEditPaneFontSize			@"EditPaneFontSize"
-#define kEditPaneForegroundColor	@"EditPaneForegroundColor"
-#define kEditPaneBackgroundColor	@"EditPaneBackgroundColor"
-#define kEditPaneSelectionColor		@"EditPaneSelectionColor"
-#define kEditPaneCaretColor			@"EditPaneCaretColor"
-
+extern NSString * const kEditPaneFontName;
+extern NSString * const kEditPaneFontSize;
+extern NSString * const kEditPaneForegroundColor;
+extern NSString * const kEditPaneBackgroundColor;
+extern NSString * const kEditPaneSelectionColor;
+extern NSString * const kEditPaneCaretColor;
 
 @interface PreferencesManager : NSObject {
 
