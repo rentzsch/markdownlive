@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#define kEditPaneFontNameChangedNotification @"EditPaneFontNameChangedNotification"
+extern NSString * const kEditPaneFontNameChangedNotification;
 
 @interface PreferencesController : NSObject {
 	IBOutlet NSWindow *prefWindow;

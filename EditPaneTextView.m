@@ -11,6 +11,7 @@
 #import "PreferencesManager.h"
 #import "PreferencesController.h"
 
+NSString * const	kEditPaneTextViewChangedNotification		= @"EditPaneTextViewChangedNotification";
 
 @implementation EditPaneTextView
 
