@@ -343,7 +343,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		NSUInteger rangeEnd = NSMaxRange(range);
 		NSUInteger currentIndex = range.location;
 		
-		while (currentIndex < (rangeEnd + insertedCharacters)) {
+		while (currentIndex <= (rangeEnd + insertedCharacters)) {
 			NSUInteger startIndex, lineEndIndex, contentsEndIndex;
 			
 			[mutableString getLineStart:&startIndex
