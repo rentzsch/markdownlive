@@ -12,6 +12,7 @@
 #import "PreferencesController.h"
 
 NSString * const	kEditPaneTextViewChangedNotification		= @"EditPaneTextViewChangedNotification";
+NSString * const	kEditPaneColorChangedNotification			= @"EditPaneColorChangedNotification";
 
 @implementation EditPaneTextView
 
@@ -26,19 +27,19 @@ NSString * const	kEditPaneTextViewChangedNotification		= @"EditPaneTextViewChang
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneForegroundColor]
 							options:0
-							context:@"ColorChange"];
+							context:kEditPaneColorChangedNotification];
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneBackgroundColor]
 							options:0
-							context:@"ColorChange"];
+							context:kEditPaneColorChangedNotification];
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneSelectionColor]
 							options:0
-							context:@"ColorChange"];
+							context:kEditPaneColorChangedNotification];
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneCaretColor]
 							options:0
-							context:@"ColorChange"];
+							context:kEditPaneColorChangedNotification];
 	
 	[self setUsesFontPanel:NO];
 	
@@ -106,7 +107,7 @@ NSString * const	kEditPaneTextViewChangedNotification		= @"EditPaneTextViewChang
 #pragma unused(object)
 #pragma unused(change)
 	
-	if ([(NSString *)context isEqualToString:@"ColorChange"]) {
+	if ([(NSString *)context isEqualToString:kEditPaneColorChangedNotification]) {
 		[self updateColors];
 	}
 }
