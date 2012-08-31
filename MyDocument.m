@@ -11,6 +11,8 @@
 #import "NSTextView+EditPlainTextWithUndo.h"
 #include "discountWrapper.h"
 
+NSString * const	kNumberedListTemplate		= @"%lu. ";
+
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
 
@@ -343,7 +345,10 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		NSUInteger rangeEnd = NSMaxRange(range);
 		NSUInteger currentIndex = range.location;
 		
-		while (currentIndex <= (rangeEnd + insertedCharacters)) {
+		NSUInteger insertionCounter = 0;
+		
+		while (currentIndex < (rangeEnd + insertedCharacters)
+			   && currentIndex < mutableString.length) {
 			NSUInteger startIndex, lineEndIndex, contentsEndIndex;
 			
 			[mutableString getLineStart:&startIndex
@@ -352,24 +357,39 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 							   forRange:NSMakeRange(currentIndex, 0)];
 			
 			if (startIndex < contentsEndIndex) {
-				// Prefix line with string
-				[markdownSourceTextView insertText:string atIndex:startIndex];
+				// Prefix line with string. 
+				if (string == kNumberedListTemplate) {
+					NSString *currentString = [NSString stringWithFormat:string, (unsigned long)(insertionCounter + 1)];
+					[markdownSourceTextView insertText:currentString atIndex:startIndex];
+					
+					stringLength = currentString.length;
+				}
+				else {
+					[markdownSourceTextView insertText:string atIndex:startIndex];
+				}
+				
 				insertedCharacters += stringLength;
 				
 				currentIndex = stringLength + lineEndIndex;
+				
+				insertionCounter++;
 			}
 			else {
-				// startIndex == contentsEndIndex => the line is empty. Do nothing and go to next line
+				// startIndex == contentsEndIndex => the line is empty. Do nothing and go to next line. 
 				currentIndex = lineEndIndex;
-			}
-			
-			if (currentIndex >= mutableString.length) {
-				break;
 			}
 		}
 		
-		range.location += stringLength;
-		range.length += insertedCharacters - stringLength;
+		if (insertionCounter == 1) {
+			// If this was within a single line, we keep the previously selected characters selected. 
+			range.location += stringLength;
+			range.length += insertedCharacters - stringLength;
+		}
+		else {
+			// If this selection went across multiple lines, we extend the selection to all the lines that were touched. 
+			range.length += insertedCharacters;
+		}
+		
 		[newSelection addObject:[NSValue valueWithRange:range]];
 	}
 	
@@ -443,7 +463,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
 - (IBAction)numberedList:(id)sender
 {
-	[self _addStringBeforeSelectedLines:@"1. "];
+	[self _addStringBeforeSelectedLines:kNumberedListTemplate];
 }
 
 @end
