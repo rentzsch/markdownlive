@@ -8,15 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		11EF12E0142D24BB0086C77F /* MLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11EF12DF142D24BB0086C77F /* MLAppDelegate.m */; };
-		11EF12E6142D5C1D0086C77F /* bold.png in Resources */ = {isa = PBXBuildFile; fileRef = 11EF12E3142D5C1D0086C77F /* bold.png */; };
-		11EF12E7142D5C1D0086C77F /* italic.png in Resources */ = {isa = PBXBuildFile; fileRef = 11EF12E4142D5C1D0086C77F /* italic.png */; };
-		11EF12E8142D5C1D0086C77F /* underline.png in Resources */ = {isa = PBXBuildFile; fileRef = 11EF12E5142D5C1D0086C77F /* underline.png */; };
-		11EF12EA142D60000086C77F /* quote.png in Resources */ = {isa = PBXBuildFile; fileRef = 11EF12E9142D60000086C77F /* quote.png */; };
-		11EF12ED142D63050086C77F /* nlist.png in Resources */ = {isa = PBXBuildFile; fileRef = 11EF12EB142D63050086C77F /* nlist.png */; };
-		11EF12EE142D63050086C77F /* ulist.png in Resources */ = {isa = PBXBuildFile; fileRef = 11EF12EC142D63050086C77F /* ulist.png */; };
 		1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58280DA1D0D100B32029 /* MyDocument.xib */; };
 		1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD582A0DA1D0D100B32029 /* MainMenu.xib */; };
 		3D6A8BBC15F0D914002C8B62 /* NSTextView+EditPlainTextWithUndo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D6A8BBB15F0D914002C8B62 /* NSTextView+EditPlainTextWithUndo.m */; };
+		3D6A8BE115F0F33C002C8B62 /* Ordered List Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6A8BDC15F0F33C002C8B62 /* Ordered List Template.pdf */; };
+		3D6A8BE215F0F33C002C8B62 /* Quote Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6A8BDD15F0F33C002C8B62 /* Quote Template.pdf */; };
+		3D6A8BE315F0F33C002C8B62 /* Unordered List Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6A8BDE15F0F33C002C8B62 /* Unordered List Template.pdf */; };
 		795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 795F6C86105D70A300D1F90A /* MarkdownLiveApp.icns */; };
 		795F6CCD105D741100D1F90A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795F6CCC105D741100D1F90A /* WebKit.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -82,12 +79,6 @@
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		11EF12DE142D24BB0086C77F /* MLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MLAppDelegate.h; sourceTree = "<group>"; };
 		11EF12DF142D24BB0086C77F /* MLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MLAppDelegate.m; sourceTree = "<group>"; };
-		11EF12E3142D5C1D0086C77F /* bold.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bold.png; sourceTree = "<group>"; };
-		11EF12E4142D5C1D0086C77F /* italic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = italic.png; sourceTree = "<group>"; };
-		11EF12E5142D5C1D0086C77F /* underline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = underline.png; sourceTree = "<group>"; };
-		11EF12E9142D60000086C77F /* quote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quote.png; sourceTree = "<group>"; };
-		11EF12EB142D63050086C77F /* nlist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nlist.png; sourceTree = "<group>"; };
-		11EF12EC142D63050086C77F /* ulist.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ulist.png; sourceTree = "<group>"; };
 		13E42FBA07B3F13500E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		1DDD58290DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		1DDD582B0DA1D0D100B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
@@ -109,6 +100,9 @@
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		3D6A8BBA15F0D914002C8B62 /* NSTextView+EditPlainTextWithUndo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+EditPlainTextWithUndo.h"; sourceTree = "<group>"; };
 		3D6A8BBB15F0D914002C8B62 /* NSTextView+EditPlainTextWithUndo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+EditPlainTextWithUndo.m"; sourceTree = "<group>"; };
+		3D6A8BDC15F0F33C002C8B62 /* Ordered List Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Ordered List Template.pdf"; sourceTree = "<group>"; };
+		3D6A8BDD15F0F33C002C8B62 /* Quote Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Quote Template.pdf"; sourceTree = "<group>"; };
+		3D6A8BDE15F0F33C002C8B62 /* Unordered List Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Unordered List Template.pdf"; sourceTree = "<group>"; };
 		3DD161871431FCED0003F6C7 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		3DD161881431FCF40003F6C7 /* EditPaneTypesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPaneTypesetter.h; sourceTree = "<group>"; };
 		3DD161891431FCFC0003F6C7 /* EditPaneTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPaneTextView.h; sourceTree = "<group>"; };
@@ -182,20 +176,6 @@
 			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
-		11EF12E2142D5C1D0086C77F /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				11EF12EB142D63050086C77F /* nlist.png */,
-				11EF12EC142D63050086C77F /* ulist.png */,
-				11EF12E9142D60000086C77F /* quote.png */,
-				11EF12E3142D5C1D0086C77F /* bold.png */,
-				11EF12E4142D5C1D0086C77F /* italic.png */,
-				11EF12E5142D5C1D0086C77F /* underline.png */,
-			);
-			name = Images;
-			path = English.lproj/Images;
-			sourceTree = "<group>";
-		};
 		19C28FB0FE9D524F11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -266,7 +246,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				11EF12E2142D5C1D0086C77F /* Images */,
+				3D6A8BD915F0F33C002C8B62 /* Images */,
 				226936E612E7CDC500171322 /* styles.css */,
 				795F6C86105D70A300D1F90A /* MarkdownLiveApp.icns */,
 				2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */,
@@ -294,6 +274,16 @@
 				3D6A8BBB15F0D914002C8B62 /* NSTextView+EditPlainTextWithUndo.m */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		3D6A8BD915F0F33C002C8B62 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				3D6A8BDC15F0F33C002C8B62 /* Ordered List Template.pdf */,
+				3D6A8BDD15F0F33C002C8B62 /* Quote Template.pdf */,
+				3D6A8BDE15F0F33C002C8B62 /* Unordered List Template.pdf */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		795F6C4D105D6EA500D1F90A /* discount */ = {
@@ -431,12 +421,9 @@
 				1DDD582C0DA1D0D100B32029 /* MyDocument.xib in Resources */,
 				1DDD582D0DA1D0D100B32029 /* MainMenu.xib in Resources */,
 				795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */,
-				11EF12E6142D5C1D0086C77F /* bold.png in Resources */,
-				11EF12E7142D5C1D0086C77F /* italic.png in Resources */,
-				11EF12E8142D5C1D0086C77F /* underline.png in Resources */,
-				11EF12EA142D60000086C77F /* quote.png in Resources */,
-				11EF12ED142D63050086C77F /* nlist.png in Resources */,
-				11EF12EE142D63050086C77F /* ulist.png in Resources */,
+				3D6A8BE115F0F33C002C8B62 /* Ordered List Template.pdf in Resources */,
+				3D6A8BE215F0F33C002C8B62 /* Quote Template.pdf in Resources */,
+				3D6A8BE315F0F33C002C8B62 /* Unordered List Template.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
