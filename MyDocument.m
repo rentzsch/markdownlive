@@ -19,7 +19,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 @interface MyDocument ()
 
 - (void)_surroundSelectionWithString:(NSString *)string;
-- (void)_addStringBeforeSelectedLines:(NSString *)string;
+- (void)_addStringBeforeSelectedLines:(NSString *)string
+				   skippingEmptyLines:(BOOL)skipEmptyLines;
 
 @end
 
@@ -329,7 +330,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	[self updateContentIncludingOnRedo];
 }
 
-- (void)_addStringBeforeSelectedLines:(NSString *)string {
+- (void)_addStringBeforeSelectedLines:(NSString *)string
+				   skippingEmptyLines:(BOOL)skipEmptyLines {
 	[self updateContentOnUndo];
 
 	NSMutableString *mutableString = markdownSourceTextView.textStorage.mutableString;
@@ -356,7 +358,9 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 							contentsEnd:&contentsEndIndex
 							   forRange:NSMakeRange(currentIndex, 0)];
 			
-			if (startIndex < contentsEndIndex) {
+			BOOL lineHasContent = (startIndex < contentsEndIndex);
+			
+			if ((skipEmptyLines == NO) || lineHasContent) {
 				// Prefix line with string. 
 				if (string == kNumberedListTemplate) {
 					NSString *currentString = [NSString stringWithFormat:string, (unsigned long)(insertionCounter + 1)];
@@ -433,37 +437,44 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
 - (IBAction)header1:(id)sender
 {
-	[self _addStringBeforeSelectedLines:@"# "];
+	[self _addStringBeforeSelectedLines:@"# "
+					 skippingEmptyLines:YES];
 }
 
 - (IBAction)header2:(id)sender
 {
-	[self _addStringBeforeSelectedLines:@"## "];
+	[self _addStringBeforeSelectedLines:@"## "
+					 skippingEmptyLines:YES];
 }
 
 - (IBAction)header3:(id)sender
 {
-	[self _addStringBeforeSelectedLines:@"### "];
+	[self _addStringBeforeSelectedLines:@"### "
+					 skippingEmptyLines:YES];
 }
 
 - (IBAction)blockQuote:(id)sender
 {
-	[self _addStringBeforeSelectedLines:@"> "];
+	[self _addStringBeforeSelectedLines:@"> "
+					 skippingEmptyLines:NO];
 }
 
 - (IBAction)codeSection:(id)sender
 {
-	[self _addStringBeforeSelectedLines:@"    "];
+	[self _addStringBeforeSelectedLines:@"    "
+					 skippingEmptyLines:NO];
 }
 
 - (IBAction)unorderedList:(id)sender
 {
-	[self _addStringBeforeSelectedLines:@"* "];
+	[self _addStringBeforeSelectedLines:@"* "
+					 skippingEmptyLines:YES];
 }
 
 - (IBAction)numberedList:(id)sender
 {
-	[self _addStringBeforeSelectedLines:kNumberedListTemplate];
+	[self _addStringBeforeSelectedLines:kNumberedListTemplate
+					 skippingEmptyLines:YES];
 }
 
 @end
