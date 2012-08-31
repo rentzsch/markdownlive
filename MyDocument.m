@@ -275,96 +275,92 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	[[NSPasteboard generalPasteboard] setString:[ORCDiscount markdown2HTML:[markdownSource string]] forType:NSStringPboardType];
 }
 
-- (void)_surroundSelectionWithString:(NSString *)string
-{
-	NSMutableString *newString = [markdownSourceTextView.string mutableCopy];
+- (void)_surroundSelectionWithString:(NSString *)string {
+	NSMutableString *mutableString = markdownSourceTextView.textStorage.mutableString;
 	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
-	NSUInteger addedCharacters = 0;
+	NSUInteger stringLength = string.length;
+	
+	NSUInteger insertedCharacters = 0;
 	
 	for (NSValue *rangeInfo in [markdownSourceTextView selectedRanges]) {
 		NSRange range = [rangeInfo rangeValue];
-		range.location += addedCharacters;
+		range.location += insertedCharacters;
 		
-		[newString insertString:string atIndex:range.location + range.length];
-		[newString insertString:string atIndex:range.location];
+		[mutableString insertString:string atIndex:NSMaxRange(range)];
+		[mutableString insertString:string atIndex:range.location];
 		
-		addedCharacters += [string length] * 2;
+		insertedCharacters += stringLength * 2;
 		
-		range.location += [string length];
+		range.location += stringLength;
 		[newSelection addObject:[NSValue valueWithRange:range]];
 	}
 	
-	[markdownSourceTextView setString:newString];
 	[markdownSourceTextView setSelectedRanges:newSelection];
-	[newString release];
 	[newSelection release];
 	
 	[self updateContent];
 }
 
-- (void)_addStringBeforeSelectedLines:(NSString *)string
-{
-	NSString *oldString = markdownSourceTextView.string;
-	NSMutableString *newString = [oldString mutableCopy];
-	NSMutableArray *newSelection = [markdownSourceTextView.selectedRanges mutableCopy];
-	__block NSInteger currentSelectionIndex = -1;
+- (void)_addStringBeforeSelectedLines:(NSString *)string {
+	NSMutableString *mutableString = markdownSourceTextView.textStorage.mutableString;
+	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
+	NSUInteger stringLength = string.length;
 	
+	NSUInteger insertedCharacters = 0;
 	
-	[oldString enumerateLinesUsingBlock:^(NSString *line, BOOL *stop) {
-		NSRange originalLineRange = [oldString rangeOfString:line];
-		NSRange lineRange = [newString rangeOfString:line];
-		__block BOOL stringAdded = NO;
-		NSArray *selection = [newSelection copy];
-		[newSelection removeAllObjects];
+	for (NSValue *rangeInfo in [markdownSourceTextView selectedRanges]) {
+		NSRange range = [rangeInfo rangeValue];
+		range.location += insertedCharacters;
 		
-		[selection enumerateObjectsUsingBlock:^(id rangeInfo, NSUInteger index, BOOL *stop) {
-			NSRange selectionRange = [rangeInfo rangeValue];
-			BOOL justAdded = NO;
+		NSUInteger rangeEnd = NSMaxRange(range);
+		NSUInteger currentIndex = range.location;
+		
+		while (currentIndex < (rangeEnd + insertedCharacters)) {
+			NSUInteger startIndex, lineEndIndex, contentsEndIndex;
 			
-			if (!stringAdded && NSIntersectionRange(selectionRange, originalLineRange).length != 0) {
-				[newString insertString:string atIndex:lineRange.location];
+			[mutableString getLineStart:&startIndex
+									end:&lineEndIndex
+							contentsEnd:&contentsEndIndex
+							   forRange:NSMakeRange(currentIndex, 0)];
+			
+			if (startIndex < contentsEndIndex) {
+				// Prefix line with string
+				[mutableString insertString:string atIndex:startIndex];
+				insertedCharacters += stringLength;
 				
-				justAdded = currentSelectionIndex != index;
-				currentSelectionIndex = index;
-				stringAdded = YES;
+				currentIndex = stringLength + lineEndIndex;
+			}
+			else {
+				// startIndex == contentsEndIndex => the line is empty. Do nothing and go to next line
+				currentIndex = lineEndIndex;
 			}
 			
-			NSLog(@"justAdded: %d", justAdded);
-			
-			if (stringAdded && currentSelectionIndex != index) {
-				selectionRange.location += [string length];
+			if (currentIndex >= mutableString.length) {
+				break;
 			}
-			
-			if (justAdded && lineRange.location != selectionRange.location) {
-				selectionRange.location += [string length];
-			} else {
-				selectionRange.length += [string length];
-			}
-			
-			[newSelection addObject:[NSValue valueWithRange:selectionRange]];
-		}];
+		}
 		
-		[selection release];
-	}];
+		range.location += stringLength;
+		range.length += insertedCharacters - stringLength;
+		[newSelection addObject:[NSValue valueWithRange:range]];
+	}
 	
-	
-	[markdownSourceTextView setString:newString];
 	[markdownSourceTextView setSelectedRanges:newSelection];
-	[newString release];
 	[newSelection release];
 	
 	[self updateContent];
 }
 
-- (IBAction)boldItalic:(NSSegmentedControl *)sender
-{
-	NSLog(@"sender: %ld", sender.selectedSegment);
+- (IBAction)boldItalic:(NSSegmentedControl *)sender {
+	//NSLog(@"sender: %ld", sender.selectedSegment);
+	
 	switch (sender.selectedSegment) {
-		case 0: {//bold
+		case 0: { //bold
 			[self bold:sender];
 			
 			break;
-		} case 1: {//italic
+		}
+		case 1: { //italic
 			[self italic:sender];
 			
 			break;
