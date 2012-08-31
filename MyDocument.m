@@ -8,6 +8,7 @@
 #import "ORCDiscount.h"
 #import "MyDocument.h"
 #import "EditPaneTextView.h"
+#import "NSTextView+EditPlainTextWithUndo.h"
 #include "discountWrapper.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
@@ -218,6 +219,30 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
 }
 
+- (void)updateContentOnUndo {
+	NSUndoManager *undoManager = [self undoManager];
+	
+	[undoManager registerUndoWithTarget:self
+							   selector:@selector(updateContentOnUndo)
+								 object:nil];
+	
+	if ([undoManager isUndoing]) {
+		[self updateContent];
+	}
+}
+
+- (void)updateContentIncludingOnRedo {
+	NSUndoManager *undoManager = [self undoManager];
+	
+	[undoManager registerUndoWithTarget:self
+							   selector:@selector(updateContentIncludingOnRedo)
+								 object:nil];
+	
+	if ([undoManager isUndoing] == NO) {
+		[self updateContent];
+	}
+}
+
 - (void)htmlPreviewTimer:(NSTimer*)timer_ {
 	
 #pragma unused(timer_)
@@ -276,7 +301,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (void)_surroundSelectionWithString:(NSString *)string {
-	NSMutableString *mutableString = markdownSourceTextView.textStorage.mutableString;
+	[self updateContentOnUndo];
+
 	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
 	NSUInteger stringLength = string.length;
 	
@@ -286,8 +312,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		NSRange range = [rangeInfo rangeValue];
 		range.location += insertedCharacters;
 		
-		[mutableString insertString:string atIndex:NSMaxRange(range)];
-		[mutableString insertString:string atIndex:range.location];
+		[markdownSourceTextView insertText:string atIndex:NSMaxRange(range)];
+		[markdownSourceTextView insertText:string atIndex:range.location];
 		
 		insertedCharacters += stringLength * 2;
 		
@@ -295,13 +321,15 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		[newSelection addObject:[NSValue valueWithRange:range]];
 	}
 	
-	[markdownSourceTextView setSelectedRanges:newSelection];
+	[markdownSourceTextView setSelectedRangesWithUndo:newSelection];
 	[newSelection release];
 	
-	[self updateContent];
+	[self updateContentIncludingOnRedo];
 }
 
 - (void)_addStringBeforeSelectedLines:(NSString *)string {
+	[self updateContentOnUndo];
+
 	NSMutableString *mutableString = markdownSourceTextView.textStorage.mutableString;
 	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
 	NSUInteger stringLength = string.length;
@@ -325,7 +353,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 			
 			if (startIndex < contentsEndIndex) {
 				// Prefix line with string
-				[mutableString insertString:string atIndex:startIndex];
+				[markdownSourceTextView insertText:string atIndex:startIndex];
 				insertedCharacters += stringLength;
 				
 				currentIndex = stringLength + lineEndIndex;
@@ -345,10 +373,10 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		[newSelection addObject:[NSValue valueWithRange:range]];
 	}
 	
-	[markdownSourceTextView setSelectedRanges:newSelection];
+	[markdownSourceTextView setSelectedRangesWithUndo:newSelection];
 	[newSelection release];
 	
-	[self updateContent];
+	[self updateContentIncludingOnRedo];
 }
 
 - (IBAction)boldItalic:(NSSegmentedControl *)sender {
