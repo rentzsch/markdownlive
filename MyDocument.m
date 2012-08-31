@@ -19,6 +19,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 @interface MyDocument ()
 
 - (void)_surroundSelectionWithString:(NSString *)string;
+- (void)_surroundSelectionWithPrefixString:(NSString *)prefixString
+							  suffixString:(NSString *)suffixString;
 - (void)_addStringBeforeSelectedLines:(NSString *)string
 				   skippingEmptyLines:(BOOL)skipEmptyLines;
 
@@ -304,10 +306,19 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (void)_surroundSelectionWithString:(NSString *)string {
+	[self _surroundSelectionWithPrefixString:string
+								suffixString:string];
+}
+
+- (void)_surroundSelectionWithPrefixString:(NSString *)prefixString
+							  suffixString:(NSString *)suffixString {
 	[self updateContentOnUndo];
 
 	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
-	NSUInteger stringLength = string.length;
+	
+	NSUInteger prefixStringLength = prefixString.length;
+	NSUInteger suffixStringLength = suffixString.length;
+	NSUInteger insertedStringLength = prefixStringLength + suffixStringLength;
 	
 	NSUInteger insertedCharacters = 0;
 	
@@ -315,12 +326,12 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		NSRange range = [rangeInfo rangeValue];
 		range.location += insertedCharacters;
 		
-		[markdownSourceTextView insertText:string atIndex:NSMaxRange(range)];
-		[markdownSourceTextView insertText:string atIndex:range.location];
+		[markdownSourceTextView insertText:suffixString atIndex:NSMaxRange(range)];
+		[markdownSourceTextView insertText:prefixString atIndex:range.location];
 		
-		insertedCharacters += stringLength * 2;
+		insertedCharacters += insertedStringLength;
 		
-		range.location += stringLength;
+		range.location += prefixStringLength;
 		[newSelection addObject:[NSValue valueWithRange:range]];
 	}
 	
@@ -475,6 +486,16 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 {
 	[self _addStringBeforeSelectedLines:kNumberedListTemplate
 					 skippingEmptyLines:YES];
+}
+
+- (IBAction)link:(id)sender
+{
+	[self _surroundSelectionWithPrefixString:@"[" suffixString:@"]()"];
+}
+
+- (IBAction)image:(id)sender
+{
+	[self _surroundSelectionWithPrefixString:@"![" suffixString:@"]()"];
 }
 
 @end

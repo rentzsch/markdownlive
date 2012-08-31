@@ -14,6 +14,8 @@
 		3D6A8BE115F0F33C002C8B62 /* Ordered List Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6A8BDC15F0F33C002C8B62 /* Ordered List Template.pdf */; };
 		3D6A8BE215F0F33C002C8B62 /* Quote Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6A8BDD15F0F33C002C8B62 /* Quote Template.pdf */; };
 		3D6A8BE315F0F33C002C8B62 /* Unordered List Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D6A8BDE15F0F33C002C8B62 /* Unordered List Template.pdf */; };
+		3D8BA23315F160FD000555C7 /* Image Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BA23115F160FD000555C7 /* Image Template.pdf */; };
+		3D8BA23415F160FD000555C7 /* Link Template.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3D8BA23215F160FD000555C7 /* Link Template.pdf */; };
 		795F6C87105D70A300D1F90A /* MarkdownLiveApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 795F6C86105D70A300D1F90A /* MarkdownLiveApp.icns */; };
 		795F6CCD105D741100D1F90A /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 795F6CCC105D741100D1F90A /* WebKit.framework */; };
 		8D15AC2C0486D014006FF6A4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A37F4B9FDCFA73011CA2CEA /* Credits.rtf */; };
@@ -103,6 +105,8 @@
 		3D6A8BDC15F0F33C002C8B62 /* Ordered List Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Ordered List Template.pdf"; sourceTree = "<group>"; };
 		3D6A8BDD15F0F33C002C8B62 /* Quote Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Quote Template.pdf"; sourceTree = "<group>"; };
 		3D6A8BDE15F0F33C002C8B62 /* Unordered List Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Unordered List Template.pdf"; sourceTree = "<group>"; };
+		3D8BA23115F160FD000555C7 /* Image Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Image Template.pdf"; sourceTree = "<group>"; };
+		3D8BA23215F160FD000555C7 /* Link Template.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Link Template.pdf"; sourceTree = "<group>"; };
 		3DD161871431FCED0003F6C7 /* PreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesController.h; sourceTree = "<group>"; };
 		3DD161881431FCF40003F6C7 /* EditPaneTypesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPaneTypesetter.h; sourceTree = "<group>"; };
 		3DD161891431FCFC0003F6C7 /* EditPaneTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditPaneTextView.h; sourceTree = "<group>"; };
@@ -279,6 +283,8 @@
 		3D6A8BD915F0F33C002C8B62 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				3D8BA23115F160FD000555C7 /* Image Template.pdf */,
+				3D8BA23215F160FD000555C7 /* Link Template.pdf */,
 				3D6A8BDC15F0F33C002C8B62 /* Ordered List Template.pdf */,
 				3D6A8BDD15F0F33C002C8B62 /* Quote Template.pdf */,
 				3D6A8BDE15F0F33C002C8B62 /* Unordered List Template.pdf */,
@@ -424,6 +430,8 @@
 				3D6A8BE115F0F33C002C8B62 /* Ordered List Template.pdf in Resources */,
 				3D6A8BE215F0F33C002C8B62 /* Quote Template.pdf in Resources */,
 				3D6A8BE315F0F33C002C8B62 /* Unordered List Template.pdf in Resources */,
+				3D8BA23315F160FD000555C7 /* Image Template.pdf in Resources */,
+				3D8BA23415F160FD000555C7 /* Link Template.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

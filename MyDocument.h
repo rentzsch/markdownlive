@@ -37,5 +37,7 @@
 - (IBAction)codeSection:(id)sender;
 - (IBAction)unorderedList:(id)sender;
 - (IBAction)numberedList:(id)sender;
+- (IBAction)link:(id)sender;
+- (IBAction)image:(id)sender;
 
 @end
