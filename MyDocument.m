@@ -431,6 +431,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	[self _addStringBeforeSelectedLines:@"> "];
 }
 
+- (IBAction)codeSection:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"    "];
+}
+
 - (IBAction)unorderedList:(id)sender
 {
 	[self _addStringBeforeSelectedLines:@"* "];

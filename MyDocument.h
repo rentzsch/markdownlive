@@ -34,6 +34,7 @@
 - (IBAction)header2:(id)sender;
 - (IBAction)header3:(id)sender;
 - (IBAction)blockQuote:(id)sender;
+- (IBAction)codeSection:(id)sender;
 - (IBAction)unorderedList:(id)sender;
 - (IBAction)numberedList:(id)sender;
 
