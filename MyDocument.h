@@ -27,4 +27,17 @@
 
 - (IBAction)copyGeneratedHTMLAction:(id)sender;
 
+- (IBAction)boldItalic:(id)sender;
+- (IBAction)bold:(id)sender;
+- (IBAction)italic:(id)sender;
+- (IBAction)header1:(id)sender;
+- (IBAction)header2:(id)sender;
+- (IBAction)header3:(id)sender;
+- (IBAction)blockQuote:(id)sender;
+- (IBAction)codeSection:(id)sender;
+- (IBAction)unorderedList:(id)sender;
+- (IBAction)numberedList:(id)sender;
+- (IBAction)link:(id)sender;
+- (IBAction)image:(id)sender;
+
 @end

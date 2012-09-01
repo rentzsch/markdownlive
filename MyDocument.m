@@ -8,9 +8,25 @@
 #import "ORCDiscount.h"
 #import "MyDocument.h"
 #import "EditPaneTextView.h"
+#import "NSTextView+EditPlainTextWithUndo.h"
 #include "discountWrapper.h"
 
+NSString * const	kNumberedListTemplate		= @"%lu. ";
+
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
+
+
+@interface MyDocument ()
+
+- (void)_surroundSelectionWithString:(NSString *)string;
+- (void)_surroundSelectionWithPrefixString:(NSString *)prefixString
+							  suffixString:(NSString *)suffixString
+						   selectionOffset:(NSInteger)selectionOffset;
+- (void)_addStringBeforeSelectedLines:(NSString *)string
+				   skippingEmptyLines:(BOOL)skipEmptyLines;
+
+@end
+
 
 // class extension
 @interface MyDocument ()
@@ -71,6 +87,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	// even if you've turned off the text view's richText setting.
 	[markdownSourceTextView updateFont];
 	[markdownSourceTextView updateColors];
+	
+	if ([controller_.window respondsToSelector:@selector(toggleFullScreen:)]) {
+		controller_.window.collectionBehavior &= !NSWindowCollectionBehaviorFullScreenAuxiliary;
+		controller_.window.collectionBehavior |= NSWindowCollectionBehaviorFullScreenPrimary;
+	}
 	
 	[super windowControllerDidLoadNib:controller_];
 }
@@ -190,7 +211,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	NSView *docView = [[[htmlPreviewWebView mainFrame] frameView] documentView];
 	NSView *parent = [docView superview];
 	if (parent) {
-		NSAssert([parent isKindOfClass:[NSClipView class]], nil);
+		NSAssert([parent isKindOfClass:[NSClipView class]], @"");
 		savedOrigin = [parent bounds].origin;
 		// This line from Darin from http://lists.apple.com/archives/webkitsdk-dev/2003/Dec/msg00004.html :
 		savedAtBottom = [docView isFlipped]
@@ -202,6 +223,30 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	NSURL *css = [ORCDiscount cssURL];
 	NSString *html = [ORCDiscount HTMLPage:[ORCDiscount markdown2HTML:[markdownSource string]] withCSSFromURL:css];
 	[[htmlPreviewWebView mainFrame] loadHTMLString:html baseURL:[self fileURL]];
+}
+
+- (void)updateContentOnUndo {
+	NSUndoManager *undoManager = [self undoManager];
+	
+	[undoManager registerUndoWithTarget:self
+							   selector:@selector(updateContentOnUndo)
+								 object:nil];
+	
+	if ([undoManager isUndoing]) {
+		[self updateContent];
+	}
+}
+
+- (void)updateContentIncludingOnRedo {
+	NSUndoManager *undoManager = [self undoManager];
+	
+	[undoManager registerUndoWithTarget:self
+							   selector:@selector(updateContentIncludingOnRedo)
+								 object:nil];
+	
+	if ([undoManager isUndoing] == NO) {
+		[self updateContent];
+	}
 }
 
 - (void)htmlPreviewTimer:(NSTimer*)timer_ {
@@ -259,6 +304,217 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	
 	[[NSPasteboard generalPasteboard] declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
 	[[NSPasteboard generalPasteboard] setString:[ORCDiscount markdown2HTML:[markdownSource string]] forType:NSStringPboardType];
+}
+
+- (void)_surroundSelectionWithString:(NSString *)string {
+	[self _surroundSelectionWithPrefixString:string
+								suffixString:string
+							 selectionOffset:0];
+}
+
+- (void)_surroundSelectionWithPrefixString:(NSString *)prefixString
+							  suffixString:(NSString *)suffixString
+						   selectionOffset:(NSInteger)selectionOffset {
+	[self updateContentOnUndo];
+
+	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
+	
+	NSUInteger prefixStringLength = prefixString.length;
+	NSUInteger suffixStringLength = suffixString.length;
+	NSUInteger insertedStringLength = prefixStringLength + suffixStringLength;
+	
+	NSUInteger insertedCharacters = 0;
+	NSArray *selectedRanges = [markdownSourceTextView selectedRanges];
+	BOOL multipleSelections = (selectedRanges.count != 1);
+	
+	for (NSValue *rangeInfo in selectedRanges) {
+		NSRange range = [rangeInfo rangeValue];
+		range.location += insertedCharacters;
+		
+		[markdownSourceTextView insertText:suffixString atIndex:NSMaxRange(range)];
+		[markdownSourceTextView insertText:prefixString atIndex:range.location];
+		
+		insertedCharacters += insertedStringLength;
+		
+		if (multipleSelections || selectionOffset == 0) {
+			range.location += prefixStringLength;
+		} else {
+			// We use the selectionOffset only if there is a single selection. 
+			if (selectionOffset < 0) {
+				// Negative offsets are relative to the end of the resulting range. 
+				range.location += range.length + insertedStringLength + selectionOffset;
+			} else {
+				// Positive offsets are relative to the start of the resulting range.
+				range.location += selectionOffset;
+			}
+			range.length = 0;
+		}
+		[newSelection addObject:[NSValue valueWithRange:range]];
+	}
+	
+	[markdownSourceTextView setSelectedRangesWithUndo:newSelection];
+	[newSelection release];
+	
+	[self updateContentIncludingOnRedo];
+}
+
+- (void)_addStringBeforeSelectedLines:(NSString *)string
+				   skippingEmptyLines:(BOOL)skipEmptyLines {
+	[self updateContentOnUndo];
+
+	NSMutableString *mutableString = markdownSourceTextView.textStorage.mutableString;
+	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
+	NSUInteger stringLength = string.length;
+	
+	NSUInteger insertedCharacters = 0;
+	
+	for (NSValue *rangeInfo in [markdownSourceTextView selectedRanges]) {
+		NSRange range = [rangeInfo rangeValue];
+		range.location += insertedCharacters;
+		
+		NSUInteger rangeEnd = NSMaxRange(range);
+		NSUInteger currentIndex = range.location;
+		
+		NSUInteger insertionCounter = 0;
+		
+		while (currentIndex < (rangeEnd + insertedCharacters)
+			   && currentIndex < mutableString.length) {
+			NSUInteger startIndex, lineEndIndex, contentsEndIndex;
+			
+			[mutableString getLineStart:&startIndex
+									end:&lineEndIndex
+							contentsEnd:&contentsEndIndex
+							   forRange:NSMakeRange(currentIndex, 0)];
+			
+			BOOL lineHasContent = (startIndex < contentsEndIndex);
+			
+			if ((skipEmptyLines == NO) || lineHasContent) {
+				// Prefix line with string. 
+				if (string == kNumberedListTemplate) {
+					NSString *currentString = [NSString stringWithFormat:string, (unsigned long)(insertionCounter + 1)];
+					[markdownSourceTextView insertText:currentString atIndex:startIndex];
+					
+					stringLength = currentString.length;
+				}
+				else {
+					[markdownSourceTextView insertText:string atIndex:startIndex];
+				}
+				
+				insertedCharacters += stringLength;
+				
+				currentIndex = stringLength + lineEndIndex;
+				
+				insertionCounter++;
+			}
+			else {
+				// startIndex == contentsEndIndex => the line is empty. Do nothing and go to next line. 
+				currentIndex = lineEndIndex;
+			}
+		}
+		
+		if (insertionCounter == 1) {
+			// If this was within a single line, we keep the previously selected characters selected. 
+			range.location += stringLength;
+			range.length += insertedCharacters - stringLength;
+		}
+		else {
+			// If this selection went across multiple lines, we extend the selection to all the lines that were touched. 
+			range.length += insertedCharacters;
+		}
+		
+		[newSelection addObject:[NSValue valueWithRange:range]];
+	}
+	
+	[markdownSourceTextView setSelectedRangesWithUndo:newSelection];
+	[newSelection release];
+	
+	[self updateContentIncludingOnRedo];
+}
+
+- (IBAction)boldItalic:(NSSegmentedControl *)sender {
+	//NSLog(@"sender: %ld", sender.selectedSegment);
+	
+	switch (sender.selectedSegment) {
+		case 0: { //bold
+			[self bold:sender];
+			
+			break;
+		}
+		case 1: { //italic
+			[self italic:sender];
+			
+			break;
+		}
+	}
+}
+
+- (void)_undoBold:(NSString *)string
+{
+	NSLog(@"string: %@", string);
+}
+
+- (IBAction)bold:(id)sender
+{
+	[self _surroundSelectionWithString:@"**"];
+}
+
+- (IBAction)italic:(id)sender
+{
+	[self _surroundSelectionWithString:@"*"];
+}
+
+- (IBAction)header1:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"# "
+					 skippingEmptyLines:YES];
+}
+
+- (IBAction)header2:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"## "
+					 skippingEmptyLines:YES];
+}
+
+- (IBAction)header3:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"### "
+					 skippingEmptyLines:YES];
+}
+
+- (IBAction)blockQuote:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"> "
+					 skippingEmptyLines:NO];
+}
+
+- (IBAction)codeSection:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"    "
+					 skippingEmptyLines:NO];
+}
+
+- (IBAction)unorderedList:(id)sender
+{
+	[self _addStringBeforeSelectedLines:@"* "
+					 skippingEmptyLines:YES];
+}
+
+- (IBAction)numberedList:(id)sender
+{
+	[self _addStringBeforeSelectedLines:kNumberedListTemplate
+					 skippingEmptyLines:YES];
+}
+
+- (IBAction)link:(id)sender
+{
+	[self _surroundSelectionWithPrefixString:@"[" suffixString:@"]()"
+							 selectionOffset:-1];
+}
+
+- (IBAction)image:(id)sender
+{
+	[self _surroundSelectionWithPrefixString:@"![" suffixString:@"]()"
+							 selectionOffset:-1];
 }
 
 @end
