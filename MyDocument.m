@@ -20,7 +20,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
 - (void)_surroundSelectionWithString:(NSString *)string;
 - (void)_surroundSelectionWithPrefixString:(NSString *)prefixString
-							  suffixString:(NSString *)suffixString;
+							  suffixString:(NSString *)suffixString
+						   selectionOffset:(NSInteger)selectionOffset;
 - (void)_addStringBeforeSelectedLines:(NSString *)string
 				   skippingEmptyLines:(BOOL)skipEmptyLines;
 
@@ -307,11 +308,13 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
 - (void)_surroundSelectionWithString:(NSString *)string {
 	[self _surroundSelectionWithPrefixString:string
-								suffixString:string];
+								suffixString:string
+							 selectionOffset:0];
 }
 
 - (void)_surroundSelectionWithPrefixString:(NSString *)prefixString
-							  suffixString:(NSString *)suffixString {
+							  suffixString:(NSString *)suffixString
+						   selectionOffset:(NSInteger)selectionOffset {
 	[self updateContentOnUndo];
 
 	NSMutableArray *newSelection = [[NSMutableArray alloc] init];
@@ -321,8 +324,10 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	NSUInteger insertedStringLength = prefixStringLength + suffixStringLength;
 	
 	NSUInteger insertedCharacters = 0;
+	NSArray *selectedRanges = [markdownSourceTextView selectedRanges];
+	BOOL multipleSelections = (selectedRanges.count != 1);
 	
-	for (NSValue *rangeInfo in [markdownSourceTextView selectedRanges]) {
+	for (NSValue *rangeInfo in selectedRanges) {
 		NSRange range = [rangeInfo rangeValue];
 		range.location += insertedCharacters;
 		
@@ -331,7 +336,19 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		
 		insertedCharacters += insertedStringLength;
 		
-		range.location += prefixStringLength;
+		if (multipleSelections || selectionOffset == 0) {
+			range.location += prefixStringLength;
+		} else {
+			// We use the selectionOffset only if there is a single selection. 
+			if (selectionOffset < 0) {
+				// Negative offsets are relative to the end of the resulting range. 
+				range.location += range.length + insertedStringLength + selectionOffset;
+			} else {
+				// Positive offsets are relative to the start of the resulting range.
+				range.location += selectionOffset;
+			}
+			range.length = 0;
+		}
 		[newSelection addObject:[NSValue valueWithRange:range]];
 	}
 	
@@ -490,12 +507,14 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 
 - (IBAction)link:(id)sender
 {
-	[self _surroundSelectionWithPrefixString:@"[" suffixString:@"]()"];
+	[self _surroundSelectionWithPrefixString:@"[" suffixString:@"]()"
+							 selectionOffset:-1];
 }
 
 - (IBAction)image:(id)sender
 {
-	[self _surroundSelectionWithPrefixString:@"![" suffixString:@"]()"];
+	[self _surroundSelectionWithPrefixString:@"![" suffixString:@"]()"
+							 selectionOffset:-1];
 }
 
 @end
