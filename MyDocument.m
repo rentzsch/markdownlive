@@ -7,10 +7,7 @@
 
 #import "ORCDiscount.h"
 #import "MyDocument.h"
-#import "EditPaneLayoutManager.h"
 #import "EditPaneTextView.h"
-#import "PreferencesController.h"
-#import "PreferencesManager.h"
 #include "discountWrapper.h"
 
 NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
@@ -247,7 +244,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 		NSURL *stdUrl = [url URLByStandardizingPath];
 		NSURL *docUrl = [[self fileURL] URLByStandardizingPath];
 		if ([[url scheme] isEqualToString:@"applewebdata"] ||
-			[stdUrl isFileURL] && [stdUrl isEqualTo:docUrl]) {
+			([stdUrl isFileURL] && [stdUrl isEqualTo:docUrl])) {
 			[listener use];
 		} else {
 			[[NSWorkspace sharedWorkspace] openURL:url];
