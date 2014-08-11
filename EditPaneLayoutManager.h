@@ -13,7 +13,7 @@
 	NSFont *font;
 }
 
-@property (nonatomic, retain) NSFont *font;
+@property (nonatomic, strong) NSFont *font;
 
 - (CGFloat)lineHeight;
 

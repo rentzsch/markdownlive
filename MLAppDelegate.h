@@ -10,6 +10,6 @@
 
 @interface MLAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (nonatomic, assign) IBOutlet NSMenuItem *viewMenu;
+@property (nonatomic, strong) IBOutlet NSMenuItem *viewMenu;
 
 @end

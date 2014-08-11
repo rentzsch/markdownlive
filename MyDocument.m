@@ -63,10 +63,8 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (void)dealloc {
-	[htmlPreviewTimer invalidate]; htmlPreviewTimer = nil;
-	[markdownSource release]; markdownSource = nil;
+	[htmlPreviewTimer invalidate];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[super dealloc];
 }
 
 - (NSString *)windowNibName {
@@ -116,16 +114,16 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
         NSURL *markdownFileURL = [self fileURL];
         NSURL *htmlFileURL = [[markdownFileURL URLByDeletingPathExtension] URLByAppendingPathExtension:@"html"];
         if ([[NSFileManager defaultManager] fileExistsAtPath:[htmlFileURL path]]) {
-            NSXMLDocument *doc = [[[NSXMLDocument alloc] initWithContentsOfURL:htmlFileURL
+            NSXMLDocument *doc = [[NSXMLDocument alloc] initWithContentsOfURL:htmlFileURL
                                                                        options:NSXMLNodePreserveAll|NSXMLDocumentTidyXML
-                                                                         error:nil] autorelease];
+                                                                         error:nil];
             if (doc) {
                 NSArray *nodes = [doc nodesForXPath:@"//*[@id=\"markdownlive\"]" error:nil];
                 if ([nodes count] == 1) {
                     NSXMLElement *node = [nodes objectAtIndex:0];
-                    NSXMLDocument *markdownDoc = [[[NSXMLDocument alloc] initWithXMLString:[ORCDiscount markdown2HTML:[markdownSource string]]
+                    NSXMLDocument *markdownDoc = [[NSXMLDocument alloc] initWithXMLString:[ORCDiscount markdown2HTML:[markdownSource string]]
                                                                                    options:NSXMLDocumentTidyHTML
-                                                                                     error:nil] autorelease];
+                                                                                     error:nil];
                     NSArray *markdownNodes = [markdownDoc nodesForXPath:@"/html/body/*" error:nil];
                     [markdownNodes makeObjectsPerformSelector:@selector(detach)];
                     [node setChildren:markdownNodes];
@@ -155,7 +153,6 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 															   error:&error];
 		if (!error) {
 			NSAssert(markdownSourceString, nil);
-			[markdownSource release];
 			markdownSource = [[NSTextStorage alloc] initWithString:markdownSourceString];
 			NSAssert(markdownSource, nil);
 			whenToUpdatePreview = [NSDate timeIntervalSinceReferenceDate] + 0.5;
@@ -170,7 +167,7 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 - (NSView *)printableView {
 	NSRect frame = [[self printInfo] imageablePageBounds];
 	frame.size.height = 0;
-	NSTextView *printView = [[[NSTextView alloc] initWithFrame:frame] autorelease];
+	NSTextView *printView = [[NSTextView alloc] initWithFrame:frame];
     [printView setVerticallyResizable:YES];
     [printView setHorizontallyResizable:NO];
 	
@@ -183,7 +180,6 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	
     [[printView textStorage] beginEditing];
     [[printView textStorage] appendAttributedString:printStr];
-	[printStr release];
     [[printView textStorage] endEditing];
     
     [printView sizeToFit];
@@ -353,7 +349,6 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	}
 	
 	[markdownSourceTextView setSelectedRangesWithUndo:newSelection];
-	[newSelection release];
 	
 	[self updateContentIncludingOnRedo];
 }
@@ -426,7 +421,6 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 	}
 	
 	[markdownSourceTextView setSelectedRangesWithUndo:newSelection];
-	[newSelection release];
 	
 	[self updateContentIncludingOnRedo];
 }
