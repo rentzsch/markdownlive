@@ -189,15 +189,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		22ECEEC512E7C258003B50DC /* discount-config */ = {
-			isa = PBXGroup;
-			children = (
-				226936B912E7C8B600171322 /* mkdio.h */,
-				22ECEEC612E7C258003B50DC /* config.h */,
-			);
-			path = "discount-config";
-			sourceTree = "<group>";
-		};
 		2A37F4AAFDCFA73011CA2CEA /* MarkdownLive */ = {
 			isa = PBXGroup;
 			children = (
@@ -205,7 +196,6 @@
 				2A37F4ABFDCFA73011CA2CEA /* Classes */,
 				3D6A8BBD15F0D919002C8B62 /* Categories */,
 				795F6C4D105D6EA500D1F90A /* discount */,
-				22ECEEC512E7C258003B50DC /* discount-config */,
 				795F6DB3105D75D300D1F90A /* discount_wrappers */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
@@ -307,6 +297,8 @@
 				2269369F12E7C6BE00171322 /* tags.h */,
 				2269369E12E7C6BE00171322 /* tags.c */,
 				226936C912E7CA2800171322 /* setup.c */,
+				226936B912E7C8B600171322 /* mkdio.h */,
+				22ECEEC612E7C258003B50DC /* config.h */,
 			);
 			path = discount;
 			sourceTree = "<group>";

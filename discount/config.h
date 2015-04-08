@@ -1,3 +1,7 @@
+/*
+ * configuration for markdown, generated Wed Apr  8 00:13:17 CDT 2015
+ * by vino@achilleus.local
+ */
 #ifndef __AC_MARKDOWN_D
 #define __AC_MARKDOWN_D 1
 
