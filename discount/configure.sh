@@ -12,6 +12,8 @@ ac_help='--enable-amalloc	Enable memory allocation debugging
 --with-dl=X		Use Discount, Extra, or Both types of definition list
 --with-id-anchor	Use id= anchors for table-of-contents links
 --with-github-tags	Allow `_` and `-` in <> tags
+--with-fenced-code	Allow fenced code blocks
+--with-urlencoded-anchor	Use url-encoded chars to multibyte chars in toc links
 --enable-all-features	Turn on all stable optional features
 --shared		Build shared libraries (default is static)'
 
@@ -35,6 +37,9 @@ locals() {
 		;;
     --ENABLE-*)	enable=`echo $K | sed -e 's/--ENABLE-//' | tr '-' '_'`
 		echo WITH_${enable}=T ;;
+    --DEBIAN-GLITCH)
+		echo DEBIAN_GLITCH=T
+		;;
     esac
 }
 
@@ -53,23 +58,38 @@ BOTH)          AC_DEFINE 'USE_EXTRA_DL' 1
 *)             AC_FAIL "Unknown value <$WITH_DL> for --with-dl (want 'discount', 'extra', or 'both')" ;;
 esac
 
+test "$WITH_FENCED_CODE" && AC_DEFINE "WITH_FENCED_CODE" 1
 test "$WITH_ID_ANCHOR" && AC_DEFINE 'WITH_ID_ANCHOR' 1
 test "$WITH_GITHUB_TAGS" && AC_DEFINE 'WITH_GITHUB_TAGS' 1
+test "$WITH_URLENCODED_ANCHOR" && AC_DEFINE 'WITH_URLENCODED_ANCHOR' 1
+test "$DEBIAN_GLITCH" && AC_DEFINE 'DEBIAN_GLITCH' 1
 
 AC_PROG_CC
 
 test "$TRY_SHARED" && AC_COMPILER_PIC && AC_CC_SHLIBS
 
-case "$AC_CC $AC_CFLAGS" in
-*-Wall*)    AC_DEFINE 'while(x)' 'while( (x) != 0 )'
-	    AC_DEFINE 'if(x)' 'if( (x) != 0 )' ;;
-esac
+if [ "IS_BROKEN_CC" ]; then
+    case "$AC_CC $AC_CFLAGS" in
+    *-pedantic*) ;;
+    *)  # hack around deficiencies in gcc and clang
+	#
+	AC_DEFINE 'while(x)' 'while( (x) != 0 )'
+	AC_DEFINE 'if(x)' 'if( (x) != 0 )'
+
+	if [ "$IS_CLANG" ]; then
+	    AC_CC="$AC_CC -Wno-implicit-int"
+	elif [ "$IS_GCC" ]; then
+	    AC_CC="$AC_CC -Wno-return-type -Wno-implicit-int"
+	fi ;;
+    esac
+fi
 
 AC_PROG ar || AC_FAIL "$TARGET requires ar"
 AC_PROG ranlib
 
 AC_C_VOLATILE
 AC_C_CONST
+AC_C_INLINE
 AC_SCALAR_TYPES sub hdr
 AC_CHECK_BASENAME
 

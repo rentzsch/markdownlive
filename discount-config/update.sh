@@ -13,12 +13,13 @@ status_msg "Running configure.sh..."
 
 cd `dirname $0`/../discount/
 ./configure.sh
+make blocktags
 
 status_msg "Copying important files..."
 
 if head -n 1 config.h | grep -q "^/\*$"; then
 	# remove generated comments in config.h
-	sed '1,/^ *\*\/ *$/ { d; }' <config.h >../discount-config/config.h && echo 'config.h'
+	sed -i '1,/^ *\*\/ *$/ { d; }' <config.h
 else
 	cp config.h ../discount-config/config.h && echo 'config.h'
 	error_msg "Can't locate config.h comments!"
@@ -28,6 +29,6 @@ cp mkdio.h ../discount-config/mkdio.h && echo 'mkdio.h'
 
 status_msg "Clean files from working directory..."
 
-git clean -f
+git clean -df -e blocktags -e 'config.h' -e 'mkdio.h'
 
 status_msg "Done!"

@@ -18,16 +18,11 @@
 	if ((self = [super init])) {
 		EditPaneTypesetter *typeSetter = [[EditPaneTypesetter alloc] init];
 		[self setTypesetter:typeSetter];
-		[typeSetter release];
 		[self setUsesFontLeading:NO];
 	}
 	return self;
 }
 
-- (void)dealloc {
-	self.font = nil;
-	[super dealloc];
-}
 
 - (CGFloat)lineHeight {
 	return floor([self defaultLineHeightForFont:font] + 1.5);

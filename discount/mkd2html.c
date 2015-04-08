@@ -45,7 +45,7 @@ basename(char *path)
 {
     char *p;
 
-    if (( p = strrchr(path, '/') ))
+    if ( p = strrchr(path, '/') )
 	return 1+p;
     return path;
 }
@@ -65,7 +65,6 @@ fail(char *why, ...)
 }
 
 
-void
 main(argc, argv)
 char **argv;
 {
@@ -82,7 +81,7 @@ char **argv;
     CREATE(footers);
     pgm = basename(argv[0]);
 
-    while ( argc > 2 ) {
+    while ( argc > 1 ) {
 	if ( strcmp(argv[1], "-css") == 0 ) {
 	    EXPAND(css) = argv[2];
 	    argc -= 2;
@@ -98,14 +97,20 @@ char **argv;
 	    argc -= 2;
 	    argv += 2;
 	}
+	else
+	    break;
     }
 
-
-    if ( argc > 1 ) {
+    switch ( argc ) {
 	char *p, *dot;
-	
+    case 1:
+	input = stdin;
+	output = stdout;
+	break;
+    case 2:
+    case 3:
+	dest   = malloc(strlen(argv[argc-1]) + 6);
 	source = malloc(strlen(argv[1]) + 6);
-	dest   = malloc(strlen(argv[1]) + 6);
 
 	if ( !(source && dest) )
 	    fail("out of memory allocating name buffers");
@@ -129,10 +134,11 @@ char **argv;
 
 	if ( (output = fopen(dest, "w")) == 0 )
 	    fail("can't write to %s", dest);
-    }
-    else {
-	input = stdin;
-	output = stdout;
+	break;
+
+    default:
+	fprintf(stderr, "usage: %s [opts] source [dest]\n", pgm);
+	exit(1);
     }
 
     if ( (mmiot = mkd_in(input, 0)) == 0 )
@@ -153,7 +159,7 @@ char **argv;
 	"  <meta name=\"GENERATOR\" content=\"mkd2html %s\">\n", markdown_version);
 
     fprintf(output,"  <meta http-equiv=\"Content-Type\"\n"
-		   "        content=\"text/html; charset-us-ascii\">");
+		   "        content=\"text/html; charset=utf-8\">");
 
     for ( i=0; i < S(css); i++ )
 	fprintf(output, "  <link rel=\"stylesheet\"\n"

@@ -27,36 +27,49 @@ NSString * const	kEditPaneColorChangedNotification			= @"EditPaneColorChangedNot
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneForegroundColor]
 							options:0
-							context:kEditPaneColorChangedNotification];
+							context:(__bridge void *)kEditPaneColorChangedNotification];
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneBackgroundColor]
 							options:0
-							context:kEditPaneColorChangedNotification];
+							context:(__bridge void *)kEditPaneColorChangedNotification];
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneSelectionColor]
 							options:0
-							context:kEditPaneColorChangedNotification];
+							context:(__bridge void *)kEditPaneColorChangedNotification];
 	[defaultsController addObserver:self
 						 forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneCaretColor]
 							options:0
-							context:kEditPaneColorChangedNotification];
+							context:(__bridge void *)kEditPaneColorChangedNotification];
 	
 	[self setUsesFontPanel:NO];
 	
 	NSTextContainer *textContainer = [[NSTextContainer alloc] init];
 	[textContainer setContainerSize:[[self textContainer] containerSize]];
 	[textContainer setWidthTracksTextView:YES];
-	layoutMan = [[EditPaneLayoutManager alloc] init];
 	[self replaceTextContainer:textContainer];
-	[textContainer replaceLayoutManager:layoutMan];
-	[textContainer release];
+
+	EditPaneLayoutManager *lManager = [[EditPaneLayoutManager alloc] init];
+	[textContainer replaceLayoutManager:lManager];
+	layoutMan = lManager;
 }
 
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self];
-	[layoutMan release];
-	[super dealloc];
+
+	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+
+	[defaultsController removeObserver:self
+							forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneForegroundColor]
+							   context:(__bridge void *)kEditPaneColorChangedNotification];
+	[defaultsController removeObserver:self
+							forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneBackgroundColor]
+							   context:(__bridge void *)kEditPaneColorChangedNotification];
+	[defaultsController removeObserver:self
+							forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneSelectionColor]
+							   context:(__bridge void *)kEditPaneColorChangedNotification];
+	[defaultsController removeObserver:self
+							forKeyPath:[NSString stringWithFormat:@"values.%@", kEditPaneCaretColor]
+							   context:(__bridge void *)kEditPaneColorChangedNotification];
 }
 
 - (void)keyDown:(NSEvent *)aEvent {
@@ -69,7 +82,7 @@ NSString * const	kEditPaneColorChangedNotification			= @"EditPaneColorChangedNot
 		selectedRange:(NSRange)selectedRange replacementRange:(NSRange)replacementRange {
 	id resultString;
 	if ([aString isKindOfClass:[NSAttributedString class]]) {
-		resultString = [[aString mutableCopy] autorelease];
+		resultString = [aString mutableCopy];
 		selectedRange = NSMakeRange(0, [resultString length]);
 		NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:
 							   [NSNumber numberWithInt:NSUnderlineStyleSingle], NSUnderlineStyleAttributeName,
@@ -106,8 +119,8 @@ NSString * const	kEditPaneColorChangedNotification			= @"EditPaneColorChangedNot
 #pragma unused(keyPath)
 #pragma unused(object)
 #pragma unused(change)
-	
-	if ([(NSString *)context isEqualToString:kEditPaneColorChangedNotification]) {
+
+	if ([(__bridge NSString *)context isEqualToString:kEditPaneColorChangedNotification]) {
 		[self updateColors];
 	}
 }

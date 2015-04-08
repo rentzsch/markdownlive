@@ -24,9 +24,9 @@ NSString* discountToHTML(NSString *markdown) {
             char *htmlUTF8;
             int htmlUTF8Len = mkd_document_wrapper(document, &htmlUTF8);
             if (htmlUTF8Len != EOF) {
-                result = [[[NSString alloc] initWithBytes:htmlUTF8
+                result = [[NSString alloc] initWithBytes:htmlUTF8
                                                    length:htmlUTF8Len
-                                                 encoding:NSUTF8StringEncoding] autorelease];
+                                                 encoding:NSUTF8StringEncoding];
             }
             mkd_cleanup_wrapper(document);
         }

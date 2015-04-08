@@ -13,7 +13,7 @@ extern NSString * const kEditPaneTextViewChangedNotification;
 @class EditPaneLayoutManager;
 
 @interface EditPaneTextView : NSTextView {
-	EditPaneLayoutManager *layoutMan;
+	__weak EditPaneLayoutManager *layoutMan;
 }
 
 - (void)updateColors;
