@@ -63,8 +63,11 @@ NSString	*kMarkdownDocumentType = @"MarkdownDocumentType";
 }
 
 - (void)dealloc {
-	[htmlPreviewTimer invalidate];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+	[htmlPreviewTimer invalidate];
 }
 
 - (NSString *)windowNibName {
