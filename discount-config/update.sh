@@ -13,6 +13,7 @@ status_msg "Running configure.sh..."
 
 cd `dirname $0`/../discount/
 ./configure.sh
+make blocktags
 
 status_msg "Copying important files..."
 
@@ -28,6 +29,6 @@ cp mkdio.h ../discount-config/mkdio.h && echo 'mkdio.h'
 
 status_msg "Clean files from working directory..."
 
-git clean -f
+git clean -df -e blocktags
 
 status_msg "Done!"

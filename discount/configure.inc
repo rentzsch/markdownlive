@@ -193,8 +193,8 @@ AC_CHECK_FUNCS () {
     B=`echo "$1" | sed -e 's/(.*)//'`
 
     case "$B" in
-    "$1") F="$1()" ;;
-    *)    F="$1" ;;
+    "$1") F="$1()"; need_proto=1 ;;
+    *)    F="$1"  ; unset need_proto ;;
     esac
 
     shift
@@ -204,6 +204,10 @@ AC_CHECK_FUNCS () {
 	echo "#include <$1>" >> ngc$$.c
 	shift
     done
+
+    if [ "$need_proto" ]; then
+	echo "void $F;" >> ngc$$.c
+    fi
 
     cat >> ngc$$.c << EOF
 main()
@@ -385,8 +389,13 @@ EOF
     TLOGN " ($AC_CC)"
 
     if [ $status -eq 0 ]; then
-	if $AC_CC -v 2>&1 | grep 'gcc version' >/dev/null; then
+	if $AC_CC -x c /dev/null -dM -E 2>&1 | grep '__clang__' >/dev/null; then
+	    TLOG " yuck, you're using clang"
+	    IS_CLANG=T
+	    IS_BROKEN_CC=T
+	elif $AC_CC -v 2>&1 | grep 'gcc version' >/dev/null; then
 	    TLOG " oh ick, it looks like gcc"
+	    IS_GCC=T
 	    IS_BROKEN_CC=T
 	else
 	    TLOG " ok"
@@ -421,8 +430,6 @@ EOF
     else
 	AC_FAIL " does not compile code properly"
     fi
-
-    AC_SUB 'CC' "$AC_CC"
 
     __remove ngc$$ ngc$$.c ngc$$.o
 
@@ -826,9 +833,7 @@ EOF
 # AC_C_VOLATILE checks to see if the compiler supports the volatile keyword
 #
 AC_C_VOLATILE () {
-    cat > ngc$$.c << EOF
-f() { volatile char me=1; }
-EOF
+    echo 'f() { volatile char me=1; }' > ngc$$.c
     LOGN "checking for \"volatile\" keyword"
 
     if __MAKEDOTO ngc$$.c; then
@@ -843,9 +848,38 @@ EOF
 
 
 #
+# AC_C_INLINE checks to see if compiler supports the inline keyword
+#
+AC_C_INLINE() {
+    echo 'inline int foo() { return 1; }' > ngc$$.c
+    LOGN 'Checking for "inline" keyword'
+    if __MAKEDOTO ngc$$.c; then
+	rc=0
+    else
+	AC_DEFINE inline '/**/'
+	rc=1
+    fi
+    __remove ngc$$.c
+    return $rc
+}
+
+
+#
 # AC_SCALAR_TYPES checks to see if the compiler can generate 2 and 4 byte ints.
 #
 AC_SCALAR_TYPES () {
+
+    rc=1
+    LOGN "defining WORD & DWORD scalar types"
+    
+    if AC_QUIET AC_CHECK_HEADERS WinDef.h; then
+	# windows machine; BYTE, WORD, DWORD already
+	# defined
+	echo "#include <WinDef.h>" >> $__cwd/config.h
+	TLOG " (defined in WinDef.h)"
+	return 0
+    fi
+	
     cat > ngc$$.c << EOF
 #include <stdio.h>
 #include <string.h>
@@ -859,7 +893,6 @@ say(char *w, char *v)
 			: "s:@%s@:%s:g\n", w, v);
 }
 
-void
 main(argc, argv)
 char **argv;
 {
@@ -887,8 +920,6 @@ char **argv;
     exit(0);
 }
 EOF
-    rc=1
-    LOGN "defining WORD & DWORD scalar types"
     if $AC_CC ngc$$.c -o ngc$$; then
 	while [ "$1" ]; do
 	    case "$1" in
@@ -912,6 +943,7 @@ EOF
     0) TLOG "" ;;
     *) AC_FAIL " ** FAILED **" ;;
     esac
+    return $rc
 }
 
 
@@ -923,6 +955,7 @@ AC_OUTPUT () {
     AC_SUB 'LIBS'    "$AC_LIBS"
     AC_SUB 'CONFIGURE_FILES' "$__config_files"
     AC_SUB 'GENERATED_FILES' "$*"
+    AC_SUB 'CC'      "$AC_CC"
     AC_SUB 'CFLAGS'  "$AC_CFLAGS"
     AC_SUB 'LDFLAGS' "$AC_LDFLAGS"
     AC_SUB 'srcdir'  "$AC_SRCDIR"
@@ -1151,6 +1184,8 @@ AC_CHECK_BASENAME() {
     cat > ngc$$.c << EOF
 #include <string.h>
 
+extern char *basename(char*);
+
 main()
 {
     char *a = basename("/a/test");
@@ -1162,7 +1197,7 @@ main()
 EOF
 
     if $AC_CC -o ngc$$ ngc$$.c $LIBS; then
-	if ngc$$; then
+	if ./ngc$$; then
 	    TLOG "(found)"
 	    AC_DEFINE 'HAVE_BASENAME' 1
 	    AC_CHECK_HEADERS libgen.h
@@ -1197,28 +1232,58 @@ AC_COMPILER_PIC () {
     return $__rc
 }
 
-#
-# AC_CC_SHLIBS checks if the C compiler can produce shared libraries
-# and if it can writes a librarian that handles those libraries for us.
-#
-AC_CC_SHLIBS () {
-    AC_PROG_CC || AC_FAIL "Need a C compiler to build shared libraries"
-    AC_PROG_LN_S || AC_FAIL "Need to be able to make symbolic links for shared libraries"
-    AC_PROG_INSTALL || AC_FAIL "Need an install program to install shared libraries"
-    LOGN "checking whether the C compiler can build shared libraries "
 
-    echo "int some_variable = 0;" > ngc$$.c 
+# generate a macosX librarian
+#
+__AC_MACOS_LIBRARIAN() {
+    AC_SUB LD_LIBRARY_PATH DYLD_LIBRARY_PATH
+    __config_files="$__config_files librarian.sh"
+    cat > librarian.sh << EOF
+#! /bin/sh
+#
+#  Build MacOS shared libraries, hiding (some) ickiness from the makefile
 
-    if $AC_CC $AC_PICFLAG -shared -o ngc$$.so ngc$$.c; then
-	AC_SUB LD_LIBRARY_PATH LD_LIBRARY_PATH
-	# -Wl option probably works, but be paranoid anyway
-	_VFLAGS="$AC_PICFLAG -shared -Wl,-soname,ngc$$.so.1"
-	if $AC_CC $_VFLAGS -o ngc$$.so ngc$$.c; then
-	    USE_SONAME=T
+ACTION=\$1; shift
+LIBRARY=\$1; shift
+	
+eval \`awk -F. '{ printf "MAJOR=%d\n", \$1;
+		  printf "VERSION=%d.%d.%d\n", \$1, \$2, \$3; }' \$1\`
+shift
+
+LIBNAME=\$LIBRARY.dylib
+FULLNAME=\$LIBNAME
+
+case "\$ACTION" in
+make)   FLAGS="$AC_CFLAGS -dynamiclib"
+	VFLAGS="-current_version \$VERSION -compatibility_version \$MAJOR"
+
+	rm -f \$LIBRARY
+	if $AC_CC \$FLAGS \$VFLAGS -o \$FULLNAME "\$@"; then
+	    $PROG_LN_S \$FULLNAME \$LIBRARY
 	fi
-	LDCONFIG=`AC_PATH=/sbin:/usr/sbin:/usr/local/sbin acLookFor ldconfig`
-	__config_files="$__config_files librarian.sh"
-	cat > librarian.sh << EOF
+	;;
+files)  echo "\$FULLNAME"
+	;;
+install)$PROG_INSTALL -c \$FULLNAME "\$1"
+	;;
+esac
+EOF
+    chmod +x librarian.sh
+}
+
+
+# Generate an ELF librarian (for Linux, freebsd)
+#
+__AC_ELF_LIBRARIAN() {
+    AC_SUB LD_LIBRARY_PATH LD_LIBRARY_PATH
+    # -Wl option probably works, but be paranoid anyway
+    _VFLAGS="$AC_PICFLAG -shared -Wl,-soname,ngc$$.so.1"
+    if $AC_CC $_VFLAGS -o ngc$$.so ngc$$.c; then
+	USE_SONAME=T
+    fi
+    LDCONFIG=`AC_PATH=/sbin:/usr/sbin:/usr/local/sbin acLookFor ldconfig`
+    __config_files="$__config_files librarian.sh"
+    cat > librarian.sh << EOF
 #! /bin/sh
 #
 #  Build ELF shared libraries, hiding (some) ickiness from the makefile
@@ -1254,45 +1319,36 @@ install)$PROG_INSTALL -c \$FULLNAME "\$1"
 	;;
 esac
 EOF
-	chmod +x librarian.sh
-        LOG "(yes; -shared)"
-	__rc=0
-    elif $AC_CC $AC_PICFLAG  -dynamiclib -o ngc$$.so ngc$$.c; then
-	# macosx
-	AC_SUB LD_LIBRARY_PATH DYLD_LIBRARY_PATH
-	__config_files="$__config_files librarian.sh"
-	cat > librarian.sh << EOF
-#! /bin/sh
+    chmod +x librarian.sh
+}
+
+
 #
-#  Build MacOS shared libraries, hiding (some) ickiness from the makefile
+# AC_CC_SHLIBS checks if the C compiler can produce shared libraries
+# and if it can writes a librarian that handles those libraries for us.
+#
+AC_CC_SHLIBS () {
+    AC_PROG_CC || AC_FAIL "Need a C compiler to build shared libraries"
+    AC_PROG_LN_S || AC_FAIL "Need to be able to make symbolic links for shared libraries"
+    AC_PROG_INSTALL || AC_FAIL "Need an install program to install shared libraries"
+    LOGN "checking whether the C compiler can build shared libraries "
 
-ACTION=\$1; shift
-LIBRARY=\$1; shift
-	
-eval \`awk -F. '{ printf "MAJOR=%d\n", \$1;
-		  printf "VERSION=%d.%d.%d\n", \$1, \$2, \$3; }' \$1\`
-shift
+    echo "int some_variable = 0;" > ngc$$.c 
 
-LIBNAME=\$LIBRARY.dylib
-FULLNAME=\$LIBNAME
+    if uname -a | grep Darwin >/dev/null; then
+	# Claims to be macos?
+	if $AC_CC $AC_PICFLAG  -dynamiclib -o ngc$$.so ngc$$.c; then
+	    __AC_MACOS_LIBRARIAN
 
-case "\$ACTION" in
-make)   FLAGS="$AC_CFLAGS -dynamiclib"
-	VFLAGS="-current_version \$VERSION -compatibility_version \$MAJOR"
-
-	rm -f \$LIBRARY
-	if $AC_CC \$FLAGS \$VFLAGS -o \$FULLNAME "\$@"; then
-	    $PROG_LN_S \$FULLNAME \$LIBRARY
+	    LOG "(yes; macos dylib)"
+	    __rc=0
+	else
+	    LOG "(no)"
+	    __rc=1
 	fi
-	;;
-files)  echo "\$FULLNAME"
-	;;
-install)$PROG_INSTALL -c \$FULLNAME "\$1"
-	;;
-esac
-EOF
-	chmod +x librarian.sh
-        LOG "(yes; macos dylib)"
+    elif $AC_CC $AC_PICFLAG -shared -o ngc$$.so ngc$$.c; then
+	__AC_ELF_LIBRARIAN
+        LOG "(yes; -shared)"
 	__rc=0
     else
         LOG "(no)"
